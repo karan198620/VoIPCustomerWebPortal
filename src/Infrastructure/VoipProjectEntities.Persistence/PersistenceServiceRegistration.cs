@@ -18,6 +18,15 @@ namespace VoipProjectEntities.Persistence
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<IEventRepository, EventRepository>();
             services.AddScoped<IOrderRepository, OrderRepository>();
+            services.AddScoped<ICustomerRepository, CustomerRepository>();
+            services.AddScoped<IMenuRepository, MenuRepository>();
+            services.AddScoped<IDeviceAgentRepository, DeviceAgentRepository>();
+            services.AddScoped<ITrailBalanceCustomerRepository, TrailBalanceCustomerRepository>();
+            services.AddScoped<IAgentCustomerRepository, AgentCustomerRepository>();
+            services.AddScoped<ISettingRepository, SettingRepository>();
+            services.AddScoped<ISubscriptionCustomerRepository, SubscriptionCustomerRepository>();
+            services.AddScoped<IBalanceCustomerRepository, BalanceCustomerRepository>();
+            services.AddScoped<ICallRecordingAgentRepository, CallRecordingAgentRepository>();
 
             return services;
         }

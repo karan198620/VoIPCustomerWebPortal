@@ -15,14 +15,14 @@ namespace VoipProjectEntities.Api.Controllers.v1
     {
         private readonly IMediator _mediator;
 
-        public OrderController(IMediator mediator)
+        private OrderController(IMediator mediator)
         {
             _mediator = mediator;
         }
 
 
         [HttpGet(Name = "GetOrdersForMonth")]
-        public async Task<ActionResult> GetPagedOrdersForMonth(DateTime date, int page, int size)
+        private async Task<ActionResult> GetPagedOrdersForMonth(DateTime date, int page, int size)
         {
             var getOrdersForMonthQuery = new GetOrdersForMonthQuery() { Date = date, Page = page, Size = size };
             var dtos = await _mediator.Send(getOrdersForMonthQuery);

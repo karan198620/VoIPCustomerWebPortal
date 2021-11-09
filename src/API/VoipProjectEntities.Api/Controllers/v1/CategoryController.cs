@@ -20,7 +20,7 @@ namespace VoipProjectEntities.Api.Controllers.v1
         private readonly IMediator _mediator;
         private readonly ILogger _logger;
 
-        public CategoryController(IMediator mediator, ILogger<CategoryController> logger)
+        private CategoryController(IMediator mediator, ILogger<CategoryController> logger)
         {
             _mediator = mediator;
             _logger = logger;
@@ -29,7 +29,7 @@ namespace VoipProjectEntities.Api.Controllers.v1
         //[Authorize]
         [HttpGet("all", Name = "GetAllCategories")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult> GetAllCategories()
+        private async Task<ActionResult> GetAllCategories()
         {
             _logger.LogInformation("GetAllCategories Initiated");
             var dtos = await _mediator.Send(new GetCategoriesListQuery());
@@ -41,7 +41,7 @@ namespace VoipProjectEntities.Api.Controllers.v1
         [HttpGet("allwithevents", Name = "GetCategoriesWithEvents")]
         [ProducesDefaultResponseType]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult> GetCategoriesWithEvents(bool includeHistory)
+        private async Task<ActionResult> GetCategoriesWithEvents(bool includeHistory)
         {
             GetCategoriesListWithEventsQuery getCategoriesListWithEventsQuery = new GetCategoriesListWithEventsQuery() { IncludeHistory = includeHistory };
 
@@ -50,7 +50,7 @@ namespace VoipProjectEntities.Api.Controllers.v1
         }
 
         [HttpPost(Name = "AddCategory")]
-        public async Task<ActionResult> Create([FromBody] CreateCategoryCommand createCategoryCommand)
+        private async Task<ActionResult> Create([FromBody] CreateCategoryCommand createCategoryCommand)
         {
             var response = await _mediator.Send(createCategoryCommand);
             return Ok(response);
