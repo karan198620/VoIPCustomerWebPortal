@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "VoipProjectEntities.API.IntegrationTests": {
+      "commandName": "Project"
+    },
+    "Docker": {
+      "commandName": "Docker"
+    }
+  }
+}
