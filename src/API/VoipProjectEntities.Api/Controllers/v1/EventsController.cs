@@ -19,7 +19,7 @@ namespace VoipProjectEntities.Api.Controllers.v1
     {
         private readonly IMediator _mediator;
 
-        public EventsController(IMediator mediator)
+        private EventsController(IMediator mediator)
         {
             _mediator = mediator;
         }
@@ -27,31 +27,31 @@ namespace VoipProjectEntities.Api.Controllers.v1
         [HttpGet(Name = "GetAllEvents")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesDefaultResponseType]
-        public async Task<ActionResult> GetAllEvents()
+        private async Task<ActionResult> GetAllEvents()
         {
             var dtos = await _mediator.Send(new GetEventsListQuery());
             return Ok(dtos);
         }
 
         [HttpGet("{id}", Name = "GetEventById")]
-        public async Task<ActionResult> GetEventById(string id)
+        private async Task<ActionResult> GetEventById(string id)
         {
             var getEventDetailQuery = new GetEventDetailQuery() { Id = id };
             return Ok(await _mediator.Send(getEventDetailQuery));
         }
 
         [HttpPost(Name = "AddEvent")]
-        public async Task<ActionResult> Create([FromBody] CreateEventCommand createEventCommand)
+        private async Task<ActionResult> Create([FromBody] CreateEventCommand createEventCommand)
         {
             var id = await _mediator.Send(createEventCommand);
             return Ok(id);
         }
 
         [HttpPut(Name = "UpdateEvent")]
-        //[ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesDefaultResponseType]
-        public async Task<ActionResult> Update([FromBody] UpdateEventCommand updateEventCommand)
+        private async Task<ActionResult> Update([FromBody] UpdateEventCommand updateEventCommand)
         {
             var response = await _mediator.Send(updateEventCommand);
             return Ok(response);
@@ -61,7 +61,7 @@ namespace VoipProjectEntities.Api.Controllers.v1
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesDefaultResponseType]
-        public async Task<ActionResult> Delete(string id)
+        private async Task<ActionResult> Delete(string id)
         {
             var deleteEventCommand = new DeleteEventCommand() { EventId = id };
             await _mediator.Send(deleteEventCommand);
@@ -70,7 +70,7 @@ namespace VoipProjectEntities.Api.Controllers.v1
 
         [HttpGet("export", Name = "ExportEvents")]
         [FileResultContentType("text/csv")]
-        public async Task<FileResult> ExportEvents()
+        private async Task<FileResult> ExportEvents()
         {
             var fileDto = await _mediator.Send(new GetEventsExportQuery());
 

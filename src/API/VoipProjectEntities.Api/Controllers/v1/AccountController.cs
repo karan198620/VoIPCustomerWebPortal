@@ -28,6 +28,12 @@ namespace VoipProjectEntities.Api.Controllers
             return Ok(await _authenticationService.RegisterAsync(request));
         }
 
+        [HttpPost("findemail")]
+        public async Task<ActionResult<FindEmailResponse>> FindEmailAsync(FindEmailRequest request)
+        {
+            return Ok(await _authenticationService.FindEmailAsync(request));
+        }
+
         [HttpPost("refresh-token")]
         public async Task<IActionResult> RefreshTokenAsync(RefreshTokenRequest request)
         {

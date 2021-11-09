@@ -20,5 +20,9 @@
   <ItemGroup>
     <ProjectReference Include="..\VoipProjectEntities.Domain\VoipProjectEntities.Domain.csproj" />
   </ItemGroup>
+	
+  <ItemGroup>
+    <Folder Include="Features\TrailBalanceCustomers\Queries\GetTrailBalanceCustomerDetail\" />
+  </ItemGroup>
 
 </Project>
