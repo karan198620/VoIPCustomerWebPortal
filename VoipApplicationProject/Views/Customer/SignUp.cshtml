@@ -1,0 +1,66 @@
+﻿@model VoipApplicationProject.Models.CustomerModel
+
+@{
+    ViewData["Title"] = "SignUp";
+}
+
+<div class="container">
+    <h3 class="text-center">Motile.com Customer Portal</h3>
+    <div class="text-center mb-2"><small class="font-weight-bold">Make the most of your professional life.</small></div>
+    <form asp-action="SignUp" class="mt-3">
+        <div class="col-md-6 offset-md-3">
+            <div class="mb-2"><small>To Register Enter details.</small></div>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <input asp-for="CustomerName" class="form-control" placeholder="Name*" />
+                <span asp-validation-for="CustomerName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input asp-for="Email" class="form-control" placeholder="Email ID*" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input asp-for="Password" class="form-control" placeholder="Password*" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input class="form-control" placeholder="Confirm Password*" />
+            </div>
+        </div>
+        <div class="text-center">
+            <label>By Clicking Agree & Join</label>
+        </div>
+        <div class="offset-md-2">
+            <label>you agree to motile.com :</label>
+            <a href="#">Disclaimer</a>
+            <a href="#">Terms & Conditions</a>
+            <a href="#">User Agreement Policy</a>
+            <a href="#">Cookie Policy</a>
+            <div class="col-md-4 offset-md-3 mt-3">
+                <input type="submit" value="Agree & Join" class="btn btn-primary btn-block" />
+            </div>
+        </div>
+        <div class="text-center mt-2">
+            <label>Already on motile.com? </label>
+            <a href="Login">Sign in</a>
+        </div>
+    </form>
+</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+@if (ViewBag.ShowAlert == "signup_error")
+{
+    <script>alert("Sign Up failed. Please try again");</script>
+}
+else if (ViewBag.ShowAlert == "email_error")
+{
+    <script>alert("This email already exists !");</script>
+}
+else if (ViewBag.ShowAlert == "menu_error")
+{
+    <script>alert("Sorry. Something went wrong. Please try again!");</script>
+}
+
+

@@ -1,0 +1,21 @@
+﻿@model IEnumerable<VoipApplicationProject.Models.MenuAccessModel>
+@{
+
+    string AddSpace(VoipApplicationProject.Models.MenuLink men) => string.Concat(men.ToString().Select(x => Char.IsUpper(x) ? " " + x : x.ToString())).TrimStart(' ');
+}
+
+@if (ViewBag.menulist == null)
+{
+    @*<script>alert("No Menu Items For This Customer !");</script>*@
+}
+else
+{
+    <div class="sidenav border-right">
+        @foreach (var menu in ViewBag.menulist)
+        {
+            <a href="#" class="border-bottom menulinks">@AddSpace(@menu.MenuLink)</a>
+        }
+    </div>
+}
+
+

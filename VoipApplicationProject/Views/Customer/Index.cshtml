@@ -1,0 +1,73 @@
+﻿@model IEnumerable<VoipApplicationProject.Models.CustomerModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="col-md-10 mx-auto">
+    <table class="table">
+    <thead>
+        <tr>
+            <th class="d-none">
+                @Html.DisplayNameFor(model => model.CustomerId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CustomerName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Password)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ISMigrated)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CustomerTypeID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ISTrialBalanceOpted)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td class="d-none">
+                    @Html.DisplayFor(modelItem => item.CustomerId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CustomerName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Password)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ISMigrated)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CustomerTypeID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ISTrialBalanceOpted)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+</div>
+@if (ViewBag.ShowAlert)
+{
+    <script>alert("No Customers exist!);</script>
+}
