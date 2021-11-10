@@ -13,7 +13,7 @@ namespace VoipProjectEntities.Application.Features.Menu.Commands.CreateMenu
             RuleFor(p => p.IsAccess)
                 .NotNull();
 
-            RuleFor(p => p.CustomerID)
+            RuleFor(p => p.Id)
                 .NotNull();
 
             RuleFor(p => p.UpdatedAt)

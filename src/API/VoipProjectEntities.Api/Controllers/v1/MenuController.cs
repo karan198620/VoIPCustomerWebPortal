@@ -35,9 +35,9 @@ namespace VoipProjectEntities.Api.Controllers.v1
         [HttpGet("all/{CustomerId}/{IsAccess}", Name = "GetAllMenu")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesDefaultResponseType]
-        public async Task<ActionResult> GetAllMenu(Guid CustomerId, bool IsAccess)
+        public async Task<ActionResult> GetAllMenu(Guid Id, bool IsAccess)
         {
-            var dtos = await _mediator.Send(new GetMenuListQuery() { CustomerId = CustomerId, IsAccess = IsAccess});
+            var dtos = await _mediator.Send(new GetMenuListQuery() { Id = Id, IsAccess = IsAccess});
             return Ok(dtos);
         }
 

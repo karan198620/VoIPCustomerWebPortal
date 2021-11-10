@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System;
 using VoipProjectEntities.Identity;
 using VoipProjectEntities.Identity.Models;
 
@@ -15,25 +16,34 @@ namespace VoipProjectEntities.API.IntegrationTests.Base
         }
         public async void SeedUsers()
         {
-            PasswordHasher<ApplicationUser> passwordHasher = new PasswordHasher<ApplicationUser>();
+            PasswordHasher<Customer> passwordHasher = new PasswordHasher<Customer>();
 
-            ApplicationUser admin = new ApplicationUser()
+            Customer admin = new Customer()
             {
-                FirstName = "John",
-                LastName = "Smith",
+                CustomerName = "John",
                 UserName = "johnsmith",
                 NormalizedUserName = "JOHNSMITH",
                 Email = "john@test.com",
                 NormalizedEmail = "JOHN@TEST.COM",
-                EmailConfirmed = true
+                EmailConfirmed = true,
+                ISTrialBalanceOpted = true,
+                ISMigrated = false,
+                CreatedAt = DateTime.Now,
+                UpdatedAt = DateTime.Now,
+                CustomerTypeID=2
+
             };
             admin.PasswordHash = passwordHasher.HashPassword(admin, "User123!@#");
             await _identityDbContext.Users.AddAsync(admin);
 
-            ApplicationUser viewer = new ApplicationUser()
+            Customer viewer = new Customer()
             {
-                FirstName = "Apoorv",
-                LastName = "Rame",
+                CustomerName = "APOORV",
+                ISTrialBalanceOpted = true,
+                ISMigrated = false,
+                CreatedAt = DateTime.Now,
+                UpdatedAt = DateTime.Now,
+                CustomerTypeID = 2,
                 UserName = "apoorv",
                 NormalizedUserName = "APOORV",
                 Email = "apoorv@test.com",

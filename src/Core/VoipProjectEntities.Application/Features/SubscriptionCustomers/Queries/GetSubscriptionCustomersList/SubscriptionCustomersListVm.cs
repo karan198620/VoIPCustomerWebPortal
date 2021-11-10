@@ -7,7 +7,7 @@ namespace VoipProjectEntities.Application.Features.SubscriptionCustomers.Queries
     public class SubscriptionCustomersListVm
     {
         public string SubscriptionCustomerID { get; set; }
-        public Guid CustomerID { get; set; }
+        public Guid? Id { get; set; }
         public DateTime SubscriptionStartDate { get; set; }
         public DateTime SubscriptionEndDate { get; set; }
         public int SubscriptionType { get; set; }

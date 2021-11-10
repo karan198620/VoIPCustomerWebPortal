@@ -18,14 +18,14 @@ namespace VoipProjectEntities.Identity.Services
 {
     public class AuthenticationService : IAuthenticationService
     {
-        private readonly UserManager<ApplicationUser> _userManager;
-        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly UserManager<Customer> _userManager;
+        private readonly SignInManager<Customer> _signInManager;
         private readonly JwtSettings _jwtSettings;
         private readonly IdentityDbContext _context;
 
-        public AuthenticationService(UserManager<ApplicationUser> userManager,
+        public AuthenticationService(UserManager<Customer> userManager,
             IOptions<JwtSettings> jwtSettings,
-            SignInManager<ApplicationUser> signInManager,
+            SignInManager<Customer> signInManager,
             IdentityDbContext context)
         {
             _userManager = userManager;
@@ -89,13 +89,17 @@ namespace VoipProjectEntities.Identity.Services
                 throw new ArgumentException($"Username '{request.UserName}' already exists.");
             }
 
-            var user = new ApplicationUser
+            var user = new Customer
             {
+                CustomerName = request.CustomerName,
                 Email = request.Email,
-                FirstName = request.FirstName,
-                LastName = request.LastName,
                 UserName = request.UserName,
-                EmailConfirmed = true
+                EmailConfirmed = false,
+                ISMigrated = request.ISMigrated,
+                CustomerTypeID = request.CustomerTypeID,
+                ISTrialBalanceOpted = request.ISTrialBalanceOpted,
+                CreatedAt = request.CreatedAt,
+                UpdatedAt = request.UpdatedAt
             };
 
             var existingEmail = await _userManager.FindByEmailAsync(request.Email);
@@ -120,14 +124,14 @@ namespace VoipProjectEntities.Identity.Services
             }
         }
 
-        public async Task<FindEmailResponse> FindEmailAsync(FindEmailRequest request)
+        public async Task<FindEmailResponse> FindEmailAsync(string email)
         {
-            var user = new ApplicationUser
+            var user = new Customer
             {
-                Email = request.Email
+                Email = email
             };
 
-            var existingEmail = await _userManager.FindByEmailAsync(request.Email);
+            var existingEmail = await _userManager.FindByEmailAsync(email);
 
             if (existingEmail != null)
             {
@@ -135,11 +139,11 @@ namespace VoipProjectEntities.Identity.Services
             }
             else
             {
-                throw new Exception($"Something went wrong in {nameof(FindEmailAsync)}");
+                return new FindEmailResponse() { Email = "" };
             }
         }
 
-        private async Task<JwtSecurityToken> GenerateToken(ApplicationUser user)
+        private async Task<JwtSecurityToken> GenerateToken(Customer user)
         {
             var userClaims = await _userManager.GetClaimsAsync(user);
             var roles = await _userManager.GetRolesAsync(user);

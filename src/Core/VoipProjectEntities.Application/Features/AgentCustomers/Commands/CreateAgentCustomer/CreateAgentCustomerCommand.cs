@@ -9,17 +9,11 @@ namespace VoipProjectEntities.Application.Features.AgentCustomers.Commands.Creat
     public class CreateAgentCustomerCommand : IRequest<Response<Guid>>
     {
         public Guid AgentCustomerID { get; set; }
-
         public string AgentName { get; set; }
-
         public string Password { get; set; }
-
         public bool ISMigratedAt { get; set; }
-
-
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
-
         public override string ToString()
         {
             return $" Edited by  Agent name: {AgentName}; Password: {Password}; On: {UpdatedAt.ToShortDateString()};";

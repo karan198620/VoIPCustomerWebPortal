@@ -20,7 +20,7 @@ namespace VoipProjectEntities.Application.Profiles
         {
             CustomerListVm des = new CustomerListVm()
             {
-                CustomerId = _protector.Protect(source.CustomerId.ToString()),
+                Id = _protector.Protect(source.CustomerId.ToString()),
                 CustomerName = source.CustomerName,
                 CustomerTypeID = source.CustomerTypeID,
                 Email = source.Email,

@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Identity;
+using System;
 using System.Threading.Tasks;
 using VoipProjectEntities.Identity.Models;
 
@@ -6,15 +7,19 @@ namespace VoipProjectEntities.Identity.Seed
 {
     public static class UserCreator
     {
-        public static async Task SeedAsync(UserManager<ApplicationUser> userManager)
+        public static async Task SeedAsync(UserManager<Customer> userManager)
         {
-            var applicationUser = new ApplicationUser
+            var applicationUser = new Customer
             {
-                FirstName = "John",
-                LastName = "Smith",
+                CustomerName = "John",
                 UserName = "johnsmith",
                 Email = "john@test.com",
-                EmailConfirmed = true
+                EmailConfirmed = true,
+                ISMigrated = true,
+                CustomerTypeID = 2,
+                ISTrialBalanceOpted = true,
+                CreatedAt = DateTime.Now,
+                UpdatedAt = DateTime.Now
             };
 
             var user = await userManager.FindByEmailAsync(applicationUser.Email);

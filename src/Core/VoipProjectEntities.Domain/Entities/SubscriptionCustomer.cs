@@ -10,17 +10,10 @@ namespace VoipProjectEntities.Domain.Entities
     public class SubscriptionCustomer : CommonField
     {
         public Guid SubscriptionCustomerID { get; set; }
-
-        [Display(Name = "Customer")]
-        public Guid CustomerID { get; set; }
-
-        [ForeignKey("CustomerID")]
-        public virtual Customer Customers { get; set; }
-
+        public Guid CustomerId { get; set; }
         public DateTime SubscriptionStartDate { get; set; }
         public DateTime SubscriptionEndDate { get; set; }
         public int SubscriptionType { get; set; }
         public bool ISActive { get; set; }
-
     }
 }

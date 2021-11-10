@@ -15,11 +15,7 @@ namespace VoipProjectEntities.Domain.Entities
         public bool IsWorking { get; set; }
         public int DeviceProfileType { get; set; } //enum
         public Guid DeviceId { get; set; }
-
-        [Display(Name = "Customer")]
-        public Guid? CustomerID { get; set; }
-        [ForeignKey("CustomerID")]
-        public virtual Customer Customers { get; set; }
+        public Guid CustomerId { get; set; }
 
         [Display(Name = "AgentCustomer")]
         public Guid? AgentCustomerID { get; set; }

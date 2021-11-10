@@ -14,12 +14,6 @@ namespace VoipProjectEntities.Domain.Entities
         public string AgentName { get; set; }
         public string Password { get; set; }
         public bool ISMigratedAt { get; set; }
-
-        [Display(Name = "Customer")]
-        public Guid? CustomerId { get; set; }
-
-        [ForeignKey("CustomerId")]
-        public virtual Customer Customers { get; set; }
-
+        public Guid CustomerId { get; set; }
     }
 }

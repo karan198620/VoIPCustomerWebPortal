@@ -6,7 +6,7 @@ using VoipProjectEntities.Application.Models.Authentication;
 namespace VoipProjectEntities.Api.Controllers
 {
     [ApiVersion("1")]
-    [Route("api/v{version:apiVersion}/[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class AccountController : ControllerBase
     {
@@ -28,10 +28,10 @@ namespace VoipProjectEntities.Api.Controllers
             return Ok(await _authenticationService.RegisterAsync(request));
         }
 
-        [HttpPost("findemail")]
-        public async Task<ActionResult<FindEmailResponse>> FindEmailAsync(FindEmailRequest request)
+        [HttpGet("findemail/{email}")]
+        public async Task<ActionResult<FindEmailResponse>> FindEmailAsync(string email)
         {
-            return Ok(await _authenticationService.FindEmailAsync(request));
+            return Ok(await _authenticationService.FindEmailAsync(email));
         }
 
         [HttpPost("refresh-token")]

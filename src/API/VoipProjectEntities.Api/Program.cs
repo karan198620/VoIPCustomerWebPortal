@@ -36,7 +36,7 @@ namespace VoipProjectEntities.Api
             {
                 try
                 {
-                    var userManager = scope.ServiceProvider.GetService<UserManager<ApplicationUser>>();
+                    var userManager = scope.ServiceProvider.GetService<UserManager<Customer>>();
                     await Identity.Seed.UserCreator.SeedAsync(userManager);
                     Log.Information("Application Starting");
                 }

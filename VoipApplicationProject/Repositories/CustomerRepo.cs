@@ -32,28 +32,84 @@ namespace VoipApplicationProject.Repositories
         #endregion
 
         #region "Validate Login"
-        public List<CustomerModel> ValidateLogin(CustomerModel customer)
+        public CustomerModel IsAuthenticated(CustomerModel customer)
         {
-            string api = "api/Customer/ValidateLogin/" + customer.CustomerName + "/" + customer.Password;
-            List<CustomerModel> CustomerList = GetCustomerList(api);
+            //string api = "api/Customer/ValidateLogin/" + customer.CustomerName + "/" + customer.Password;
+            try
+            {
+                CustomerModel customerModel = new CustomerModel();
+                CustomerRoot result = new CustomerRoot();
 
-            return CustomerList;
+                HttpClient HC = new HttpClient();
+                //HC.BaseAddress = new Uri(Baseurl);                
+
+                var insertedRecord = HC.PostAsJsonAsync("https://localhost:44330/api/Account/authenticate?api-version=1.0", customer);
+                insertedRecord.Wait();
+
+                var results = insertedRecord.Result;
+
+                if (results.IsSuccessStatusCode)
+                {
+                    var UserResponse = results.Content.ReadAsStringAsync().Result;
+                    result = JsonConvert.DeserializeObject<CustomerRoot>(UserResponse);
+
+                    customerModel = new CustomerModel
+                    {
+                        Email = result.email,
+                        Id = result.id,
+                        UserName = result.userName,
+                        token = result.token,
+                        refreshtoken = result.refreshToken,
+                        IsAuthenticated = result.isAuthenticated,
+                        CustomerTypeID = result.CustomerTypeId
+                    };
+                }
+
+                HC.Dispose();
+                return customerModel;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
         #endregion
 
         #region "Validate Email"
-        public List<CustomerModel> ValidateEmail(string Email)
+        public string ValidateEmail(string Email)
         {
-            string api = "api/Customer/ValidateEmail/" + Email;
-            List<CustomerModel> CustomerList = GetCustomerList(api);       
+            var CustomerEmail = "";
+            try
+            {
+                HttpClient HC = new HttpClient();
+                CustomerRoot result = new CustomerRoot();
 
-            return CustomerList;
+                var insertedRecord = HC.GetAsync(Baseurl + "api/Account/findemail/" + Email);
+                insertedRecord.Wait();
+
+                var results = insertedRecord.Result;
+
+                if (results.IsSuccessStatusCode)
+                {
+                    var UserResponse = results.Content.ReadAsStringAsync().Result;
+                    result = JsonConvert.DeserializeObject<CustomerRoot>(UserResponse);
+                    CustomerEmail = result.email.ToString();
+                }
+
+                HC.Dispose();
+                return CustomerEmail;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
         #endregion
 
         #region "Create Customer"
-        public CustomerModel CreateCustomer(CustomerModel customer)
+        public string Register(CustomerModel customer)
         {
+            customer.UserName = customer.CustomerName;
             customer.CustomerTypeID = CustomerType.User;
             customer.ISMigrated = false;
             customer.ISTrialBalanceOpted = true;
@@ -62,11 +118,13 @@ namespace VoipApplicationProject.Repositories
 
             try
             {
-                CustomerModel CM = new CustomerModel();
+                //CustomerModel CM = new CustomerModel();
+                string userid = "";
                 HttpClient HC = new HttpClient();
-                Root result = new Root();
+                HC.BaseAddress = new Uri(Baseurl);
+                CustomerRoot result = new CustomerRoot();
 
-                var insertedRecord = HC.PostAsJsonAsync(Baseurl + "api/Customer", customer);
+                var insertedRecord = HC.PostAsJsonAsync("api/Account/register", customer);
                 insertedRecord.Wait();
 
                 var results = insertedRecord.Result;
@@ -74,12 +132,12 @@ namespace VoipApplicationProject.Repositories
                 if (results.IsSuccessStatusCode)
                 {
                     var UserResponse = results.Content.ReadAsStringAsync().Result;
-                    result = JsonConvert.DeserializeObject<Root>(UserResponse);
-                    CM = result.data;
+                    result = JsonConvert.DeserializeObject<CustomerRoot>(UserResponse);
+                    userid = result.userid;
                 }
 
                 HC.Dispose();
-                return CM;
+                return userid;
             }
             catch (Exception)
             {
@@ -91,7 +149,7 @@ namespace VoipApplicationProject.Repositories
         #region "Create Menu Access"
         public bool CreateMenuAccess(string CustomerId)
         {
-            bool FunctionReturnValue = false;            
+            bool FunctionReturnValue = false;
 
             try
             {
@@ -134,25 +192,25 @@ namespace VoipApplicationProject.Repositories
         #region "Delete Customer"
         public void DeleteCustomer(string email)
         {
-            List<CustomerModel> CustomerList = ValidateEmail(email);
+            //string CustomerList = ValidateEmail(email);
 
-            if(CustomerList.Count > 0)
-            {
-                try
-                {
-                    HttpClient HC = new HttpClient();
-                    HC.BaseAddress = new Uri(Baseurl);
+            //if(CustomerList.Count > 0)
+            //{
+            //    try
+            //    {
+            //        HttpClient HC = new HttpClient();
+            //        HC.BaseAddress = new Uri(Baseurl);
 
-                    var insertedRecord = HC.DeleteAsync("api/Customer/" + CustomerList[0].CustomerId);
-                    insertedRecord.Wait();
+            //        var insertedRecord = HC.DeleteAsync("api/Customer/" + CustomerList[0].CustomerId);
+            //        insertedRecord.Wait();
 
-                    HC.Dispose();
-                }
-                catch (Exception)
-                {
-                    throw;
-                }
-            }
+            //        HC.Dispose();
+            //    }
+            //    catch (Exception)
+            //    {
+            //        throw;
+            //    }
+            //}
         }
         #endregion
 
@@ -200,7 +258,7 @@ namespace VoipApplicationProject.Repositories
                 RootObject result = new RootObject();
 
 
-                var insertedRecord =  HC.GetAsync(Baseurl + api);
+                var insertedRecord = HC.GetAsync(Baseurl + api);
                 insertedRecord.Wait();
 
                 var results = insertedRecord.Result;
@@ -219,7 +277,7 @@ namespace VoipApplicationProject.Repositories
             {
                 throw;
             }
-        }        
+        }
         #endregion
 
         #region "Root Object"
@@ -233,6 +291,20 @@ namespace VoipApplicationProject.Repositories
         {
             public string status { get; set; }
             public CustomerModel data { get; set; }
+        }
+
+        public class CustomerRoot
+        {
+            public string status { get; set; }
+            public string userid { get; set; }
+            public string email { get; set; }
+            public bool isAuthenticated { get; set; }
+            public string id { get; set; }
+            public CustomerType CustomerTypeId { get; set; }
+            public string userName { get; set; }
+            public string token { get; set; }
+            public string refreshToken { get; set; }
+            public string refreshTokenExpiration { get; set; }
         }
         #endregion
     }

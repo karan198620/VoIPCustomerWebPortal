@@ -23,7 +23,7 @@ namespace VoipProjectEntities.Application.Features.Customers.Commands.DeleteCust
         }
         public async Task<Unit> Handle(DeleteCustomerCommand request, CancellationToken cancellationToken)
         {
-            var customerId = new Guid(_protector.Unprotect(request.CustomerId));
+            var customerId = new Guid(_protector.Unprotect(request.Id));
             //var customerId = request.CustomerId;
             var customerToDelete = await _customerRepository.GetByIdAsync(customerId);
 

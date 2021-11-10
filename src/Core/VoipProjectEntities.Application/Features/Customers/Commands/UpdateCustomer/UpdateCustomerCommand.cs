@@ -8,7 +8,7 @@ namespace VoipProjectEntities.Application.Features.Customers.Commands.UpdateCust
 {
     public class UpdateCustomerCommand : IRequest<Response<Guid>>
     {
-        public Guid CustomerId { get; set; }
+        public Guid Id { get; set; }
         public string CustomerName { get; set; }
         public string Password { get; set; }
         public string Email { get; set; }

@@ -18,7 +18,7 @@ namespace VoipApplicationProject
             SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587);
             //SmtpClient smtpClient = new SmtpClient("smtp", 587);
             smtpClient.UseDefaultCredentials = true;
-            smtpClient.Credentials = new System.Net.NetworkCredential("t.anagha8@gmail.com", "");
+            smtpClient.Credentials = new System.Net.NetworkCredential("krunalrane.98@gmail.com", "9594939291");
             smtpClient.EnableSsl = true;
 
             //smtpClient.UseDefaultCredentials = true;

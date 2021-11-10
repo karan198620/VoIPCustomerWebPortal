@@ -24,7 +24,8 @@
                 <span asp-validation-for="Password" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input class="form-control" placeholder="Confirm Password*" />
+                <input asp-for="ConfirmPassword" class="form-control" placeholder="Confirm Password*" />
+                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
             </div>
         </div>
         <div class="text-center">

@@ -24,7 +24,7 @@ namespace VoipProjectEntities.Application.Profiles
                 MenuLink = source.MenuLink,
                 CreatedAt = source.CreatedAt,
                 UpdatedAt = source.UpdatedAt,
-                CustomerID = _protector.Protect(source.CustomerID.ToString()),
+                CustomerID = _protector.Protect(source.CustomerId.ToString()),
                 IsAccess = source.IsAccess,
             };
             return des;

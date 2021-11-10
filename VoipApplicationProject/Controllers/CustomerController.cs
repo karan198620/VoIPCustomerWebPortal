@@ -48,26 +48,26 @@ namespace VoipApplicationProject.Controllers
         [HttpPost]
         public IActionResult SignUp(CustomerModel customer)
         {
-            List<CustomerModel> CustomerList = repo.ValidateEmail(customer.Email);
+            string Email = repo.ValidateEmail(customer.Email);
 
-            if (CustomerList.Count > 0)
+            if (!String.IsNullOrEmpty(Email))
             {
                 ViewBag.ShowAlert = "email_error";
                 return View();
             }
             else
             {
-                CustomerModel Cust = repo.CreateCustomer(customer);
+                string userid = repo.Register(customer);
 
-                if (Cust != null)
+                if (userid != null)
                 {
-                    if (repo.CreateMenuAccess(Cust.CustomerId))
+                    if (repo.CreateMenuAccess(userid))
                     {
                         return RedirectToAction("Login", "Customer");
                     }
                     else
                     {
-                        repo.DeleteCustomer(Cust.Email);
+                        //repo.DeleteCustomer(Cust.Email);
                         ViewBag.ShowAlert = "menu_error";
                         return View();
                     }
@@ -94,14 +94,14 @@ namespace VoipApplicationProject.Controllers
         {
             //int custTypeid = repo.GetEnumValue(Convert.ToString(customer.CustomerTypeID));
 
-            List<CustomerModel> CustomerList = repo.ValidateLogin(customer);
+            CustomerModel Customer = repo.IsAuthenticated(customer);
 
-            if (CustomerList.Count > 0)
+            if (Customer.IsAuthenticated == true)
             {
-                if(CustomerList[0].CustomerTypeID == customer.CustomerTypeID)
+                if(Customer.CustomerTypeID == customer.CustomerTypeID)
                 {
-                    CustomerModel Customer = repo.GetCustomerById(CustomerList[0].CustomerId);
-                    HttpContext.Session.SetString(CustomerId, Customer.CustomerId);
+                    CustomerModel Customers = repo.GetCustomerById(Customer.Id);
+                    HttpContext.Session.SetString(CustomerId, Customer.Id);
 
                     return RedirectToAction("Index", "Dashboard");
                 }
@@ -134,13 +134,13 @@ namespace VoipApplicationProject.Controllers
         {
             string email = Request.Form["Email"];
 
-            List<CustomerModel> CustomerList = repo.ValidateEmail(email);
+            string CustomerEmail = repo.ValidateEmail(email);
 
-            if (CustomerList.Count > 0)
+            if (!String.IsNullOrEmpty(CustomerEmail))
             {
                 SendEmail sm = new SendEmail();
                 string Body = "Click link below to Reset Password \n\n https://localhost:44314/Customer/ResetPassword";
-                sm.SendEmailTo(CustomerList[0].Email, Body);
+                sm.SendEmailTo(CustomerEmail, Body);
 
                 ViewBag.message = "Link Has beeen send to Registered Email";
                 return View();
@@ -154,5 +154,19 @@ namespace VoipApplicationProject.Controllers
         }
         #endregion
 
+        #region "Reset Password"
+        [HttpGet]
+        public ActionResult ResetPassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult ResetPassword(CustomerModel customerModel)
+        {
+
+            return View();
+        }
+        #endregion
     }
 }
