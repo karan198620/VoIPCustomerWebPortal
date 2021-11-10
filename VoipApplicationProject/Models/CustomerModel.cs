@@ -7,14 +7,21 @@ namespace VoipApplicationProject.Models
 {
     public class CustomerModel
     {
-        public string CustomerId { get; set; }
+        public string Id { get; set; }
 
         [Required]
         public string CustomerName { get; set; }
 
+        public string UserName { get; set; }
+
         [Required]
         [DataType(DataType.Password)]
         public string Password { get; set; }
+
+        [Required]
+        [DataType(DataType.Password)]
+        [Compare("Password", ErrorMessage = "Confirm password doesn't match, Type again !")]
+        public string ConfirmPassword { get; set; }
 
         [Required]
         [DataType(DataType.EmailAddress)]
@@ -24,6 +31,9 @@ namespace VoipApplicationProject.Models
         public bool ISTrialBalanceOpted { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
+        public string token { get; set; }
+        public string refreshtoken { get; set; }
+        public bool IsAuthenticated { get; set; }
     }
     public enum CustomerType
     {

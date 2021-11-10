@@ -7,6 +7,6 @@ namespace VoipProjectEntities.Application.Features.Customers.Commands.DeleteCust
 {
     public class DeleteCustomerCommand : IRequest
     {
-        public string CustomerId { get; set; }
+        public string Id { get; set; }
     }
 }

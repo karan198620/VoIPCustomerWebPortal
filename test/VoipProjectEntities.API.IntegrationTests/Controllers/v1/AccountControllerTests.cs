@@ -1,5 +1,6 @@
 using Newtonsoft.Json;
 using Shouldly;
+using System;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -53,8 +54,12 @@ namespace VoipProjectEntities.API.IntegrationTests.Controllers.v1
 
             var request = new RegistrationRequest()
             {
-                FirstName = "Fname",
-                LastName = "Lname",
+                CustomerName = "fname",
+                ISTrialBalanceOpted = true,
+                ISMigrated = false,
+                CreatedAt = DateTime.Now,
+                UpdatedAt = DateTime.Now,
+                CustomerTypeID = 2,
                 Email = "fname@test.com",
                 UserName = "fname.lname",
                 Password = "User123!@#"
@@ -74,7 +79,5 @@ namespace VoipProjectEntities.API.IntegrationTests.Controllers.v1
 
             result.UserId.ShouldNotBeNull();
         }
-
-
     }
 }

@@ -6,7 +6,7 @@ namespace VoipProjectEntities.Application.Features.Customers.Queries.GetCustomer
 {
     public class CustomerDetailVm
     {
-        public Guid CustomerId { get; set; }
+        public Guid Id { get; set; }
         public string CustomerName { get; set; }
         public string Password { get; set; }
         public string Email { get; set; }

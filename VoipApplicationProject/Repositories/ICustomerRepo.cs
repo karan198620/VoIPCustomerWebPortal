@@ -9,10 +9,10 @@ namespace VoipApplicationProject.Repositories
     public interface ICustomerRepo
     {
         //int GetEnumValue(string Type);
-        List<CustomerModel> ValidateLogin(CustomerModel customer);
+        CustomerModel IsAuthenticated(CustomerModel customer);
         List<CustomerModel> GetAllCustomers();
-        List<CustomerModel> ValidateEmail(string Email);
-        CustomerModel CreateCustomer(CustomerModel customer);
+        string ValidateEmail(string Email);
+        string Register(CustomerModel customer);
         CustomerModel GetCustomerById(string CustomerId);
         bool CreateMenuAccess(string CustomerId);
         void DeleteCustomer(string email);

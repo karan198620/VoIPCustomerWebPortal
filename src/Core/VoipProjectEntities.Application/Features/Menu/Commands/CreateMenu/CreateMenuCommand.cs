@@ -8,7 +8,7 @@ namespace VoipProjectEntities.Application.Features.Menu.Commands.CreateMenu
     {
         public bool IsAccess { get; set; }
         public int MenuLink { get; set; } //enum
-        public Guid CustomerID { get; set; }
+        public Guid Id { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
     }

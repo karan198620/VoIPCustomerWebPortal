@@ -24,7 +24,7 @@ namespace VoipProjectEntities.Identity
             services.AddDbContext<IdentityDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("IdentityConnectionString"),
                 b => b.MigrationsAssembly(typeof(IdentityDbContext).Assembly.FullName)));
 
-            services.AddIdentity<ApplicationUser, IdentityRole>()
+            services.AddIdentity<Customer, IdentityRole>()
                 .AddEntityFrameworkStores<IdentityDbContext>().AddDefaultTokenProviders();
 
             services.AddTransient<IAuthenticationService, AuthenticationService>();

@@ -80,7 +80,7 @@ namespace VoipProjectEntities.Api.Controllers.v1
         [ProducesDefaultResponseType]
         public async Task<ActionResult> Delete(string id)
         {
-            var deleteCustomerCommand = new DeleteCustomerCommand() { CustomerId = id };
+            var deleteCustomerCommand = new DeleteCustomerCommand() { Id = id };
             await _mediator.Send(deleteCustomerCommand);
             return NoContent();
         }        

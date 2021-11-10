@@ -23,7 +23,7 @@ namespace VoipProjectEntities.Application.Profiles
             {
                 SubscriptionCustomerID = _protector.Protect(sourc.SubscriptionCustomerID.ToString()),
                 SubscriptionType= sourc.SubscriptionType,
-                CustomerID = sourc.CustomerID,
+                Id = sourc.CustomerId,
                 SubscriptionEndDate = sourc.SubscriptionEndDate,
                 SubscriptionStartDate = sourc.SubscriptionStartDate,
                 ISActive = sourc.ISActive,                

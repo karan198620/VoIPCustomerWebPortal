@@ -24,11 +24,11 @@ namespace VoipProjectEntities.Application.Features.Customers.Commands.UpdateCust
         }
         public async Task<Response<Guid>> Handle(UpdateCustomerCommand request, CancellationToken cancellationToken)
         {
-            var customerToUpdate = await _customerRepository.GetByIdAsync(request.CustomerId);
+            var customerToUpdate = await _customerRepository.GetByIdAsync(request.Id);
 
             if (customerToUpdate == null)
             {
-                throw new NotFoundException(nameof(Customer), request.CustomerId);
+                throw new NotFoundException(nameof(Customer), request.Id);
             }
 
             var validator = new UpdateCustomerCommandValidator();
@@ -41,7 +41,7 @@ namespace VoipProjectEntities.Application.Features.Customers.Commands.UpdateCust
 
             await _customerRepository.UpdateAsync(customerToUpdate);
 
-            return new Response<Guid>(request.CustomerId, "Updated successfully ");
+            return new Response<Guid>(request.Id, "Updated successfully ");
         }
     }
 }

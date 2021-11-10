@@ -38,7 +38,7 @@ namespace VoipProjectEntities.Application.Features.Menu.Commands.CreateMenu
             }
             else
             {
-                var menu = new VoipProjectEntities.Domain.Entities.MenuAccess() { CreatedAt = request.CreatedAt, CustomerID = request.CustomerID, IsAccess = request.IsAccess, MenuLink = request.MenuLink, UpdatedAt = request.UpdatedAt };
+                var menu = new VoipProjectEntities.Domain.Entities.MenuAccess() { CreatedAt = request.CreatedAt, CustomerId = request.Id, IsAccess = request.IsAccess, MenuLink = request.MenuLink, UpdatedAt = request.UpdatedAt };
                 menu = await _menuRepository.AddAsync(menu);
                 createMenuCommandResponse.Data = _mapper.Map<CreateMenuDto>(menu);
                 createMenuCommandResponse.Succeeded = true;

@@ -13,10 +13,7 @@ namespace VoipProjectEntities.Domain.Entities
         [Key]
         public Guid MenuAccessId { get; set; }
         public bool IsAccess { get; set; }
-        public int MenuLink { get; set; } //enum
-        [Display(Name = "Customer")]
-        public Guid? CustomerID { get; set; }
-        [ForeignKey("CustomerID")]
-        public virtual Customer Customers { get; set; }
+        public int MenuLink { get; set; }//enum
+        public Guid CustomerId { get; set; }
     }
 }

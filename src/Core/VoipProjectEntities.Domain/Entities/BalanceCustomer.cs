@@ -11,16 +11,8 @@ namespace VoipProjectEntities.Domain.Entities
     {
         [Key]
         public Guid BalanceCustomerID { get; set; }
-
         public double BalanceAmount { get; set; }
-
         public int TranscationType { get; set; }
-
-
-        [Display(Name = "Customer")]
-        public Guid? CustomerId { get; set; }
-
-        [ForeignKey("CustomerId")]
-        public virtual Customer Customers { get; set; }
+        public Guid CustomerId { get; set; }
     }
 }

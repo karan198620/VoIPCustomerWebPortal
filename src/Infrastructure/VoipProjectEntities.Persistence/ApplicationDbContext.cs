@@ -26,6 +26,14 @@ namespace VoipProjectEntities.Persistence
         public DbSet<Event> Events { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Order> Orders { get; set; }
+        public DbSet<Setting> Settings { get; set; }
+        public DbSet<SubscriptionCustomer> SubscriptionCustomers { get; set; }
+        public DbSet<AgentCustomer> AgentCustomers { get; set; }
+        public DbSet<BalanceCustomer> BalanceCustomers { get; set; }
+        public DbSet<CallRecordingAgent> CallRecordingAgents { get; set; }
+        public DbSet<DeviceAgent> DeviceAgents { get; set; }
+        public DbSet<MenuAccess> MenuAccesses { get; set; }
+        public DbSet<TrailBalanceCustomer> TrailBalanceCustomers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

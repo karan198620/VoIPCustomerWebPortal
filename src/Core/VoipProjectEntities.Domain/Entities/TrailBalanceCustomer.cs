@@ -12,9 +12,6 @@ namespace VoipProjectEntities.Domain.Entities
         public Guid TrailBalanceCustomerId { get; set; }
         public DateTime Date { get; set; }
         public int TransactionType { get; set; } //enum
-        [Display(Name = "Customer")]
-        public Guid? CustomerID { get; set; }
-        [ForeignKey("CustomerID")]
-        public virtual Customer Customers { get; set; }
+        public Guid CustomerId { get; set; }
     }
 }
