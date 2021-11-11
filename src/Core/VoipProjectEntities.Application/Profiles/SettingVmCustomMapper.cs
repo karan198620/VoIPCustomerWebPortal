@@ -22,7 +22,7 @@ namespace VoipProjectEntities.Application.Profiles
             {
                 SettingID = _protector.Protect(sourc.SettingID.ToString()),
                 SettingType = sourc.SettingType,
-                Id = sourc.CustomerId,
+                CustomerId = sourc.CustomerId,
                 Value1=sourc.Value1,
                 Value2=sourc.Value2,
                 Value3=sourc.Value3,

@@ -27,7 +27,6 @@ namespace VoipApplicationProject
             services.AddControllersWithViews();
             services.AddScoped<ICustomerRepo, CustomerRepo>();
             services.AddScoped<IDashboardRepo, DashboardRepo>();
-            services.AddSession();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -49,8 +48,6 @@ namespace VoipApplicationProject
             app.UseRouting();
 
             app.UseAuthorization();
-
-            app.UseSession();
 
             app.UseEndpoints(endpoints =>
             {

@@ -25,7 +25,7 @@ namespace VoipProjectEntities.Application.Features.Menu.Queries.GetMenu
 
         public async Task<Response<IEnumerable<MenuListVm>>> Handle(GetMenuListQuery request, CancellationToken cancellationToken)
         {
-            var allMenu = (await _menuRepository.ListAllAsync()).OrderBy(x => x.CreatedAt).Where(m=>m.CustomerId == request.Id && m.IsAccess == request.IsAccess);
+            var allMenu = (await _menuRepository.ListAllAsync()).OrderBy(x => x.CreatedAt).Where(m=>m.CustomerId == request.CustomerId && m.IsAccess == request.IsAccess);
             var menuList = _mapper.Map<List<MenuListVm>>(allMenu);
             var response = new Response<IEnumerable<MenuListVm>>(menuList);
             return response;

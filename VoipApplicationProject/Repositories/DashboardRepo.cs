@@ -5,7 +5,9 @@ using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using System.Web.Mvc;
 using VoipApplicationProject.Models;
+using static VoipApplicationProject.RootObjects.RootObject;
 
 namespace VoipApplicationProject.Repositories
 {
@@ -14,44 +16,44 @@ namespace VoipApplicationProject.Repositories
         string Baseurl = "https://localhost:44330/";        
 
         #region "Get Menu List For Customer"
-        public List<MenuAccessModel> GetMenu(string CustomerId, bool IsAccess)
+        public RootMenu GetMenu(string CustomerId, bool IsAccess, string token)
         {
             try
             {
                 List<MenuAccessModel> MenuList = new List<MenuAccessModel>();
+                RootMenu menuRoot = new RootMenu();
 
                 HttpClient HC = new HttpClient();
-                RootObject result = new RootObject();
+                HC.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
-                var insertedRecord = HC.GetAsync(Baseurl + "api/Menu/all/" + CustomerId + "/" + IsAccess);
+                var Record = HC.GetAsync(Baseurl + "api/Menu/all/" + CustomerId + "/" + IsAccess);
 
-                insertedRecord.Wait();
+                Record.Wait();
 
-                var results = insertedRecord.Result;
+                var results = Record.Result;
 
-                if (results.IsSuccessStatusCode)
+                if (results.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+                {
+                    menuRoot.status = "Unauthorized";
+                    return menuRoot;
+                }
+                else if(results.IsSuccessStatusCode)
                 {
                     var UserResponse = results.Content.ReadAsStringAsync().Result;
-                    result = JsonConvert.DeserializeObject<RootObject>(UserResponse);
-                    MenuList = result.data.ToList();                   
+                    menuRoot = JsonConvert.DeserializeObject<RootMenu>(UserResponse);
+                    menuRoot.status = "Success";
+
+                    return menuRoot;
                 }
 
                 HC.Dispose();
-                return MenuList;
+                return menuRoot;
             }
             catch (Exception)
             {
                 throw;
             }
         }
-        #endregion
-
-        #region "Root Object"
-        public class RootObject
-        {
-            public string status { get; set; }
-            public MenuAccessModel[] data { get; set; }
-        }
-        #endregion
+        #endregion        
     }
 }

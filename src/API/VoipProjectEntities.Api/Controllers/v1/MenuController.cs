@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -32,12 +33,13 @@ namespace VoipProjectEntities.Api.Controllers.v1
             return Ok(response);
         }
 
+        [Authorize]
         [HttpGet("all/{CustomerId}/{IsAccess}", Name = "GetAllMenu")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesDefaultResponseType]
-        public async Task<ActionResult> GetAllMenu(Guid Id, bool IsAccess)
+        public async Task<ActionResult> GetAllMenu(string CustomerId, bool IsAccess)
         {
-            var dtos = await _mediator.Send(new GetMenuListQuery() { Id = Id, IsAccess = IsAccess});
+            var dtos = await _mediator.Send(new GetMenuListQuery() { CustomerId = CustomerId, IsAccess = IsAccess});
             return Ok(dtos);
         }
 

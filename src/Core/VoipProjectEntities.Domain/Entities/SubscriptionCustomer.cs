@@ -10,7 +10,7 @@ namespace VoipProjectEntities.Domain.Entities
     public class SubscriptionCustomer : CommonField
     {
         public Guid SubscriptionCustomerID { get; set; }
-        public Guid CustomerId { get; set; }
+        public string CustomerId { get; set; }
         public DateTime SubscriptionStartDate { get; set; }
         public DateTime SubscriptionEndDate { get; set; }
         public int SubscriptionType { get; set; }

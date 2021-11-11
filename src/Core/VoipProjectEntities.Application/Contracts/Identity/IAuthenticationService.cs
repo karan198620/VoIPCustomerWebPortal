@@ -10,5 +10,6 @@ namespace VoipProjectEntities.Application.Contracts.Identity
         Task<FindEmailResponse> FindEmailAsync(string email);
         Task<RefreshTokenResponse> RefreshTokenAsync(RefreshTokenRequest request);
         Task<RevokeTokenResponse> RevokeToken(RevokeTokenRequest request);
+        Task<DeleteResponse> DeleteAsync(DeleteRequest request);
     }
 }

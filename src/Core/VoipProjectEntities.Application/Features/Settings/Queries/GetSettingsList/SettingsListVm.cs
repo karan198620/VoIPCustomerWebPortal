@@ -8,7 +8,7 @@ namespace VoipProjectEntities.Application.Features.Settings.Queries.GetSettingsL
     {
         public string SettingID { get; set; }
         public int SettingType { get; set; }
-        public Guid? Id { get; set; }
+        public string CustomerId { get; set; }
         public string Value1 { get; set; }
         public string Value2 { get; set; }
         public string Value3 { get; set; }

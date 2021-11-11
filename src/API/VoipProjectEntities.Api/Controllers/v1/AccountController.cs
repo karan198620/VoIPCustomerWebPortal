@@ -51,5 +51,16 @@ namespace VoipProjectEntities.Api.Controllers
             else
                 return Ok(response);
         }
+
+        [HttpDelete("delete")]
+        public async Task<ActionResult> Delete(DeleteRequest request)
+        {
+            var response = await _authenticationService.DeleteAsync(request);
+
+            if (response.Message == "Successfully deleted !")
+               return Ok(response); 
+            else
+                return BadRequest(response);
+        }
     }
 }

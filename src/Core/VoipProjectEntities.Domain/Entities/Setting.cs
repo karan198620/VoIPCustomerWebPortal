@@ -11,7 +11,7 @@ namespace VoipProjectEntities.Domain.Entities
     public class Setting : CommonField
     {
         public Guid SettingID {get; set; }
-        public Guid CustomerId { get; set; }
+        public string CustomerId { get; set; }
         public int SettingType { get; set; }
         public string Value1 { get; set; }
         public string Value2 { get; set; }

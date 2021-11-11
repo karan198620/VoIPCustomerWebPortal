@@ -26,7 +26,8 @@ namespace VoipProjectEntities.Identity.Services
         public AuthenticationService(UserManager<Customer> userManager,
             IOptions<JwtSettings> jwtSettings,
             SignInManager<Customer> signInManager,
-            IdentityDbContext context)
+            IdentityDbContext context
+            )
         {
             _userManager = userManager;
             _jwtSettings = jwtSettings.Value;
@@ -37,6 +38,7 @@ namespace VoipProjectEntities.Identity.Services
         public async Task<AuthenticationResponse> AuthenticateAsync(AuthenticationRequest request)
         {
             var user = await _userManager.FindByEmailAsync(request.Email);
+
             AuthenticationResponse response = new AuthenticationResponse();
 
             if (user == null)
@@ -50,7 +52,10 @@ namespace VoipProjectEntities.Identity.Services
 
             if (!result.Succeeded)
             {
-                throw new AuthenticationException($"Credentials for '{request.Email} aren't valid'.");
+                //throw new AuthenticationException($"Credentials for '{request.Email} aren't valid'.");
+                response.IsAuthenticated = false;
+                response.Message = $"Credentials for {request.Email} aren't valid.";
+                return response;
             }
 
             JwtSecurityToken jwtSecurityToken = await GenerateToken(user);
@@ -86,7 +91,7 @@ namespace VoipProjectEntities.Identity.Services
 
             if (existingUser != null)
             {
-                throw new ArgumentException($"Username '{request.UserName}' already exists.");
+                return new RegistrationResponse() { UserId = null, Message = $"{request.UserName} already exists." };
             }
 
             var user = new Customer
@@ -111,16 +116,16 @@ namespace VoipProjectEntities.Identity.Services
                 if (result.Succeeded)
                 {
                     await _userManager.AddToRoleAsync(user, "Viewer");
-                    return new RegistrationResponse() { UserId = user.Id };
+                    return new RegistrationResponse() { UserId = user.Id, Message = "Success" };
                 }
                 else
                 {
-                    throw new Exception($"{result.Errors}");
+                    return new RegistrationResponse() { UserId = null, Message = $"{result.Errors}" };
                 }
             }
             else
             {
-                throw new ArgumentException($"Email {request.Email } already exists.");
+                return new RegistrationResponse() { UserId = null, Message = $"{request.Email } already exists." };
             }
         }
 
@@ -265,6 +270,25 @@ namespace VoipProjectEntities.Identity.Services
             response.IsRevoked = true;
             response.Message = "Token revoked";
             return response;
+        }
+
+        public async Task<DeleteResponse> DeleteAsync(DeleteRequest request)
+        {
+            var user = await _userManager.FindByIdAsync(request.CutomerId);
+
+            if (user != null)
+            {
+                var result = await _userManager.DeleteAsync(user);
+
+                if (result.Succeeded)
+                    return new DeleteResponse { Message = "Successfully deleted !" };
+                else
+                    return new DeleteResponse { Message = "Fail to delete !" };
+            }
+            else
+            {
+                return new DeleteResponse { Message = "User Not Found !" };
+            }
         }
     }
 }

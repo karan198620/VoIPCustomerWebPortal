@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace VoipProjectEntities.Application.Models.Authentication
 {
-    public class FindEmailRequest
+    public class DeleteResponse
     {
-        [Required]
-        public string Email { get; set; }
+        public string Message { get; set; }
     }
 }

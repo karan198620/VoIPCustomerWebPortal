@@ -15,7 +15,7 @@ namespace VoipProjectEntities.Domain.Entities
         public bool IsWorking { get; set; }
         public int DeviceProfileType { get; set; } //enum
         public Guid DeviceId { get; set; }
-        public Guid CustomerId { get; set; }
+        public string CustomerId { get; set; }
 
         [Display(Name = "AgentCustomer")]
         public Guid? AgentCustomerID { get; set; }

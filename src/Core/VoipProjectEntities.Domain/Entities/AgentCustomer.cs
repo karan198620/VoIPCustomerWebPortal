@@ -14,6 +14,6 @@ namespace VoipProjectEntities.Domain.Entities
         public string AgentName { get; set; }
         public string Password { get; set; }
         public bool ISMigratedAt { get; set; }
-        public Guid CustomerId { get; set; }
+        public string CustomerId { get; set; }
     }
 }
