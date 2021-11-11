@@ -1,4 +1,6 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -22,11 +24,12 @@ namespace VoipProjectEntities.Identity.Services
         private readonly SignInManager<Customer> _signInManager;
         private readonly JwtSettings _jwtSettings;
         private readonly IdentityDbContext _context;
-
+        
         public AuthenticationService(UserManager<Customer> userManager,
             IOptions<JwtSettings> jwtSettings,
             SignInManager<Customer> signInManager,
-            IdentityDbContext context)
+            IdentityDbContext context
+            )
         {
             _userManager = userManager;
             _jwtSettings = jwtSettings.Value;
@@ -37,6 +40,7 @@ namespace VoipProjectEntities.Identity.Services
         public async Task<AuthenticationResponse> AuthenticateAsync(AuthenticationRequest request)
         {
             var user = await _userManager.FindByEmailAsync(request.Email);
+
             AuthenticationResponse response = new AuthenticationResponse();
 
             if (user == null)
@@ -50,7 +54,10 @@ namespace VoipProjectEntities.Identity.Services
 
             if (!result.Succeeded)
             {
-                throw new AuthenticationException($"Credentials for '{request.Email} aren't valid'.");
+                //throw new AuthenticationException($"Credentials for '{request.Email} aren't valid'.");
+                response.IsAuthenticated = false;
+                response.Message = $"Credentials for {request.Email} aren't valid.";
+                return response;
             }
 
             JwtSecurityToken jwtSecurityToken = await GenerateToken(user);
@@ -86,7 +93,7 @@ namespace VoipProjectEntities.Identity.Services
 
             if (existingUser != null)
             {
-                throw new ArgumentException($"Username '{request.UserName}' already exists.");
+                return new RegistrationResponse() { UserId = null, Message = $"{request.UserName} already exists." };
             }
 
             var user = new Customer
@@ -111,16 +118,16 @@ namespace VoipProjectEntities.Identity.Services
                 if (result.Succeeded)
                 {
                     await _userManager.AddToRoleAsync(user, "Viewer");
-                    return new RegistrationResponse() { UserId = user.Id };
+                    return new RegistrationResponse() { UserId = user.Id, Message = "Success" };
                 }
                 else
                 {
-                    throw new Exception($"{result.Errors}");
+                    return new RegistrationResponse() { UserId = null, Message = $"{result.Errors}" };
                 }
             }
             else
             {
-                throw new ArgumentException($"Email {request.Email } already exists.");
+                return new RegistrationResponse() { UserId = null, Message = $"{request.Email } already exists." };
             }
         }
 
@@ -265,6 +272,87 @@ namespace VoipProjectEntities.Identity.Services
             response.IsRevoked = true;
             response.Message = "Token revoked";
             return response;
+        }
+
+        public async Task<DeleteResponse> DeleteAsync(DeleteRequest request)
+        {
+            var user = await _userManager.FindByIdAsync(request.CutomerId);
+
+            if (user != null)
+            {
+                var result = await _userManager.DeleteAsync(user);
+
+                if (result.Succeeded)
+                    return new DeleteResponse { Message = "Successfully deleted !" };
+                else
+                    return new DeleteResponse { Message = "Fail to delete !" };
+            }
+            else
+            {
+                return new DeleteResponse { Message = "User Not Found !" };
+            }
+        }
+
+        public async Task<UserManagerResponse> ForgetPasswordAsync(string email)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+            if (user == null)
+                return new UserManagerResponse
+                {
+                    IsSuccess = false,
+                    Message = "No user associated with email",
+                };
+
+            var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+            var encodedToken = Encoding.UTF8.GetBytes(token);
+            var validToken = WebEncoders.Base64UrlEncode(encodedToken);
+
+            SendEmail sm = new SendEmail();
+            string body = $" Click on link to Reset Password:https://localhost:44379/Customer/ResetPassword?email={email}&token={validToken}";
+            sm.SendEmailTo(email, body);
+
+            return new UserManagerResponse
+            {
+                IsSuccess = true,
+                Message = "Reset password URL has been sent to the email successfully!"
+            };
+        }
+
+        public async Task<UserManagerResponse> ResetPasswordAsync(ResetPasswordRequest request)
+        {
+            var user = await _userManager.FindByEmailAsync(request.Email);
+            if (user == null)
+                return new UserManagerResponse
+                {
+                    IsSuccess = false,
+                    Message = "No user associated with email",
+                };
+
+            if (request.Password != request.ConfirmPassword)
+                return new UserManagerResponse
+                {
+                    IsSuccess = false,
+                    Message = "Password doesn't match its confirmation",
+                };
+
+            var decodedToken = WebEncoders.Base64UrlDecode(request.Token);
+            string normalToken = Encoding.UTF8.GetString(decodedToken);
+
+            var result = await _userManager.ResetPasswordAsync(user, normalToken, request.Password);
+
+            if (result.Succeeded)
+                return new UserManagerResponse
+                {
+                    Message = "Password has been reset successfully!",
+                    IsSuccess = true,
+                };
+
+            return new UserManagerResponse
+            {
+                Message = "Something went wrong",
+                IsSuccess = false,
+                Errors = result.Errors.Select(e => e.Description),
+            };
         }
     }
 }

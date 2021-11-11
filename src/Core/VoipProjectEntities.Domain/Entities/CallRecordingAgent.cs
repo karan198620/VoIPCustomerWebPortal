@@ -15,7 +15,7 @@ namespace VoipProjectEntities.Domain.Entities
         public DateTime Duration { get; set; }
         public int CallStatus { get; set; }
         public int Country { get; set; }
-        public Guid CustomerId { get; set; }
+        public string CustomerId { get; set; }
 
         [ForeignKey(nameof(AgentCustomer))]
         public Guid? AgentCustomerID { get; set; }

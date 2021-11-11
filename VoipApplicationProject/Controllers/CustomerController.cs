@@ -1,20 +1,22 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.WebUtilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Text;
 using System.Threading.Tasks;
 using VoipApplicationProject.Models;
 using VoipApplicationProject.Repositories;
+using static VoipApplicationProject.RootObjects.RootObject;
 
 namespace VoipApplicationProject.Controllers
 {
     public class CustomerController : Controller
     {
         private readonly ICustomerRepo repo;
-        const string CustomerId = "";
         public CustomerController(ICustomerRepo _repo)
         {
             repo = _repo;
@@ -46,37 +48,27 @@ namespace VoipApplicationProject.Controllers
         }
 
         [HttpPost]
-        public IActionResult SignUp(CustomerModel customer)
+        public IActionResult SignUp(CustomerModel CM)
         {
-            string Email = repo.ValidateEmail(customer.Email);
+            RootCustomer Customer = repo.Register(CM);
 
-            if (!String.IsNullOrEmpty(Email))
+            if (Customer.userid != null)
             {
-                ViewBag.ShowAlert = "email_error";
-                return View();
-            }
-            else
-            {
-                string userid = repo.Register(customer);
-
-                if (userid != null)
+                if (repo.CreateMenuAccess(Customer.userid))
                 {
-                    if (repo.CreateMenuAccess(userid))
-                    {
-                        return RedirectToAction("Login", "Customer");
-                    }
-                    else
-                    {
-                        //repo.DeleteCustomer(Cust.Email);
-                        ViewBag.ShowAlert = "menu_error";
-                        return View();
-                    }
+                    return RedirectToAction("Login", "Customer");
                 }
                 else
                 {
-                    ViewBag.ShowAlert = "signup_error";
+                    repo.DeleteCustomer(Customer.id);
+                    ViewBag.ShowAlert = "menu_error";
                     return View();
                 }
+            }
+            else
+            {
+                ViewBag.ShowAlert = Customer.message.ToString();
+                return View();
             }
         }
         #endregion
@@ -92,16 +84,21 @@ namespace VoipApplicationProject.Controllers
         [HttpPost]
         public IActionResult Login(CustomerModel customer)
         {
-            //int custTypeid = repo.GetEnumValue(Convert.ToString(customer.CustomerTypeID));
-
             CustomerModel Customer = repo.IsAuthenticated(customer);
 
             if (Customer.IsAuthenticated == true)
             {
                 if(Customer.CustomerTypeID == customer.CustomerTypeID)
-                {
-                    CustomerModel Customers = repo.GetCustomerById(Customer.Id);
-                    HttpContext.Session.SetString(CustomerId, Customer.Id);
+                {                    
+                    SetCookie("CustomerId", Customer.Id, 60);
+                    SetCookie("token", Customer.token, 60);
+
+                    string isRememberMe = Request.Form["ChkRememberMe"];
+
+                    if(isRememberMe != "false")
+                    {
+                        SetCookie("refreshtoken", Customer.refreshtoken, 600);
+                    }                   
 
                     return RedirectToAction("Index", "Dashboard");
                 }
@@ -166,6 +163,23 @@ namespace VoipApplicationProject.Controllers
         {
 
             return View();
+        }
+        #endregion
+
+        #region "Set Cookies"
+        public void SetCookie(string key, string value, int? expireTime)
+        {
+            CookieOptions option = new CookieOptions();
+
+            if (expireTime.HasValue)
+                option.Expires = DateTime.Now.AddMinutes(expireTime.Value);
+            else
+                option.Expires = DateTime.Now.AddMilliseconds(10);
+
+            var encodedValue = Encoding.UTF8.GetBytes(value);
+            var validValue = WebEncoders.Base64UrlEncode(encodedValue);
+
+            Response.Cookies.Append(key, validValue, option);
         }
         #endregion
     }

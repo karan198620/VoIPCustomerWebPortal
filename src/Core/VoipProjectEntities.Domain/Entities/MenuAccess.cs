@@ -14,6 +14,6 @@ namespace VoipProjectEntities.Domain.Entities
         public Guid MenuAccessId { get; set; }
         public bool IsAccess { get; set; }
         public int MenuLink { get; set; }//enum
-        public Guid CustomerId { get; set; }
+        public string CustomerId { get; set; }
     }
 }

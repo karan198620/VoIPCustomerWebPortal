@@ -45,6 +45,15 @@ namespace VoipProjectEntities.Persistence
             var playGuid = Guid.Parse("{BF3F3002-7E53-441E-8B76-F6280BE284AA}");
             var conferenceGuid = Guid.Parse("{FE98F549-E790-4E9F-AA16-18C2292A2EE9}");
 
+            modelBuilder.Entity<AgentCustomer>().Property(x => x.CustomerId).IsRequired().HasMaxLength(450);
+            modelBuilder.Entity<BalanceCustomer>().Property(x => x.CustomerId).IsRequired().HasMaxLength(450);
+            modelBuilder.Entity<CallRecordingAgent>().Property(x => x.CustomerId).IsRequired().HasMaxLength(450);
+            modelBuilder.Entity<DeviceAgent>().Property(x => x.CustomerId).IsRequired().HasMaxLength(450);
+            modelBuilder.Entity<MenuAccess>().Property(x => x.CustomerId).IsRequired().HasMaxLength(450);
+            modelBuilder.Entity<TrailBalanceCustomer>().Property(x => x.CustomerId).IsRequired().HasMaxLength(450);
+            modelBuilder.Entity<Setting>().Property(x => x.CustomerId).IsRequired().HasMaxLength(450);
+            modelBuilder.Entity<SubscriptionCustomer>().Property(x => x.CustomerId).IsRequired().HasMaxLength(450);
+
             modelBuilder.Entity<Category>().HasData(new Category
             {
                 CategoryId = concertGuid,

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace VoipProjectEntities.Application.Models.Authentication
 {
@@ -12,6 +13,6 @@ namespace VoipProjectEntities.Application.Models.Authentication
         public string Email { get; set; }
         public string Token { get; set; }
         public string RefreshToken { get; set; }
-        public DateTime? RefreshTokenExpiration { get; set; }
+        public DateTime? RefreshTokenExpiration { get; set; }        
     }
 }

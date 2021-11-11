@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.WebUtilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,34 +8,60 @@ using System.Text;
 using System.Threading.Tasks;
 using VoipApplicationProject.Models;
 using VoipApplicationProject.Repositories;
+using static VoipApplicationProject.RootObjects.RootObject;
 
 namespace VoipApplicationProject.Controllers
 {
     public class DashboardController : Controller
     {
         private readonly IDashboardRepo repo;
-        const string CustomerId = "";
         public DashboardController(IDashboardRepo _repo)
         {
             repo = _repo;
         }
 
         #region "Index"
+
+        [HttpGet]
         public IActionResult Index()
         {
-            string CustId =  HttpContext.Session.GetString(CustomerId);
-            List<MenuAccessModel> MenuList = repo.GetMenu(CustId, true);
-            
-            if (MenuList.Count > 0)
+            string cookieCustomerId = GetCookie("CustomerId");
+
+            if (String.IsNullOrEmpty(cookieCustomerId))
             {
-                //if (MenuList[0].ToString() != "DashboardUsers")
-                //{
-                //    var menus = MenuList;
-                //    ViewBag.menuList = menus.ToList();
-                //}                
+                return RedirectToAction("Login", "Customer");
+            }
+            else
+            {
+                RootMenu Menu = repo.GetMenu(cookieCustomerId, true,GetCookie("token"));
+
+                if (Menu.status == "Unauthorized")
+                {
+                   return RedirectToAction("Login", "Customer");
+                }
+                else if ((Menu.status == "Success") && (Menu.data.ToList().Count > 0))
+                {
+                    List<MenuAccessModel> MenuList = Menu.data.ToList();
+
+                    //if (MenuList[0].ToString() != "DashboardUsers")
+                    //{
+                    //    var menus = MenuList;
+                    //    ViewBag.menuList = menus.ToList();
+                    //}  
+                }
             }
 
             return View();
+        }
+        #endregion
+
+        #region "Get Cookies"
+        public string GetCookie(string Value)
+        {
+            var decodedValue = WebEncoders.Base64UrlDecode(Request.Cookies[Value]);
+            string normalValue = Encoding.UTF8.GetString(decodedValue);
+
+            return normalValue;
         }
         #endregion
     }

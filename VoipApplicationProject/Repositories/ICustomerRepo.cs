@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using VoipApplicationProject.Models;
+using static VoipApplicationProject.RootObjects.RootObject;
 
 namespace VoipApplicationProject.Repositories
 {
@@ -12,9 +13,9 @@ namespace VoipApplicationProject.Repositories
         CustomerModel IsAuthenticated(CustomerModel customer);
         List<CustomerModel> GetAllCustomers();
         string ValidateEmail(string Email);
-        string Register(CustomerModel customer);
+        RootCustomer Register(CustomerModel customer);
         CustomerModel GetCustomerById(string CustomerId);
         bool CreateMenuAccess(string CustomerId);
-        void DeleteCustomer(string email);
+        void DeleteCustomer(string CustomerId);
     }
 }

@@ -12,8 +12,8 @@
             <div class="mb-2"><small>To Register Enter details.</small></div>
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <input asp-for="CustomerName" class="form-control" placeholder="Name*" />
-                <span asp-validation-for="CustomerName" class="text-danger"></span>
+                <input asp-for="UserName" class="form-control" placeholder="User Name*" />
+                <span asp-validation-for="UserName" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input asp-for="Email" class="form-control" placeholder="Email ID*" />
@@ -51,17 +51,17 @@
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
 
-@if (ViewBag.ShowAlert == "signup_error")
+
+@if (!String.IsNullOrEmpty(ViewBag.ShowAlert))
 {
-    <script>alert("Sign Up failed. Please try again");</script>
-}
-else if (ViewBag.ShowAlert == "email_error")
-{
-    <script>alert("This email already exists !");</script>
-}
-else if (ViewBag.ShowAlert == "menu_error")
-{
-    <script>alert("Sorry. Something went wrong. Please try again!");</script>
+    if (ViewBag.ShowAlert == "menu_error")
+    {
+        <script>alert("Sorry. Something went wrong. Please try again!");</script>
+    }
+    else
+    {
+        <script>alert("@ViewBag.ShowAlert");</script>
+    }
 }
 
 
