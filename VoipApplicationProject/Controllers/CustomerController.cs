@@ -121,7 +121,7 @@ namespace VoipApplicationProject.Controllers
         [HttpGet]
         public ActionResult ForgotPassword()
         {
-            ViewBag.ShowAlert = false;
+            ViewBag.ShowAlert = "";
             return View();
         }
 
@@ -131,23 +131,15 @@ namespace VoipApplicationProject.Controllers
         {
             string email = Request.Form["Email"];
 
-            string CustomerEmail = repo.ValidateEmail(email);
-
-            if (!String.IsNullOrEmpty(CustomerEmail))
+            if (repo.ForgotPassword(email))
             {
-                SendEmail sm = new SendEmail();
-                string Body = "Click link below to Reset Password \n\n https://localhost:44314/Customer/ResetPassword";
-                sm.SendEmailTo(CustomerEmail, Body);
-
-                ViewBag.message = "Link Has beeen send to Registered Email";
-                return View();
-                //return RedirectToAction("Home", "Index");
+                ViewBag.ShowAlert = "success";
             }
             else
             {
-                ViewBag.ShowAlert = true;
-                return View();
+                ViewBag.ShowAlert = "failed";
             }
+            return View();
         }
         #endregion
 

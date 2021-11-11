@@ -17,5 +17,6 @@ namespace VoipApplicationProject.Repositories
         CustomerModel GetCustomerById(string CustomerId);
         bool CreateMenuAccess(string CustomerId);
         void DeleteCustomer(string CustomerId);
+        bool ForgotPassword(string Email);
     }
 }

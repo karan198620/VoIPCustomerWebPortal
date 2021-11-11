@@ -63,7 +63,7 @@ namespace VoipProjectEntities.Api.Controllers
             var response = await _authenticationService.DeleteAsync(request);
 
             if (response.Message == "Successfully deleted !")
-               return Ok(response); 
+                return Ok(response);
             else
                 return BadRequest(response);
         }
@@ -80,7 +80,7 @@ namespace VoipProjectEntities.Api.Controllers
         }
 
         [HttpPost("ForgetPassword")]
-        public async Task<IActionResult> ForgetPassword(string email)
+        public async Task<IActionResult> ForgetPassword([FromBody] string email)
         {
             if (string.IsNullOrEmpty(email))
                 return NotFound();

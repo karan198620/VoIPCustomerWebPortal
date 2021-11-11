@@ -54,7 +54,7 @@ namespace VoipApplicationProject.Repositories
                 RootCustomer result = new RootCustomer();
 
                 HttpClient HC = new HttpClient();
-                HC.BaseAddress = new Uri(Baseurl);                
+                HC.BaseAddress = new Uri(Baseurl);
 
                 var insertedRecord = HC.PostAsJsonAsync("api/Account/authenticate", customer);
                 insertedRecord.Wait();
@@ -68,7 +68,7 @@ namespace VoipApplicationProject.Repositories
 
                     customerModel = new CustomerModel
                     {
-                        Email = result.email,                        
+                        Email = result.email,
                         Id = result.id,
                         UserName = result.userName,
                         token = result.token,
@@ -252,18 +252,17 @@ namespace VoipApplicationProject.Repositories
         }
         #endregion
 
-        #region "Common Method - Get Customer List"
-        public List<CustomerModel> GetCustomerList(string api)
+        #region "Forgot Password"       
+        public bool ForgotPassword(string Email)
         {
+            bool FunctionReturnValue = false;
             try
             {
-                List<CustomerModel> CustomerList = new List<CustomerModel>();
-
                 HttpClient HC = new HttpClient();
-                RootObject result = new RootObject();
-
-
-                var insertedRecord = HC.GetAsync(Baseurl + api);
+                HC.BaseAddress = new Uri(Baseurl);
+                RootCustomer result = new RootCustomer();
+               
+                var insertedRecord = HC.PostAsJsonAsync("api/Account/ForgetPassword", Email);
                 insertedRecord.Wait();
 
                 var results = insertedRecord.Result;
@@ -271,12 +270,13 @@ namespace VoipApplicationProject.Repositories
                 if (results.IsSuccessStatusCode)
                 {
                     var UserResponse = results.Content.ReadAsStringAsync().Result;
-                    result = JsonConvert.DeserializeObject<RootObject>(UserResponse);
-                    CustomerList = result.data.ToList();
+                    result = JsonConvert.DeserializeObject<RootCustomer>(UserResponse);
+
+                    FunctionReturnValue = true;
                 }
 
                 HC.Dispose();
-                return CustomerList;
+                return FunctionReturnValue;
             }
             catch (Exception)
             {
@@ -296,7 +296,7 @@ namespace VoipApplicationProject.Repositories
         {
             public string status { get; set; }
             public CustomerModel data { get; set; }
-        }        
+        }
         #endregion
     }
 }
