@@ -1,5 +1,6 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -292,5 +293,66 @@ namespace VoipProjectEntities.Identity.Services
             }
         }
 
+        public async Task<UserManagerResponse> ForgetPasswordAsync(string email)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+            if (user == null)
+                return new UserManagerResponse
+                {
+                    IsSuccess = false,
+                    Message = "No user associated with email",
+                };
+
+            var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+            var encodedToken = Encoding.UTF8.GetBytes(token);
+            var validToken = WebEncoders.Base64UrlEncode(encodedToken);
+
+            SendEmail sm = new SendEmail();
+            string body = $" Click on link to Reset Password:https://localhost:44379/Customer/ResetPassword?email={email}&token={validToken}";
+            sm.SendEmailTo(email, body);
+
+            return new UserManagerResponse
+            {
+                IsSuccess = true,
+                Message = "Reset password URL has been sent to the email successfully!"
+            };
+        }
+
+        public async Task<UserManagerResponse> ResetPasswordAsync(ResetPasswordRequest request)
+        {
+            var user = await _userManager.FindByEmailAsync(request.Email);
+            if (user == null)
+                return new UserManagerResponse
+                {
+                    IsSuccess = false,
+                    Message = "No user associated with email",
+                };
+
+            if (request.Password != request.ConfirmPassword)
+                return new UserManagerResponse
+                {
+                    IsSuccess = false,
+                    Message = "Password doesn't match its confirmation",
+                };
+
+            var decodedToken = WebEncoders.Base64UrlDecode(request.Token);
+            string normalToken = Encoding.UTF8.GetString(decodedToken);
+
+            var result = await _userManager.ResetPasswordAsync(user, normalToken, request.Password);
+
+            if (result.Succeeded)
+                return new UserManagerResponse
+                {
+                    Message = "Password has been reset successfully!",
+                    IsSuccess = true,
+                };
+
+            return new UserManagerResponse
+            {
+                Message = "Something went wrong",
+                IsSuccess = false,
+                Errors = result.Errors.Select(e => e.Description),
+            };
+        }
     }
 }

@@ -12,5 +12,7 @@ namespace VoipProjectEntities.Application.Contracts.Identity
         Task<RefreshTokenResponse> RefreshTokenAsync(RefreshTokenRequest request);
         Task<RevokeTokenResponse> RevokeToken(RevokeTokenRequest request);
         Task<DeleteResponse> DeleteAsync(DeleteRequest request);
+        Task<UserManagerResponse> ForgetPasswordAsync(string email);
+        Task<UserManagerResponse> ResetPasswordAsync(ResetPasswordRequest request);
     }
 }
