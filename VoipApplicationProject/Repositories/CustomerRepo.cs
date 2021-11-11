@@ -15,12 +15,33 @@ namespace VoipApplicationProject.Repositories
         string Baseurl = "https://localhost:44330/";
 
         #region "Get All Customers"
-        public List<CustomerModel> GetAllCustomers()
+        public List<RootCustomer> GetAllCustomers()
         {
-            string api = "api/Customer";
-            List<CustomerModel> CustomerList = GetCustomerList(api);
+            string api = "api/Account/getall";
+            try
+            {
+                HttpClient HC = new HttpClient();
+                List<RootCustomer> result = new List<RootCustomer>();
 
-            return CustomerList;
+
+                var insertedRecord = HC.GetAsync(Baseurl + api);
+                insertedRecord.Wait();
+
+                var results = insertedRecord.Result;
+
+                if (results.IsSuccessStatusCode)
+                {
+                    var UserResponse = results.Content.ReadAsStringAsync().Result;
+                    result = JsonConvert.DeserializeObject<List<RootCustomer>>(UserResponse);
+                }
+
+                HC.Dispose();
+                return result;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
         #endregion
 

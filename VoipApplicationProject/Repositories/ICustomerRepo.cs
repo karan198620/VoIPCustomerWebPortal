@@ -11,7 +11,7 @@ namespace VoipApplicationProject.Repositories
     {
         //int GetEnumValue(string Type);
         CustomerModel IsAuthenticated(CustomerModel customer);
-        List<CustomerModel> GetAllCustomers();
+        List<RootCustomer> GetAllCustomers();
         string ValidateEmail(string Email);
         RootCustomer Register(CustomerModel customer);
         CustomerModel GetCustomerById(string CustomerId);

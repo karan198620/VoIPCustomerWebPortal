@@ -25,7 +25,7 @@ namespace VoipApplicationProject.Controllers
         #region "Get All Customers / Get All Existing Users"
         public IActionResult Index()
         {
-            List<CustomerModel> CustomerList = repo.GetAllCustomers();
+            List<RootCustomer> CustomerList = repo.GetAllCustomers();
             ViewBag.ShowAlert = false;
 
             if (CustomerList.Count > 0)

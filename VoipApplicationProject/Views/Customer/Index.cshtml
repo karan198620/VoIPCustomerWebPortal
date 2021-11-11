@@ -1,73 +1,34 @@
-﻿@model IEnumerable<VoipApplicationProject.Models.CustomerModel>
+﻿@model IEnumerable<VoipApplicationProject.RootObjects.RootObject.RootCustomer>
 
 @{
     ViewData["Title"] = "Index";
 }
 
-<div class="col-md-10 mx-auto">
-    <table class="table">
-    <thead>
-        <tr>
-            <th class="d-none">
-                @Html.DisplayNameFor(model => model.Id)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CustomerName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Password)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Email)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ISMigrated)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CustomerTypeID)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ISTrialBalanceOpted)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
+<div class="col-md-8 mx-auto">
+    <table class="table text-center border">
+        <thead>
             <tr>
-                <td class="d-none">
-                    @Html.DisplayFor(modelItem => item.Id)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CustomerName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Password)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Email)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ISMigrated)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CustomerTypeID)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ISTrialBalanceOpted)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-                </td>
+                <th>Customer Name</th>
+                <th>Email</th>
+                <th>Type</th>
+                <th>Actions</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.userName</td>
+                    <td>@item.email</td>
+                    <td>@item.CustomerTypeId</td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                        @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                        @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </div>
-@if (ViewBag.ShowAlert)
-{
-    <script>alert("No Customers exist!);</script>
-}
+
