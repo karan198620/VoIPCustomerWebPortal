@@ -1,3 +1,4 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
@@ -22,7 +23,7 @@ namespace VoipProjectEntities.Identity.Services
         private readonly SignInManager<Customer> _signInManager;
         private readonly JwtSettings _jwtSettings;
         private readonly IdentityDbContext _context;
-
+        
         public AuthenticationService(UserManager<Customer> userManager,
             IOptions<JwtSettings> jwtSettings,
             SignInManager<Customer> signInManager,
@@ -290,5 +291,6 @@ namespace VoipProjectEntities.Identity.Services
                 return new DeleteResponse { Message = "User Not Found !" };
             }
         }
+
     }
 }

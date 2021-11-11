@@ -1,7 +1,10 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 using System.Threading.Tasks;
 using VoipProjectEntities.Application.Contracts.Identity;
 using VoipProjectEntities.Application.Models.Authentication;
+using VoipProjectEntities.Identity.Models;
 
 namespace VoipProjectEntities.Api.Controllers
 {
@@ -11,9 +14,11 @@ namespace VoipProjectEntities.Api.Controllers
     public class AccountController : ControllerBase
     {
         private readonly IAuthenticationService _authenticationService;
-        public AccountController(IAuthenticationService authenticationService)
+        private readonly UserManager<Customer> _userManager;
+        public AccountController(IAuthenticationService authenticationService, UserManager<Customer> userManager)
         {
             _authenticationService = authenticationService;
+            _userManager = userManager;
         }
 
         [HttpPost("authenticate")]
@@ -61,6 +66,17 @@ namespace VoipProjectEntities.Api.Controllers
                return Ok(response); 
             else
                 return BadRequest(response);
+        }
+
+        [HttpGet("getall")]
+        public async Task<ActionResult<GetAllResponse>> GetAllAsync()
+        {
+            var response = await _userManager.GetUsersInRoleAsync("Viewer");
+
+            if (response != null)
+                return Ok(response);
+            else
+                return BadRequest();
         }
     }
 }
