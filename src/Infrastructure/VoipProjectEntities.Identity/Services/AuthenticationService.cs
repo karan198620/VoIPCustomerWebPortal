@@ -54,7 +54,6 @@ namespace VoipProjectEntities.Identity.Services
 
             if (!result.Succeeded)
             {
-                //throw new AuthenticationException($"Credentials for '{request.Email} aren't valid'.");
                 response.IsAuthenticated = false;
                 response.Message = $"Credentials for {request.Email} aren't valid.";
                 return response;
@@ -274,9 +273,9 @@ namespace VoipProjectEntities.Identity.Services
             return response;
         }
 
-        public async Task<DeleteResponse> DeleteAsync(DeleteRequest request)
+        public async Task<DeleteResponse> DeleteAsync(string CustomerId)
         {
-            var user = await _userManager.FindByIdAsync(request.CutomerId);
+            var user = await _userManager.FindByIdAsync(CustomerId);
 
             if (user != null)
             {
@@ -308,7 +307,7 @@ namespace VoipProjectEntities.Identity.Services
             var validToken = WebEncoders.Base64UrlEncode(encodedToken);
 
             SendEmail sm = new SendEmail();
-            string body = $" Click on link to Reset Password:https://localhost:44379/Customer/ResetPassword?email={email}&token={validToken}";
+            string body = $" Click on link to Reset Password:https://localhost:44379/Customer/ResetPassword?email={email}&token={validToken} This link is valid only for 60 minutes !";
             sm.SendEmailTo(email, body);
 
             return new UserManagerResponse

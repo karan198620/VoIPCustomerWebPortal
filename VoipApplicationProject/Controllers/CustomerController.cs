@@ -25,7 +25,7 @@ namespace VoipApplicationProject.Controllers
         #region "Get All Customers / Get All Existing Users"
         public IActionResult Index()
         {
-            List<CustomerModel> CustomerList = repo.GetAllCustomers();
+            List<RootCustomer> CustomerList = repo.GetAllCustomers();
             ViewBag.ShowAlert = false;
 
             if (CustomerList.Count > 0)
@@ -60,7 +60,7 @@ namespace VoipApplicationProject.Controllers
                 }
                 else
                 {
-                    repo.DeleteCustomer(Customer.id);
+                    repo.DeleteCustomer(Customer.userid);
                     ViewBag.ShowAlert = "menu_error";
                     return View();
                 }
@@ -121,7 +121,7 @@ namespace VoipApplicationProject.Controllers
         [HttpGet]
         public ActionResult ForgotPassword()
         {
-            ViewBag.ShowAlert = false;
+            ViewBag.ShowAlert = "";
             return View();
         }
 
@@ -131,23 +131,15 @@ namespace VoipApplicationProject.Controllers
         {
             string email = Request.Form["Email"];
 
-            string CustomerEmail = repo.ValidateEmail(email);
-
-            if (!String.IsNullOrEmpty(CustomerEmail))
+            if (repo.ForgotPassword(email))
             {
-                SendEmail sm = new SendEmail();
-                string Body = "Click link below to Reset Password \n\n https://localhost:44314/Customer/ResetPassword";
-                sm.SendEmailTo(CustomerEmail, Body);
-
-                ViewBag.message = "Link Has beeen send to Registered Email";
-                return View();
-                //return RedirectToAction("Home", "Index");
+                ViewBag.ShowAlert = "success";
             }
             else
             {
-                ViewBag.ShowAlert = true;
-                return View();
+                ViewBag.ShowAlert = "failed";
             }
+            return View();
         }
         #endregion
 
@@ -155,14 +147,22 @@ namespace VoipApplicationProject.Controllers
         [HttpGet]
         public ActionResult ResetPassword()
         {
+            ViewBag.ShowAlert = "";
             return View();
         }
 
         [HttpPost]
-        public ActionResult ResetPassword(CustomerModel customerModel)
+        public ActionResult ResetPassword(ResetPasswordModel resetPasswordModel)
         {
-
-            return View();
+            if (repo.ResetPassword(resetPasswordModel))
+            {
+                return RedirectToAction("Login");
+            }
+            else
+            {
+                ViewBag.ShowAlert = "failed";
+                return View();
+            }            
         }
         #endregion
 

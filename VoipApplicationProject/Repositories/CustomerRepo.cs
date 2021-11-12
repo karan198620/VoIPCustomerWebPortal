@@ -15,12 +15,33 @@ namespace VoipApplicationProject.Repositories
         string Baseurl = "https://localhost:44330/";
 
         #region "Get All Customers"
-        public List<CustomerModel> GetAllCustomers()
+        public List<RootCustomer> GetAllCustomers()
         {
-            string api = "api/Customer";
-            List<CustomerModel> CustomerList = GetCustomerList(api);
+            string api = "api/Account/getall";
+            try
+            {
+                HttpClient HC = new HttpClient();
+                List<RootCustomer> result = new List<RootCustomer>();
 
-            return CustomerList;
+
+                var insertedRecord = HC.GetAsync(Baseurl + api);
+                insertedRecord.Wait();
+
+                var results = insertedRecord.Result;
+
+                if (results.IsSuccessStatusCode)
+                {
+                    var UserResponse = results.Content.ReadAsStringAsync().Result;
+                    result = JsonConvert.DeserializeObject<List<RootCustomer>>(UserResponse);
+                }
+
+                HC.Dispose();
+                return result;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
         #endregion
 
@@ -33,7 +54,7 @@ namespace VoipApplicationProject.Repositories
                 RootCustomer result = new RootCustomer();
 
                 HttpClient HC = new HttpClient();
-                HC.BaseAddress = new Uri(Baseurl);                
+                HC.BaseAddress = new Uri(Baseurl);
 
                 var insertedRecord = HC.PostAsJsonAsync("api/Account/authenticate", customer);
                 insertedRecord.Wait();
@@ -47,7 +68,7 @@ namespace VoipApplicationProject.Repositories
 
                     customerModel = new CustomerModel
                     {
-                        Email = result.email,                        
+                        Email = result.email,
                         Id = result.id,
                         UserName = result.userName,
                         token = result.token,
@@ -186,8 +207,8 @@ namespace VoipApplicationProject.Repositories
                 HttpClient HC = new HttpClient();
                 HC.BaseAddress = new Uri(Baseurl);
 
-                var insertedRecord = HC.DeleteAsync("api/Customer/" + CustomerId);
-                insertedRecord.Wait();
+                var deletedRecord = HC.DeleteAsync("api/Account/delete/" + CustomerId);
+                deletedRecord.Wait();
 
                 HC.Dispose();
             }
@@ -231,18 +252,17 @@ namespace VoipApplicationProject.Repositories
         }
         #endregion
 
-        #region "Common Method - Get Customer List"
-        public List<CustomerModel> GetCustomerList(string api)
+        #region "Forgot Password"       
+        public bool ForgotPassword(string Email)
         {
+            bool FunctionReturnValue = false;
             try
             {
-                List<CustomerModel> CustomerList = new List<CustomerModel>();
-
                 HttpClient HC = new HttpClient();
-                RootObject result = new RootObject();
-
-
-                var insertedRecord = HC.GetAsync(Baseurl + api);
+                HC.BaseAddress = new Uri(Baseurl);
+                RootCustomer result = new RootCustomer();
+               
+                var insertedRecord = HC.PostAsJsonAsync("api/Account/ForgetPassword", Email);
                 insertedRecord.Wait();
 
                 var results = insertedRecord.Result;
@@ -250,12 +270,46 @@ namespace VoipApplicationProject.Repositories
                 if (results.IsSuccessStatusCode)
                 {
                     var UserResponse = results.Content.ReadAsStringAsync().Result;
-                    result = JsonConvert.DeserializeObject<RootObject>(UserResponse);
-                    CustomerList = result.data.ToList();
+                    result = JsonConvert.DeserializeObject<RootCustomer>(UserResponse);
+
+                    FunctionReturnValue = true;
                 }
 
                 HC.Dispose();
-                return CustomerList;
+                return FunctionReturnValue;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        #endregion
+
+        #region "Reset Password"       
+        public bool ResetPassword(ResetPasswordModel customer)
+        {
+            bool FunctionReturnValue = false;
+            try
+            {
+                HttpClient HC = new HttpClient();
+                HC.BaseAddress = new Uri(Baseurl);
+                CustomerModel result = new CustomerModel();
+
+                var insertedRecord = HC.PostAsJsonAsync("api/Account/ResetPassword", customer);
+                insertedRecord.Wait();
+
+                var results = insertedRecord.Result;
+
+                if (results.IsSuccessStatusCode)
+                {
+                    var UserResponse = results.Content.ReadAsStringAsync().Result;
+                    result = JsonConvert.DeserializeObject<CustomerModel>(UserResponse);
+
+                    FunctionReturnValue = true;
+                }
+
+                HC.Dispose();
+                return FunctionReturnValue;
             }
             catch (Exception)
             {
@@ -275,7 +329,7 @@ namespace VoipApplicationProject.Repositories
         {
             public string status { get; set; }
             public CustomerModel data { get; set; }
-        }        
+        }
         #endregion
     }
 }

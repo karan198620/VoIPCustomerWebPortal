@@ -11,11 +11,13 @@ namespace VoipApplicationProject.Repositories
     {
         //int GetEnumValue(string Type);
         CustomerModel IsAuthenticated(CustomerModel customer);
-        List<CustomerModel> GetAllCustomers();
+        List<RootCustomer> GetAllCustomers();
         string ValidateEmail(string Email);
         RootCustomer Register(CustomerModel customer);
         CustomerModel GetCustomerById(string CustomerId);
         bool CreateMenuAccess(string CustomerId);
         void DeleteCustomer(string CustomerId);
+        bool ForgotPassword(string Email);
+        bool ResetPassword(ResetPasswordModel customer);
     }
 }
