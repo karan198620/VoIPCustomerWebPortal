@@ -57,10 +57,10 @@ namespace VoipProjectEntities.Api.Controllers
                 return Ok(response);
         }
 
-        [HttpDelete("delete")]
-        public async Task<ActionResult> Delete(DeleteRequest request)
+        [HttpDelete("delete/{id}")]
+        public async Task<ActionResult> Delete(string id)
         {
-            var response = await _authenticationService.DeleteAsync(request);
+            var response = await _authenticationService.DeleteAsync(id);
 
             if (response.Message == "Successfully deleted !")
                 return Ok(response);
@@ -96,17 +96,12 @@ namespace VoipProjectEntities.Api.Controllers
         [HttpPost("ResetPassword")]
         public async Task<IActionResult> ResetPassword(ResetPasswordRequest request)
         {
-            if (ModelState.IsValid)
-            {
-                var result = await _authenticationService.ResetPasswordAsync(request);
+            var result = await _authenticationService.ResetPasswordAsync(request);
 
-                if (result.IsSuccess)
-                    return Ok(result);
-
+            if (result.IsSuccess)
+                return Ok(result);
+            else
                 return BadRequest(result);
-            }
-
-            return BadRequest("Some properties are not valid");
         }
     }
 }

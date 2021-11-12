@@ -207,8 +207,8 @@ namespace VoipApplicationProject.Repositories
                 HttpClient HC = new HttpClient();
                 HC.BaseAddress = new Uri(Baseurl);
 
-                var insertedRecord = HC.DeleteAsync("api/Customer/" + CustomerId);
-                insertedRecord.Wait();
+                var deletedRecord = HC.DeleteAsync("api/Account/delete/" + CustomerId);
+                deletedRecord.Wait();
 
                 HC.Dispose();
             }
@@ -271,6 +271,39 @@ namespace VoipApplicationProject.Repositories
                 {
                     var UserResponse = results.Content.ReadAsStringAsync().Result;
                     result = JsonConvert.DeserializeObject<RootCustomer>(UserResponse);
+
+                    FunctionReturnValue = true;
+                }
+
+                HC.Dispose();
+                return FunctionReturnValue;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        #endregion
+
+        #region "Reset Password"       
+        public bool ResetPassword(ResetPasswordModel customer)
+        {
+            bool FunctionReturnValue = false;
+            try
+            {
+                HttpClient HC = new HttpClient();
+                HC.BaseAddress = new Uri(Baseurl);
+                CustomerModel result = new CustomerModel();
+
+                var insertedRecord = HC.PostAsJsonAsync("api/Account/ResetPassword", customer);
+                insertedRecord.Wait();
+
+                var results = insertedRecord.Result;
+
+                if (results.IsSuccessStatusCode)
+                {
+                    var UserResponse = results.Content.ReadAsStringAsync().Result;
+                    result = JsonConvert.DeserializeObject<CustomerModel>(UserResponse);
 
                     FunctionReturnValue = true;
                 }

@@ -60,7 +60,7 @@ namespace VoipApplicationProject.Controllers
                 }
                 else
                 {
-                    repo.DeleteCustomer(Customer.id);
+                    repo.DeleteCustomer(Customer.userid);
                     ViewBag.ShowAlert = "menu_error";
                     return View();
                 }
@@ -147,14 +147,22 @@ namespace VoipApplicationProject.Controllers
         [HttpGet]
         public ActionResult ResetPassword()
         {
+            ViewBag.ShowAlert = "";
             return View();
         }
 
         [HttpPost]
-        public ActionResult ResetPassword(CustomerModel customerModel)
+        public ActionResult ResetPassword(ResetPasswordModel resetPasswordModel)
         {
-
-            return View();
+            if (repo.ResetPassword(resetPasswordModel))
+            {
+                return RedirectToAction("Login");
+            }
+            else
+            {
+                ViewBag.ShowAlert = "failed";
+                return View();
+            }            
         }
         #endregion
 
