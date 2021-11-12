@@ -22,10 +22,10 @@ namespace VoipApplicationProject.Controllers
             repo = _repo;
         }
 
-        #region "Get All Customers / Get All Existing Users"
+        #region "Get All Customers / Get All Existing Users - Lucky"
         public IActionResult Index()
         {
-            List<RootCustomer> CustomerList = repo.GetAllCustomers();
+            List<CustomerModel> CustomerList = repo.GetAllCustomers();
             ViewBag.ShowAlert = false;
 
             if (CustomerList.Count > 0)
@@ -39,7 +39,7 @@ namespace VoipApplicationProject.Controllers
         }
         #endregion
 
-        #region "Sign Up"
+        #region "Sign Up - Jaideep"
         [HttpGet]
         public IActionResult SignUp()
         {
@@ -50,30 +50,30 @@ namespace VoipApplicationProject.Controllers
         [HttpPost]
         public IActionResult SignUp(CustomerModel CM)
         {
-            RootCustomer Customer = repo.Register(CM);
+            CustomerModel Customer = repo.Register(CM);
 
-            if (Customer.userid != null)
+            if (Customer.Id != null)
             {
-                if (repo.CreateMenuAccess(Customer.userid))
+                if (repo.CreateMenuAccess(Customer.Id))
                 {
                     return RedirectToAction("Login", "Customer");
                 }
                 else
                 {
-                    repo.DeleteCustomer(Customer.userid);
+                    repo.DeleteCustomer(Customer.Id);
                     ViewBag.ShowAlert = "menu_error";
                     return View();
                 }
             }
             else
             {
-                ViewBag.ShowAlert = Customer.message.ToString();
+                ViewBag.ShowAlert = Customer.Message.ToString();
                 return View();
             }
         }
         #endregion
 
-        #region "Login"
+        #region "Login - Anagha"
         [HttpGet]
         public IActionResult Login()
         {
@@ -117,7 +117,7 @@ namespace VoipApplicationProject.Controllers
         }
         #endregion
 
-        #region "Forgot Password"
+        #region "Forgot Password - Krunal"
         [HttpGet]
         public ActionResult ForgotPassword()
         {
@@ -143,7 +143,7 @@ namespace VoipApplicationProject.Controllers
         }
         #endregion
 
-        #region "Reset Password"
+        #region "Reset Password - Krunal"
         [HttpGet]
         public ActionResult ResetPassword()
         {
@@ -152,7 +152,7 @@ namespace VoipApplicationProject.Controllers
         }
 
         [HttpPost]
-        public ActionResult ResetPassword(ResetPasswordModel resetPasswordModel)
+        public ActionResult ResetPassword(CustomerModel resetPasswordModel)
         {
             if (repo.ResetPassword(resetPasswordModel))
             {

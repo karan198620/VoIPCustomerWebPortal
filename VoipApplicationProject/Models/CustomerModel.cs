@@ -36,7 +36,9 @@ namespace VoipApplicationProject.Models
         public DateTime UpdatedAt { get; set; }
         public string token { get; set; }
         public string refreshtoken { get; set; }
+        public string refreshTokenExpiration { get; set; }
         public bool IsAuthenticated { get; set; }
+        public string Message { get; set; }
     }
     public enum CustomerType
     {

@@ -14,113 +14,26 @@ namespace VoipApplicationProject.Repositories
     {
         string Baseurl = "https://localhost:44330/";
 
-        #region "Get All Customers"
-        public List<RootCustomer> GetAllCustomers()
+        #region "Get All Customers - Lucky"
+        public List<CustomerModel> GetAllCustomers()
         {
             string api = "api/Account/getall";
-            try
-            {
-                HttpClient HC = new HttpClient();
-                List<RootCustomer> result = new List<RootCustomer>();
-
-
-                var insertedRecord = HC.GetAsync(Baseurl + api);
-                insertedRecord.Wait();
-
-                var results = insertedRecord.Result;
-
-                if (results.IsSuccessStatusCode)
-                {
-                    var UserResponse = results.Content.ReadAsStringAsync().Result;
-                    result = JsonConvert.DeserializeObject<List<RootCustomer>>(UserResponse);
-                }
-
-                HC.Dispose();
-                return result;
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+            var result = CallingApi(true, api, true);
+            return result.Item2.ToList();
         }
         #endregion
 
         #region "IsAuthenticated - Anagha"
         public CustomerModel IsAuthenticated(CustomerModel customer)
         {
-            try
-            {
-                CustomerModel customerModel = new CustomerModel();
-                RootCustomer result = new RootCustomer();
-
-                HttpClient HC = new HttpClient();
-                HC.BaseAddress = new Uri(Baseurl);
-
-                var insertedRecord = HC.PostAsJsonAsync("api/Account/authenticate", customer);
-                insertedRecord.Wait();
-
-                var results = insertedRecord.Result;
-
-                if (results.IsSuccessStatusCode)
-                {
-                    var UserResponse = results.Content.ReadAsStringAsync().Result;
-                    result = JsonConvert.DeserializeObject<RootCustomer>(UserResponse);
-
-                    customerModel = new CustomerModel
-                    {
-                        Email = result.email,
-                        Id = result.id,
-                        UserName = result.userName,
-                        token = result.token,
-                        refreshtoken = result.refreshToken,
-                        IsAuthenticated = result.isAuthenticated,
-                        CustomerTypeID = result.CustomerTypeId
-                    };
-                }
-
-                HC.Dispose();
-                return customerModel;
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+            string api = "api/Account/authenticate";
+            var result = CallingApi(false, api, false, customer);
+            return result.Item1;            
         }
         #endregion
 
-        #region "Validate Email"
-        public string ValidateEmail(string Email)
-        {
-            var CustomerEmail = "";
-            try
-            {
-                HttpClient HC = new HttpClient();
-                RootCustomer result = new RootCustomer();
-
-                var insertedRecord = HC.GetAsync(Baseurl + "api/Account/findemail/" + Email);
-                insertedRecord.Wait();
-
-                var results = insertedRecord.Result;
-
-                if (results.IsSuccessStatusCode)
-                {
-                    var UserResponse = results.Content.ReadAsStringAsync().Result;
-                    result = JsonConvert.DeserializeObject<RootCustomer>(UserResponse);
-                    CustomerEmail = result.email.ToString();
-                }
-
-                HC.Dispose();
-                return CustomerEmail;
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
-        #endregion
-
-        #region "Register"
-        public RootCustomer Register(CustomerModel customer)
+        #region "Register - Jaideep"
+        public CustomerModel Register(CustomerModel customer)
         {
             customer.CustomerName = customer.UserName;
             customer.CustomerTypeID = CustomerType.User;
@@ -129,34 +42,13 @@ namespace VoipApplicationProject.Repositories
             customer.CreatedAt = DateTime.Now;
             customer.UpdatedAt = DateTime.Now;
 
-            try
-            {
-                HttpClient HC = new HttpClient();
-                HC.BaseAddress = new Uri(Baseurl);
-                RootCustomer result = new RootCustomer();
-
-                var insertedRecord = HC.PostAsJsonAsync("api/Account/register", customer);
-                insertedRecord.Wait();
-
-                var results = insertedRecord.Result;
-
-                if (results.IsSuccessStatusCode)
-                {
-                    var UserResponse = results.Content.ReadAsStringAsync().Result;
-                    result = JsonConvert.DeserializeObject<RootCustomer>(UserResponse);
-                }
-
-                HC.Dispose();
-                return result;
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+            string api = "api/Account/register";
+            var result = CallingApi(false, api, false, customer);
+            return result.Item1;
         }
         #endregion
 
-        #region "Create Menu Access"
+        #region "Create Menu Access - Anagha"
         public bool CreateMenuAccess(string CustomerId)
         {
             bool FunctionReturnValue = false;
@@ -199,7 +91,7 @@ namespace VoipApplicationProject.Repositories
         }
         #endregion
 
-        #region "Delete Customer"
+        #region "Delete Customer - Anagha"
         public void DeleteCustomer(string CustomerId)
         {
             try
@@ -219,116 +111,68 @@ namespace VoipApplicationProject.Repositories
         }
         #endregion
 
-        #region "Get Customer By Id"
-        public CustomerModel GetCustomerById(string CustomerId)
-        {
-            try
-            {
-                CustomerModel customer = new CustomerModel();
-
-                HttpClient HC = new HttpClient();
-                Root result = new Root();
-
-                var insertedRecord = HC.GetAsync(Baseurl + "api/Customer/" + CustomerId);
-
-                insertedRecord.Wait();
-
-                var results = insertedRecord.Result;
-
-                if (results.IsSuccessStatusCode)
-                {
-                    var UserResponse = results.Content.ReadAsStringAsync().Result;
-                    result = JsonConvert.DeserializeObject<Root>(UserResponse);
-                    customer = result.data;
-                }
-
-                HC.Dispose();
-                return customer;
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
-        #endregion
-
-        #region "Forgot Password"       
+        #region "Forgot Password - Krunal"       
         public bool ForgotPassword(string Email)
         {
-            bool FunctionReturnValue = false;
+            bool FunctionReturnValue = true;
+            string api = "api/Account/ForgetPassword";
+
+            CustomerModel cus = new CustomerModel();
+            cus.Email = Email;
+            var result = CallingApi(false, api, false, cus);
+
+            if (result.Item1.Message == null)
+                return FunctionReturnValue = false;
+            else
+                return FunctionReturnValue;
+        }
+        #endregion
+
+        #region "Reset Password - Krunal"       
+        public bool ResetPassword(CustomerModel customer)
+        {
+            bool FunctionReturnValue = true;
+            string api = "api/Account/ResetPassword";
+            var result = CallingApi(false, api, false, customer);
+
+            if (result.Item1.Message == null)
+                return FunctionReturnValue = false;
+            else
+               return FunctionReturnValue;
+        }
+        #endregion
+
+        #region "Common Method For Calling API - Anagha"
+        public Tuple<CustomerModel, List<CustomerModel>> CallingApi(bool IsGet, string api, bool IsList, CustomerModel customer = null)
+        {
             try
             {
                 HttpClient HC = new HttpClient();
-                HC.BaseAddress = new Uri(Baseurl);
-                RootCustomer result = new RootCustomer();
-               
-                var insertedRecord = HC.PostAsJsonAsync("api/Account/ForgetPassword", Email);
-                insertedRecord.Wait();
+                CustomerModel customermodel = new CustomerModel();
+                List<CustomerModel> customermodelList = new List<CustomerModel>();
 
-                var results = insertedRecord.Result;
+                var Record = IsGet ? HC.GetAsync(Baseurl + api) : HC.PostAsJsonAsync(Baseurl + api, customer);
+                Record.Wait();
+
+                var results = Record.Result;
 
                 if (results.IsSuccessStatusCode)
                 {
                     var UserResponse = results.Content.ReadAsStringAsync().Result;
-                    result = JsonConvert.DeserializeObject<RootCustomer>(UserResponse);
 
-                    FunctionReturnValue = true;
+                    if (!IsList)
+                        customermodel = JsonConvert.DeserializeObject<CustomerModel>(UserResponse);
+                    else
+                        customermodelList = JsonConvert.DeserializeObject<List<CustomerModel>>(UserResponse);
                 }
 
                 HC.Dispose();
-                return FunctionReturnValue;
+                return Tuple.Create(customermodel, customermodelList);
             }
             catch (Exception)
             {
                 throw;
             }
-        }
-        #endregion
-
-        #region "Reset Password"       
-        public bool ResetPassword(ResetPasswordModel customer)
-        {
-            bool FunctionReturnValue = false;
-            try
-            {
-                HttpClient HC = new HttpClient();
-                HC.BaseAddress = new Uri(Baseurl);
-                CustomerModel result = new CustomerModel();
-
-                var insertedRecord = HC.PostAsJsonAsync("api/Account/ResetPassword", customer);
-                insertedRecord.Wait();
-
-                var results = insertedRecord.Result;
-
-                if (results.IsSuccessStatusCode)
-                {
-                    var UserResponse = results.Content.ReadAsStringAsync().Result;
-                    result = JsonConvert.DeserializeObject<CustomerModel>(UserResponse);
-
-                    FunctionReturnValue = true;
-                }
-
-                HC.Dispose();
-                return FunctionReturnValue;
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
-        #endregion
-
-        #region "Root Object"
-        public class RootObject
-        {
-            public string status { get; set; }
-            public CustomerModel[] data { get; set; }
-        }
-
-        public class Root
-        {
-            public string status { get; set; }
-            public CustomerModel data { get; set; }
         }
         #endregion
     }

@@ -92,7 +92,7 @@ namespace VoipProjectEntities.Identity.Services
 
             if (existingUser != null)
             {
-                return new RegistrationResponse() { UserId = null, Message = $"{request.UserName} already exists." };
+                return new RegistrationResponse() { Id = null, Message = $"{request.UserName} already exists." };
             }
 
             var user = new Customer
@@ -117,16 +117,16 @@ namespace VoipProjectEntities.Identity.Services
                 if (result.Succeeded)
                 {
                     await _userManager.AddToRoleAsync(user, "Viewer");
-                    return new RegistrationResponse() { UserId = user.Id, Message = "Success" };
+                    return new RegistrationResponse() { Id = user.Id, Message = "Success" };
                 }
                 else
                 {
-                    return new RegistrationResponse() { UserId = null, Message = $"{result.Errors}" };
+                    return new RegistrationResponse() { Id = null, Message = $"{result.Errors}" };
                 }
             }
             else
             {
-                return new RegistrationResponse() { UserId = null, Message = $"{request.Email } already exists." };
+                return new RegistrationResponse() { Id = null, Message = $"{request.Email } already exists." };
             }
         }
 

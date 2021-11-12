@@ -15,22 +15,5 @@ namespace VoipApplicationProject.RootObjects
             public MenuAccessModel[] data { get; set; }
         }
         #endregion
-
-        #region "Customer"
-        public class RootCustomer
-        {
-            public string status { get; set; }
-            public string userid { get; set; }
-            public string email { get; set; }
-            public bool isAuthenticated { get; set; }
-            public string id { get; set; }
-            public CustomerType CustomerTypeId { get; set; }
-            public string userName { get; set; }
-            public string token { get; set; }
-            public string refreshToken { get; set; }
-            public string refreshTokenExpiration { get; set; }
-            public string message { get; set; }
-        }
-        #endregion
     }
 }
