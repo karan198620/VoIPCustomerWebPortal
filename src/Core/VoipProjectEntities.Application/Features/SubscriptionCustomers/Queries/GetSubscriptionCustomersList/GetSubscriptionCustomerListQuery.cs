@@ -8,5 +8,6 @@ namespace VoipProjectEntities.Application.Features.SubscriptionCustomers.Queries
 {
     public class GetSubscriptionCustomerListQuery : IRequest<Response<IEnumerable<SubscriptionCustomersListVm>>>
     {
+       public string Customerid { get; set; }
     }
 }

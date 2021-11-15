@@ -22,15 +22,15 @@ namespace VoipProjectEntities.Api.Controllers.v1
         {
             _mediator = mediator;
         }
-        [HttpGet(Name = "GetAllSubscriptionCustomers")]
+        [HttpGet("{id}",Name = "GetAllSubscriptionCustomers")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesDefaultResponseType]
-        public async Task<ActionResult> GetAllSetting()
+        public async Task<ActionResult> GetAllSubscriptionCustomer(string id)
         {
-            var dtos = await _mediator.Send(new GetSubscriptionCustomerListQuery());
+            var dtos = await _mediator.Send(new GetSubscriptionCustomerListQuery() {Customerid=id});
             return Ok(dtos);
         }
-        [HttpGet("{id}", Name = "GetSubscriptionCustomerById")]
+        [HttpGet("GetSubscriptionCustomerById/{id}")]
         public async Task<ActionResult> GetCustomerById(string id)
         {
             var getSubscriptionCustomerDetailQuery = new GetSubscriptionCustomerDetailQuery() { Id = id };
