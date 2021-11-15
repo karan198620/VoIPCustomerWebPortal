@@ -1,4 +1,4 @@
-﻿@model IEnumerable<VoipApplicationProject.RootObjects.RootObject.RootCustomer>
+﻿@model IEnumerable<VoipApplicationProject.Models.CustomerModel>
 
 @{
     ViewData["Title"] = "Index";
@@ -18,9 +18,9 @@
             @foreach (var item in Model)
             {
                 <tr>
-                    <td>@item.userName</td>
-                    <td>@item.email</td>
-                    <td>@item.CustomerTypeId</td>
+                    <td>@item.UserName</td>
+                    <td>@item.Email</td>
+                    <td>@item.CustomerTypeID</td>
                     <td>
                         @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
                         @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |

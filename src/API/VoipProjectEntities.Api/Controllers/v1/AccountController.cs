@@ -80,17 +80,17 @@ namespace VoipProjectEntities.Api.Controllers
         }
 
         [HttpPost("ForgetPassword")]
-        public async Task<IActionResult> ForgetPassword([FromBody] string email)
+        public async Task<IActionResult> ForgetPassword(ForgetPasswordRequest request)
         {
-            if (string.IsNullOrEmpty(email))
+            if (string.IsNullOrEmpty(request.Email))
                 return NotFound();
 
-            var result = await _authenticationService.ForgetPasswordAsync(email);
+            var result = await _authenticationService.ForgetPasswordAsync(request.Email);
 
             if (result.IsSuccess)
                 return Ok(result);
-
-            return BadRequest(result);
+            else
+                return BadRequest(result);
         }
 
         [HttpPost("ResetPassword")]

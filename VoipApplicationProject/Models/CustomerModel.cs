@@ -16,7 +16,7 @@ namespace VoipApplicationProject.Models
 
         [Required]
         [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,15}$",
-            ErrorMessage = "Password must be between 8 and 15 characters and contain one uppercase letter, one lowercase letter, one digit and one special character.")]
+            ErrorMessage = "Password must be between 8 and 15 characters and with one upper case alphabet, one number and one special character required.")]
 
         [DataType(DataType.Password)]
         public string Password { get; set; }
@@ -36,7 +36,9 @@ namespace VoipApplicationProject.Models
         public DateTime UpdatedAt { get; set; }
         public string token { get; set; }
         public string refreshtoken { get; set; }
+        public string refreshTokenExpiration { get; set; }
         public bool IsAuthenticated { get; set; }
+        public string Message { get; set; }
     }
     public enum CustomerType
     {

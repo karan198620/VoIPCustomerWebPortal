@@ -77,7 +77,7 @@ namespace VoipProjectEntities.API.IntegrationTests.Controllers.v1
 
             var result = JsonConvert.DeserializeObject<RegistrationResponse>(responseString);
 
-            result.UserId.ShouldNotBeNull();
+            result.Id.ShouldNotBeNull();
         }
     }
 }
