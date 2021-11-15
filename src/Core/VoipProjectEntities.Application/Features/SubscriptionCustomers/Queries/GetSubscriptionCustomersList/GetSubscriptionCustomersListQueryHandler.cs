@@ -23,7 +23,7 @@ namespace VoipProjectEntities.Application.Features.SubscriptionCustomers.Queries
         }
         public async  Task<Response<IEnumerable<SubscriptionCustomersListVm>>> Handle(GetSubscriptionCustomerListQuery request, CancellationToken cancellationToken)
         {
-            var allSubscriptionCustomers = (await _subscriptioncustomerRepository.ListAllAsync()).OrderBy(x => x.SubscriptionCustomerID);
+            var allSubscriptionCustomers = (await _subscriptioncustomerRepository.ListAllAsync()).Where(c=>c.CustomerId==request.Customerid);
             var subscriptioncustomerList = _mapper.Map<List<SubscriptionCustomersListVm>>(allSubscriptionCustomers);
             var response = new Response<IEnumerable<SubscriptionCustomersListVm>>(subscriptioncustomerList);
             return response;

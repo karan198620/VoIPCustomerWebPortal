@@ -14,9 +14,7 @@ namespace VoipProjectEntities.Application.Features.SubscriptionCustomers.Command
         {
             _subscriptioncustomerRepository = subscriptioncustomerRepository;
 
-            RuleFor(p => p.SubscriptionType)
-                .NotEmpty().WithMessage("{PropertyName} is required.")
-                .NotNull();
+           
 
         }
     }

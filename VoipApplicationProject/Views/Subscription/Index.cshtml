@@ -1,0 +1,55 @@
+﻿@model IEnumerable<VoipApplicationProject.Models.SubscriptionModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            
+            <th>
+                @Html.DisplayNameFor(model => model.SubscriptionStartDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SubscriptionEndDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SubscriptionType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ISActive)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            
+            <td>
+                @Html.DisplayFor(modelItem => item.SubscriptionStartDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SubscriptionEndDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SubscriptionType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ISActive)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
