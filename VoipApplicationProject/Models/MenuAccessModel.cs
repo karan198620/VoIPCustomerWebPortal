@@ -14,6 +14,8 @@ namespace VoipApplicationProject.Models
         public string CustomerID { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
+        public string status { get; set; }
+        public MenuAccessModel[] data { get; set; }
     }
 
     public enum MenuLink

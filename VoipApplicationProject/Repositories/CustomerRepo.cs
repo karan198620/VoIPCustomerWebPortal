@@ -6,7 +6,6 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using VoipApplicationProject.Models;
-using static VoipApplicationProject.RootObjects.RootObject;
 
 namespace VoipApplicationProject.Repositories
 {
@@ -28,7 +27,7 @@ namespace VoipApplicationProject.Repositories
         {
             string api = "api/Account/authenticate";
             var result = CallingApi(false, api, false, customer);
-            return result.Item1;            
+            return result.Item1;
         }
         #endregion
 
@@ -49,7 +48,7 @@ namespace VoipApplicationProject.Repositories
         #endregion
 
         #region "Create Menu Access - Anagha"
-        public bool CreateMenuAccess(string CustomerId)
+        public bool CreateMenuAccess(string CustomerId,string CustomerType)
         {
             bool FunctionReturnValue = false;
 
@@ -57,32 +56,44 @@ namespace VoipApplicationProject.Repositories
             {
                 HttpClient HC = new HttpClient();
                 HC.BaseAddress = new Uri(Baseurl);
-                MenuAccessModel menu = new MenuAccessModel();
+                List<MenuAccessModel> menuItemList = new List<MenuAccessModel>();
 
-                //foreach (MenuLink menuLinkenum in (MenuLink[])Enum.GetValues(typeof(MenuLink)))
-                //{
-
-                //}
-
-                for(int nCount = 0; nCount < Enum.GetNames(typeof(MenuLink)).Length; nCount++)
+                foreach (MenuLink menuLinkenum in (MenuLink[])Enum.GetValues(typeof(MenuLink)))
                 {
-                    menu.CustomerID = CustomerId;
-                    menu.MenuLink = MenuLink.DashboardUsers;
-                    menu.CreatedAt = DateTime.Now;
-                    menu.UpdatedAt = DateTime.Now;
-                    menu.IsAccess = true;
+                    if (CustomerType == "Agents" && menuLinkenum == MenuLink.DashboardUsers || menuLinkenum == MenuLink.Billing)
+                        continue;
 
-                    var insertedRecord = HC.PostAsJsonAsync("api/Menu", menu);
-                    insertedRecord.Wait();
+                    if (CustomerType == "DemoUsers" && menuLinkenum == MenuLink.DashboardUsers || menuLinkenum == MenuLink.Link9
+                        || menuLinkenum == MenuLink.Link10 || menuLinkenum == MenuLink.Link11 || menuLinkenum == MenuLink.DashboardAdminUsers)
+                        continue;
 
-                    var result = insertedRecord.Result;
+                    menuItemList.Add(
+                                    new MenuAccessModel()
+                                    {
+                                        CreatedAt = DateTime.Now,
+                                        CustomerID = CustomerId,
+                                        IsAccess = true,
+                                        MenuLink = menuLinkenum,
+                                        UpdatedAt = DateTime.Now
+                                    });
 
-                    if (result.IsSuccessStatusCode)
-                    {
-                        FunctionReturnValue = true;
-                    }
+                    if (CustomerType == "Users" && menuLinkenum == MenuLink.DashboardURL)
+                        break;
+
+                    if (CustomerType == "Agents" && menuLinkenum == MenuLink.ManageCallHistory)
+                        break;
                 }
 
+                var insertedRecord = HC.PostAsJsonAsync("api/Menu", menuItemList);
+                insertedRecord.Wait();
+
+                var result = insertedRecord.Result;
+
+                if (result.IsSuccessStatusCode)
+                {
+                    FunctionReturnValue = true;
+                }
+              
                 HC.Dispose();
             }
             catch (Exception)
@@ -141,7 +152,7 @@ namespace VoipApplicationProject.Repositories
             if (result.Item1.Message == null)
                 return FunctionReturnValue = false;
             else
-               return FunctionReturnValue;
+                return FunctionReturnValue;
         }
         #endregion
 

@@ -10,7 +10,6 @@ using System.Text;
 using System.Threading.Tasks;
 using VoipApplicationProject.Models;
 using VoipApplicationProject.Repositories;
-using static VoipApplicationProject.RootObjects.RootObject;
 
 namespace VoipApplicationProject.Controllers
 {
@@ -54,7 +53,7 @@ namespace VoipApplicationProject.Controllers
 
             if (Customer.Id != null)
             {
-                if (repo.CreateMenuAccess(Customer.Id))
+                if (repo.CreateMenuAccess(Customer.Id,"Agents"))
                 {
                     return RedirectToAction("Login", "Customer");
                 }
