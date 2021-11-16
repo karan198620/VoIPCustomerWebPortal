@@ -9,7 +9,7 @@ using VoipProjectEntities.Domain.Entities;
 
 namespace VoipProjectEntities.Application.Features.Menu.Commands.CreateMenu
 {
-    public class CreateMenuCommandHandler : IRequestHandler<CreateMenuCommand, Response<CreateMenuDto>>
+    public class CreateMenuCommandHandler : IMenuRequestHandler
     {
         private readonly IMenuRepository _menuRepository;
         private readonly IMapper _mapper;
@@ -20,29 +20,42 @@ namespace VoipProjectEntities.Application.Features.Menu.Commands.CreateMenu
             _menuRepository = menuRepository;
         }
 
-        public async Task<Response<CreateMenuDto>> Handle(CreateMenuCommand request, CancellationToken cancellationToken)
+        public async Task<Response<List<CreateMenuDto>>> Handle(CreateMenuCommand[] request, CancellationToken cancellationToken)
         {
-            var createMenuCommandResponse = new Response<CreateMenuDto>();
+            var createMenuCommandResponse = new Response<List<CreateMenuDto>>();
 
-            var validator = new CreateMenuCommandValidator();
-            var validationResult = await validator.ValidateAsync(request);
+            List<MenuAccess> newMenu = new List<MenuAccess>();
 
-            if (validationResult.Errors.Count > 0)
+            foreach (var menuitems in request)
             {
-                createMenuCommandResponse.Succeeded = false;
-                createMenuCommandResponse.Errors = new List<string>();
-                foreach (var error in validationResult.Errors)
+                var validator = new CreateMenuCommandValidator();
+                var validationResult = await validator.ValidateAsync(menuitems);
+
+                if (validationResult.Errors.Count > 0)
                 {
-                    createMenuCommandResponse.Errors.Add(error.ErrorMessage);
+                    createMenuCommandResponse.Succeeded = false;
+                    createMenuCommandResponse.Errors = new List<string>();
+                    foreach (var error in validationResult.Errors)
+                    {
+                        createMenuCommandResponse.Errors.Add(error.ErrorMessage);
+                    }
                 }
-            }
-            else
-            {
-                var menu = new VoipProjectEntities.Domain.Entities.MenuAccess() { CreatedAt = request.CreatedAt, CustomerId = request.CustomerId, IsAccess = request.IsAccess, MenuLink = request.MenuLink, UpdatedAt = request.UpdatedAt };
-                menu = await _menuRepository.AddAsync(menu);
-                createMenuCommandResponse.Data = _mapper.Map<CreateMenuDto>(menu);
-                createMenuCommandResponse.Succeeded = true;
-                createMenuCommandResponse.Message = "success";
+                else
+                {
+                    newMenu = new List<MenuAccess>() {
+                                    new MenuAccess() {
+                                        CreatedAt = menuitems.CreatedAt,
+                                        CustomerId = menuitems.CustomerId,
+                                        IsAccess = menuitems.IsAccess,
+                                        MenuLink = menuitems.MenuLink,
+                                        UpdatedAt = menuitems.UpdatedAt  }
+                        };
+
+                    await _menuRepository.InsertRangeAsync(newMenu);
+                    createMenuCommandResponse.Data = _mapper.Map<List<CreateMenuDto>>(newMenu);
+                    createMenuCommandResponse.Succeeded = true;
+                    createMenuCommandResponse.Message = "success";
+                }
             }
 
             return createMenuCommandResponse;

@@ -64,20 +64,23 @@ namespace VoipApplicationProject.Repositories
 
                 //}
 
-                menu.CustomerID = CustomerId;
-                menu.MenuLink = MenuLink.DashboardUsers;
-                menu.CreatedAt = DateTime.Now;
-                menu.UpdatedAt = DateTime.Now;
-                menu.IsAccess = true;
-
-                var insertedRecord = HC.PostAsJsonAsync("api/Menu", menu);
-                insertedRecord.Wait();
-
-                var result = insertedRecord.Result;
-
-                if (result.IsSuccessStatusCode)
+                for(int nCount = 0; nCount < Enum.GetNames(typeof(MenuLink)).Length; nCount++)
                 {
-                    FunctionReturnValue = true;
+                    menu.CustomerID = CustomerId;
+                    menu.MenuLink = MenuLink.DashboardUsers;
+                    menu.CreatedAt = DateTime.Now;
+                    menu.UpdatedAt = DateTime.Now;
+                    menu.IsAccess = true;
+
+                    var insertedRecord = HC.PostAsJsonAsync("api/Menu", menu);
+                    insertedRecord.Wait();
+
+                    var result = insertedRecord.Result;
+
+                    if (result.IsSuccessStatusCode)
+                    {
+                        FunctionReturnValue = true;
+                    }
                 }
 
                 HC.Dispose();

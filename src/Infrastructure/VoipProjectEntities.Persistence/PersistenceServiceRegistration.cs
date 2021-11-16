@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using VoipProjectEntities.Application.Contracts.Persistence;
-using VoipProjectEntities.Infrastructure.EncryptDecrypt;
+using VoipProjectEntities.Application.Features.Menu.Commands.CreateMenu;
 using VoipProjectEntities.Persistence.Repositories;
 
 namespace VoipProjectEntities.Persistence
@@ -27,6 +27,8 @@ namespace VoipProjectEntities.Persistence
             services.AddScoped<ISubscriptionCustomerRepository, SubscriptionCustomerRepository>();
             services.AddScoped<IBalanceCustomerRepository, BalanceCustomerRepository>();
             services.AddScoped<ICallRecordingAgentRepository, CallRecordingAgentRepository>();
+
+            services.AddScoped<IMenuRequestHandler, CreateMenuCommandHandler>();
 
             return services;
         }
