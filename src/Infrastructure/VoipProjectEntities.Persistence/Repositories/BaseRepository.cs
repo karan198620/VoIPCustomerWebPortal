@@ -52,5 +52,11 @@ namespace VoipProjectEntities.Persistence.Repositories
             _dbContext.Set<T>().Remove(entity);
             await _dbContext.SaveChangesAsync();
         }
+
+        public async Task InsertRangeAsync(IEnumerable<T> entities)
+        {
+            await _dbContext.AddRangeAsync(entities);
+            await _dbContext.SaveChangesAsync();
+        }
     }
 }

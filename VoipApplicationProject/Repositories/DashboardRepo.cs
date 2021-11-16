@@ -7,7 +7,6 @@ using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using VoipApplicationProject.Models;
-using static VoipApplicationProject.RootObjects.RootObject;
 
 namespace VoipApplicationProject.Repositories
 {
@@ -16,13 +15,12 @@ namespace VoipApplicationProject.Repositories
         string Baseurl = "https://localhost:44330/";        
 
         #region "Get Menu List For Customer"
-        public RootMenu GetMenu(string CustomerId, bool IsAccess, string token)
+        public MenuAccessModel GetMenu(string CustomerId, bool IsAccess, string token)
         {
             try
             {
-                List<MenuAccessModel> MenuList = new List<MenuAccessModel>();
-                RootMenu menuRoot = new RootMenu();
-
+                MenuAccessModel Menu = new MenuAccessModel();
+                
                 HttpClient HC = new HttpClient();
                 HC.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
@@ -34,20 +32,17 @@ namespace VoipApplicationProject.Repositories
 
                 if (results.StatusCode == System.Net.HttpStatusCode.Unauthorized)
                 {
-                    menuRoot.status = "Unauthorized";
-                    return menuRoot;
+                    Menu.status = "Unauthorized";
                 }
                 else if(results.IsSuccessStatusCode)
                 {
                     var UserResponse = results.Content.ReadAsStringAsync().Result;
-                    menuRoot = JsonConvert.DeserializeObject<RootMenu>(UserResponse);
-                    menuRoot.status = "Success";
-
-                    return menuRoot;
+                    Menu = JsonConvert.DeserializeObject<MenuAccessModel>(UserResponse);
+                    Menu.status = "Success";
                 }
 
                 HC.Dispose();
-                return menuRoot;
+                return Menu;
             }
             catch (Exception)
             {

@@ -8,7 +8,6 @@ using System.Text;
 using System.Threading.Tasks;
 using VoipApplicationProject.Models;
 using VoipApplicationProject.Repositories;
-using static VoipApplicationProject.RootObjects.RootObject;
 
 namespace VoipApplicationProject.Controllers
 {
@@ -33,7 +32,7 @@ namespace VoipApplicationProject.Controllers
             }
             else
             {
-                RootMenu Menu = repo.GetMenu(cookieCustomerId, true,GetCookie("token"));
+                MenuAccessModel Menu = repo.GetMenu(cookieCustomerId, true,GetCookie("token"));
 
                 if (Menu.status == "Unauthorized")
                 {
@@ -43,11 +42,8 @@ namespace VoipApplicationProject.Controllers
                 {
                     List<MenuAccessModel> MenuList = Menu.data.ToList();
 
-                    //if (MenuList[0].ToString() != "DashboardUsers")
-                    //{
-                    //    var menus = MenuList;
-                    //    ViewBag.menuList = menus.ToList();
-                    //}  
+                    var menus = MenuList;
+                    ViewBag.menuList = menus.ToList();
                 }
             }
 

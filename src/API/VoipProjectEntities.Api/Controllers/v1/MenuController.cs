@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using VoipProjectEntities.Application.Contracts.Persistence;
 using VoipProjectEntities.Application.Features.Menu.Commands.CreateMenu;
 using VoipProjectEntities.Application.Features.Menu.Queries.GetMenu;
 using VoipProjectEntities.Application.Features.MenuAccesses.Command.DeleteMenuAccess;
@@ -20,16 +21,18 @@ namespace VoipProjectEntities.Api.Controllers.v1
     {
         private readonly IMediator _mediator;
         private readonly ILogger _logger;
-        public MenuController(IMediator mediator, ILogger<MenuController> logger)
+        private readonly IMenuRequestHandler _menuRequestHandler;
+        public MenuController(IMediator mediator, ILogger<MenuController> logger, IMenuRequestHandler menuRequestHandler)
         {
             _mediator = mediator;
             _logger = logger;
+            _menuRequestHandler = menuRequestHandler;
         }
 
         [HttpPost(Name = "AddMenu")]
-        public async Task<ActionResult> Create([FromBody] CreateMenuCommand createMenuCommand)
+        public async Task<ActionResult> Create([FromBody] CreateMenuCommand[] createMenuCommand)
         {
-            var response = await _mediator.Send(createMenuCommand);
+            var response = await _menuRequestHandler.Handle(createMenuCommand);
             return Ok(response);
         }
 
