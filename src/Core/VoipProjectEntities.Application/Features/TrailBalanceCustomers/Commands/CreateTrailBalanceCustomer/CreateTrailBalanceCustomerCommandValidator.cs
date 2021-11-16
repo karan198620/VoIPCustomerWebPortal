@@ -16,13 +16,12 @@ namespace VoipProjectEntities.Application.Features.TrialBalanceCustomers.Command
 
             RuleFor(p => p.Date)
                 .NotEmpty().WithMessage("{PropertyName} is required.")
-                .NotNull()
-                .GreaterThan(DateTime.Today);
+                .NotNull();
+            RuleFor(p => p.CustomerId)
+                .NotEmpty().WithMessage("{PropertyName} is required.")
+                .NotNull();
             RuleFor(p => p.TransactionType)
-               .NotEmpty().WithMessage("{PropertyName} is required.")
-               .NotNull();
-           
-
+                .NotEmpty().WithMessage("{PropertyName} is required.");
         }
     }
 }

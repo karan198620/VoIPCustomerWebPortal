@@ -24,15 +24,13 @@ namespace VoipApplicationProject.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            string cookieCustomerId = GetCookie("CustomerId");
-
-            if (String.IsNullOrEmpty(cookieCustomerId))
+            if (String.IsNullOrEmpty(GetCookie("CustomerId")))
             {
                 return RedirectToAction("Login", "Customer");
             }
             else
             {
-                MenuAccessModel Menu = repo.GetMenu(cookieCustomerId, true,GetCookie("token"));
+                MenuAccessModel Menu = repo.GetMenu(GetCookie("CustomerId"), true,GetCookie("token"));
 
                 if (Menu.status == "Unauthorized")
                 {

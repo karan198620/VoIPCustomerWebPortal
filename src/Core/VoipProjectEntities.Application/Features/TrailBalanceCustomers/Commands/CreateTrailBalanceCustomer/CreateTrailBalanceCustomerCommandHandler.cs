@@ -21,7 +21,6 @@ namespace VoipProjectEntities.Application.Features.TrialBalanceCustomers.Command
         private readonly IEmailService _emailService;
         private readonly ILogger<CreateTrailBalanceCustomerCommandHandler> _logger;
 
-
         public CreateTrailBalanceCustomerCommandHandler(IMapper mapper, ITrailBalanceCustomerRepository trailBalanceCustomerRepository, IEmailService emailService, ILogger<CreateTrailBalanceCustomerCommandHandler> logger)
         {
             _mapper = mapper;

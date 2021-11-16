@@ -9,6 +9,7 @@ namespace VoipProjectEntities.Application.Features.TrialBalanceCustomers.Command
    public  class CreateTrailBalanceCustomerCommand : IRequest<Response<Guid>>
     {
         public DateTime Date { get; set; }
-        public int TransactionType { get; set; } //enum
+        public int TransactionType { get; set; }
+        public string CustomerId { get; set; }
     }
 }
