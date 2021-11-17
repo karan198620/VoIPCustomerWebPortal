@@ -8,6 +8,6 @@ namespace VoipApplicationProject.Repositories
 {
     public interface ITrialBalanceRequestRepo
     {
-        TrialBalanceRequestModel GetAllRequest(string CustomerId, string token);
+        TrialBalanceRequestModel GetAllRequest(string token);
     }
 }

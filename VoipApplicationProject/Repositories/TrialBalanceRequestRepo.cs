@@ -14,7 +14,7 @@ namespace VoipApplicationProject.Repositories
         string Baseurl = "https://localhost:44330/";
 
         #region "Get All Trial Balance Request - Anagha"
-        public TrialBalanceRequestModel GetAllRequest(string CustomerId, string token)
+        public TrialBalanceRequestModel GetAllRequest(string token)
         {
             try
             {
@@ -23,7 +23,7 @@ namespace VoipApplicationProject.Repositories
                 HttpClient HC = new HttpClient();
                 HC.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
-                var Record = HC.GetAsync(Baseurl + "api/Menu/all/" + CustomerId);
+                var Record = HC.GetAsync(Baseurl + "api/TrailBalanceCustomer");
 
                 Record.Wait();
 

@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.DataProtection;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using VoipProjectEntities.Application.Features.TrialBalanceCustomers.Queries.GetTrialBalanceCustomerList;
+using VoipProjectEntities.Application.Features.TrailBalanceCustomers.Queries.GetTrailBalanceCustomersList;
 using VoipProjectEntities.Domain.Entities;
 
 namespace VoipProjectEntities.Application.Profiles
@@ -22,7 +22,8 @@ namespace VoipProjectEntities.Application.Profiles
             {
                 TrailBalanceCustomerId = _protector.Protect(source.TrailBalanceCustomerId.ToString()),
                 Date = source.Date,
-                TransactionType = source.TransactionType               
+                TransactionType = source.TransactionType,
+                CustomerId = source.CustomerId
             };
 
             return dest;

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using VoipProjectEntities.Application.Features.TrialBalanceCustomers.Commands.CreateTrialBalanceCustomer;
 using VoipProjectEntities.Application.Features.TrialBalanceCustomers.Commands.DeleteTrialBalanceCustomer;
 using VoipProjectEntities.Application.Features.TrialBalanceCustomers.Commands.UpdateTrialBalanceCustomer;
-using VoipProjectEntities.Application.Features.TrialBalanceCustomers.Queries.GetTrialBalanceCustomerList;
+using VoipProjectEntities.Application.Features.TrailBalanceCustomers.Queries.GetTrailBalanceCustomersList;
 
 namespace VoipProjectEntities.Api.Controllers.v1
 {

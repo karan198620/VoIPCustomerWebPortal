@@ -1,4 +1,4 @@
-﻿@model IEnumerable<VoipApplicationProject.Models.TrialBalanceRequestModel>
+﻿@model VoipApplicationProject.Models.TrialBalanceRequestModel
 
 @{
     ViewData["Title"] = "Index";
@@ -13,7 +13,7 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.TrailBalanceCustomerId)
+                Sr. No
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Date)
@@ -28,26 +28,27 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.TrailBalanceCustomerId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Date)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TransactionType)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CustomerId)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>
-        </tr>
-}
+        @for (int i=0; i < Model.data.Count(); i++)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayName((1 + i).ToString())
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => Model.data[i].Date)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => Model.data[i].TransactionType)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => Model.data[i].CustomerId)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

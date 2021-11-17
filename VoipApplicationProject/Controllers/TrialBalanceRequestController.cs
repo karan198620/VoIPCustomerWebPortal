@@ -22,7 +22,7 @@ namespace VoipApplicationProject.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            TrialBalanceRequestModel TBRModel = repo.GetAllRequest(GetCookie("CustomerId"), GetCookie("token"));
+            TrialBalanceRequestModel TBRModel = repo.GetAllRequest(GetCookie("token"));
             return View(TBRModel);
         }
         #endregion
