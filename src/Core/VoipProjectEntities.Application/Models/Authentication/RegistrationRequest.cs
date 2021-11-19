@@ -12,8 +12,6 @@ namespace VoipProjectEntities.Application.Models.Authentication
         [Required]
         public string UserName { get; set; }
 
-        [Required]
-        [MinLength(8),MaxLength(15)]
         public string Password { get; set; }
 
         [Required]
@@ -27,6 +25,8 @@ namespace VoipProjectEntities.Application.Models.Authentication
 
         [Required]
         public bool ISTrialBalanceOpted { get; set; }
+
+        public string OrganisationName { get; set; }
 
         [Required]
         public DateTime CreatedAt { get; set; }

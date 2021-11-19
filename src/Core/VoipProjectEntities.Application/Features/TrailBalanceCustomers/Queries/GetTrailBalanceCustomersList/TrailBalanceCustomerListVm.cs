@@ -10,5 +10,8 @@ namespace VoipProjectEntities.Application.Features.TrailBalanceCustomers.Queries
         public DateTime Date { get; set; }
         public int TransactionType { get; set; } //enum
         public string CustomerId { get; set; }
+        public decimal Amount { get; set; }
+        public DateTime CreatedAt { get; set; }
+        public DateTime UpdatedAt { get; set; }
     }
 }

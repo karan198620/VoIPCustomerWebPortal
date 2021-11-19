@@ -23,7 +23,10 @@ namespace VoipProjectEntities.Application.Profiles
                 TrailBalanceCustomerId = _protector.Protect(source.TrailBalanceCustomerId.ToString()),
                 Date = source.Date,
                 TransactionType = source.TransactionType,
-                CustomerId = source.CustomerId
+                CustomerId = source.CustomerId,
+                Amount = source.Amount,
+                CreatedAt = source.CreatedAt,
+                UpdatedAt = source.UpdatedAt
             };
 
             return dest;

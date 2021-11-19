@@ -21,7 +21,6 @@ namespace VoipProjectEntities.Persistence.Repositories
         {
             _logger.LogInformation("GetTrialBalanceWithCustomers Initiated");
             var AllTBR = await _dbContext.TrailBalanceCustomers.ToListAsync();
-           
             _logger.LogInformation("GetTrialBalanceWithCustomers Completed");
             return AllTBR;
         }

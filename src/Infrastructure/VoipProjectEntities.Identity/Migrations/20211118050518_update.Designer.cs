@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using VoipProjectEntities.Identity;
 
 namespace VoipProjectEntities.Identity.Migrations
 {
     [DbContext(typeof(IdentityDbContext))]
-    partial class IdentityDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211118050518_update")]
+    partial class update
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -48,15 +50,15 @@ namespace VoipProjectEntities.Identity.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "bb750f65-8827-46cd-a7c6-4096afffbdec",
-                            ConcurrencyStamp = "e1479b5c-95cd-4a1a-8117-7ca9a176cb33",
+                            Id = "6ae7db51-52f4-4330-82b7-5d36c58f39a6",
+                            ConcurrencyStamp = "ed997c9d-aaa3-4824-b786-33506a36b253",
                             Name = "Viewer",
                             NormalizedName = "VIEWER"
                         },
                         new
                         {
-                            Id = "02b8244b-8198-4b5b-a263-0de6d5f1352d",
-                            ConcurrencyStamp = "cb28fdbd-b435-4a61-b669-adfc2b67e5e2",
+                            Id = "829cf365-db3b-4e1b-a07e-c840261b1a5c",
+                            ConcurrencyStamp = "6d342254-a01f-4f2b-8dd1-844cb65c2efa",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         });
@@ -225,6 +227,9 @@ namespace VoipProjectEntities.Identity.Migrations
 
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
+
+                    b.Property<string>("RoleInBusiness")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");

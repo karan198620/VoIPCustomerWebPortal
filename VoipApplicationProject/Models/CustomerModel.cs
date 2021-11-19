@@ -32,6 +32,9 @@ namespace VoipApplicationProject.Models
         public bool ISMigrated { get; set; }     
         public CustomerType CustomerTypeID { get; set; } //enum
         public bool ISTrialBalanceOpted { get; set; }
+
+        [Required]
+        public string OrganisationName { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
         public string token { get; set; }
@@ -44,6 +47,7 @@ namespace VoipApplicationProject.Models
     {
         User = 0,
         Agents = 1,
-        Demo = 2
+        Demo = 2,
+        Admin = 3
     }
 }

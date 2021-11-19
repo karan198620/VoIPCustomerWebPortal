@@ -1,4 +1,3 @@
-using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Options;
@@ -82,6 +81,7 @@ namespace VoipProjectEntities.Identity.Services
             response.Token = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
             response.Email = user.Email;
             response.UserName = user.UserName;
+            response.CustomerTypeId = user.CustomerTypeID;
 
             return response;
         }
@@ -104,6 +104,7 @@ namespace VoipProjectEntities.Identity.Services
                 ISMigrated = request.ISMigrated,
                 CustomerTypeID = request.CustomerTypeID,
                 ISTrialBalanceOpted = request.ISTrialBalanceOpted,
+                OrganisationName = request.OrganisationName,
                 CreatedAt = request.CreatedAt,
                 UpdatedAt = request.UpdatedAt
             };
@@ -112,7 +113,7 @@ namespace VoipProjectEntities.Identity.Services
 
             if (existingEmail == null)
             {
-                var result = await _userManager.CreateAsync(user, request.Password);
+                var result = String.IsNullOrEmpty(request.Password) ? await _userManager.CreateAsync(user) : await _userManager.CreateAsync(user, request.Password);
 
                 if (result.Succeeded)
                 {
@@ -352,6 +353,26 @@ namespace VoipProjectEntities.Identity.Services
                 IsSuccess = false,
                 Errors = result.Errors.Select(e => e.Description),
             };
+        }
+
+        public async Task<GetByIdResponse> GetByIdAsync(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+
+            if (user != null)
+            {
+                return new GetByIdResponse { 
+                    Id = user.Id,
+                    UserName = user.UserName,
+                    Email = user.Email,
+                    CustomerTypeId = user.CustomerTypeID,
+                    IsAuthenticated = true,
+                    OrganisationName = user.OrganisationName,
+                    Message = "Success"
+                };
+            }
+
+            return new GetByIdResponse { Message = $"{id} Not Found !." };
         }
     }
 }

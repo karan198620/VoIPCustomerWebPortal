@@ -11,6 +11,9 @@ namespace VoipApplicationProject.Models
         public DateTime Date { get; set; }
         public TransactionType TransactionType { get; set; } //enum
         public string CustomerId { get; set; }
+        public string Email { get; set; }
+        public string OrganisationName { get; set; }
+        public CustomerType CustomerTypeId { get; set; }
         public string status { get; set; }
         public TrialBalanceRequestModel[] data { get; set; }
     }

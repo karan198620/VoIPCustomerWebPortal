@@ -6,8 +6,9 @@ using VoipApplicationProject.Models;
 
 namespace VoipApplicationProject.Repositories
 {
-    public interface ITrialBalanceRequestRepo
+    public interface IAdminRepo
     {
-        TrialBalanceRequestModel GetAllRequest(string token);
+        TrialBalanceRequestModel GetAllTBRRequest(string token);
+        TrialBalanceRequestModel GetCustomerById(string Id, string token);
     }
 }
