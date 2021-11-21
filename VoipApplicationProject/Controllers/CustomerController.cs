@@ -38,7 +38,7 @@ namespace VoipApplicationProject.Controllers
         }
         #endregion
 
-        #region "Sign Up - Jaideep"
+        #region "User Sign Up - Jaideep"
         [HttpGet]
         public IActionResult SignUp()
         {
@@ -53,7 +53,41 @@ namespace VoipApplicationProject.Controllers
 
             if (Customer.Id != null)
             {
-                if (repo.CreateMenuAccess(Customer.Id,"Agents"))
+                if (repo.CreateMenuAccess(Customer.Id,"Users"))
+                {
+                    return RedirectToAction("Login", "Customer");
+                }
+                else
+                {
+                    repo.DeleteCustomer(Customer.Id);
+                    ViewBag.ShowAlert = "menu_error";
+                    return View();
+                }
+            }
+            else
+            {
+                ViewBag.ShowAlert = Customer.Message.ToString();
+                return View();
+            }
+        }
+        #endregion
+
+        #region "Demo Sign Up - Anagha"
+        [HttpGet]
+        public IActionResult DemoSignUp()
+        {
+            ViewBag.ShowAlert = "";
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult DemoSignUp(CustomerModel CM)
+        {
+            CustomerModel Customer = repo.Register(CM);
+
+            if (Customer.Id != null)
+            {
+                if (repo.CreateMenuAccess(Customer.Id, "DemoUsers"))
                 {
                     return RedirectToAction("Login", "Customer");
                 }
@@ -98,6 +132,50 @@ namespace VoipApplicationProject.Controllers
                     {
                         SetCookie("refreshtoken", Customer.refreshtoken, 600);
                     }                   
+
+                    return RedirectToAction("Index", "Dashboard");
+                }
+                else
+                {
+                    ViewBag.ShowAlert = "customertype_error";
+                    return View();
+                }
+            }
+            else
+            {
+                ViewBag.ShowAlert = "login_error";
+                return View();
+            }
+
+        }
+        #endregion
+
+        #region "Admin Login - Anagha"
+        [HttpGet]
+        public IActionResult AdminLogin()
+        {
+            ViewBag.ShowAlert = "";
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult AdminLogin(CustomerModel customer)
+        {
+            CustomerModel Customer = repo.IsAuthenticated(customer);
+
+            if (Customer.IsAuthenticated == true)
+            {
+                if (Customer.CustomerTypeID == CustomerType.Admin)
+                {
+                    SetCookie("CustomerId", Customer.Id, 60);
+                    SetCookie("token", Customer.token, 60);
+
+                    string isRememberMe = Request.Form["ChkRememberMe"];
+
+                    if (isRememberMe != "false")
+                    {
+                        SetCookie("refreshtoken", Customer.refreshtoken, 600);
+                    }
 
                     return RedirectToAction("Index", "Dashboard");
                 }

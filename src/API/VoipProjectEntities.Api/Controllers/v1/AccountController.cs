@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
@@ -72,6 +73,18 @@ namespace VoipProjectEntities.Api.Controllers
         public async Task<ActionResult<GetAllResponse>> GetAllAsync()
         {
             var response = await _userManager.GetUsersInRoleAsync("Viewer");
+
+            if (response != null)
+                return Ok(response);
+            else
+                return BadRequest();
+        }
+
+        [Authorize]
+        [HttpGet("getById/{id}")]
+        public async Task<IActionResult> GetByIdAsync(string id)
+        {
+            var response = await _authenticationService.GetByIdAsync(id);
 
             if (response != null)
                 return Ok(response);

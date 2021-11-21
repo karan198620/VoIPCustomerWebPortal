@@ -40,7 +40,7 @@ using VoipProjectEntities.Application.Features.SubscriptionCustomers.Queries.Get
 using VoipProjectEntities.Application.Features.SubscriptionCustomers.Queries.GetSubscriptionCustomerList;
 using VoipProjectEntities.Application.Features.TrialBalanceCustomers.Commands.CreateTrialBalanceCustomer;
 using VoipProjectEntities.Application.Features.TrialBalanceCustomers.Commands.UpdateTrialBalanceCustomer;
-using VoipProjectEntities.Application.Features.TrialBalanceCustomers.Queries.GetTrialBalanceCustomerList;
+using VoipProjectEntities.Application.Features.TrailBalanceCustomers.Queries.GetTrailBalanceCustomersList;
 using VoipProjectEntities.Domain.Entities;
 
 namespace VoipProjectEntities.Application.Profiles

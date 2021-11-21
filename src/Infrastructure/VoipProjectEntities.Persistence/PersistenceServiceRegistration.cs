@@ -27,7 +27,7 @@ namespace VoipProjectEntities.Persistence
             services.AddScoped<ISubscriptionCustomerRepository, SubscriptionCustomerRepository>();
             services.AddScoped<IBalanceCustomerRepository, BalanceCustomerRepository>();
             services.AddScoped<ICallRecordingAgentRepository, CallRecordingAgentRepository>();
-
+            services.AddScoped<ITrailBalanceCustomerRepository, TrailBalanceCustomerRepository>();
             services.AddScoped<IMenuRequestHandler, CreateMenuCommandHandler>();
 
             return services;

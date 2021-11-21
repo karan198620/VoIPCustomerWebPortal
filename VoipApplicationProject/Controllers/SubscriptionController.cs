@@ -54,9 +54,5 @@ namespace VoipApplicationProject.Controllers
             return normalValue;
         }
         #endregion
-
     }
-
-
-
 }

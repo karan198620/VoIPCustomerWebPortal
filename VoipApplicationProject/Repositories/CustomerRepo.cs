@@ -35,9 +35,9 @@ namespace VoipApplicationProject.Repositories
         public CustomerModel Register(CustomerModel customer)
         {
             customer.CustomerName = customer.UserName;
-            customer.CustomerTypeID = CustomerType.User;
+            customer.CustomerTypeID = customer.CustomerTypeID == CustomerType.User ? CustomerType.User : customer.CustomerTypeID;
             customer.ISMigrated = false;
-            customer.ISTrialBalanceOpted = true;
+            customer.ISTrialBalanceOpted = customer.CustomerTypeID == CustomerType.Demo ? false : true;
             customer.CreatedAt = DateTime.Now;
             customer.UpdatedAt = DateTime.Now;
 

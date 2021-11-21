@@ -8,10 +8,12 @@ using System.Threading.Tasks;
 using VoipProjectEntities.Application.Features.TrialBalanceCustomers.Commands.CreateTrialBalanceCustomer;
 using VoipProjectEntities.Application.Features.TrialBalanceCustomers.Commands.DeleteTrialBalanceCustomer;
 using VoipProjectEntities.Application.Features.TrialBalanceCustomers.Commands.UpdateTrialBalanceCustomer;
-using VoipProjectEntities.Application.Features.TrialBalanceCustomers.Queries.GetTrialBalanceCustomerList;
+using VoipProjectEntities.Application.Features.TrailBalanceCustomers.Queries.GetTrailBalanceCustomersList;
+using Microsoft.AspNetCore.Authorization;
 
 namespace VoipProjectEntities.Api.Controllers.v1
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class TrailBalanceCustomerController : ControllerBase

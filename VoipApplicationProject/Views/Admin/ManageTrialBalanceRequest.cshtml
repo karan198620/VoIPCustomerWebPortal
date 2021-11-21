@@ -1,0 +1,153 @@
+﻿@model VoipApplicationProject.Models.TrialBalanceRequestModel
+
+@{
+    ViewData["Title"] = "ManageTrialBalanceRequest";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<link href="https://cdn.datatables.net/1.11.2/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+<link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
+
+<div style="font-size:20px">Total Trial Balance Request : @Model.data.Count()</div>
+<table id="TBRTable" class="table table-bordered text-center w-100">
+    <thead>
+        <tr>
+            <th>Sr. No</th>
+            <th>Date <a href="#" data-toggle="modal" data-target="#dateModal"><i class="fas fa-filter text-dark"></i></a></th>
+            <th>Transaction Type</th>
+            <th>Time</th>
+            <th>Email</th>
+            <th>Organisation</th>
+            <th>Role</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (int i = 0; i < Model.data.Count(); i++)
+        {
+            <tr>
+                <td>@Html.DisplayName((1 + i).ToString())</td>
+                <td>@Html.Label(Model.data[i].Date.ToShortDateString())</td>
+                <td>@Html.DisplayFor(modelItem => Model.data[i].TransactionType)</td>
+                <td>@Html.Label(Model.data[i].Date.ToShortTimeString())</td>
+                <td>@Html.DisplayFor(modelItem => Model.data[i].Email)</td>
+                <td>@Html.DisplayFor(modelItem => Model.data[i].OrganisationName)</td>
+                <td>@Html.DisplayFor(modelItem => Model.data[i].CustomerTypeId)</td>
+                <td>
+                    @Html.ActionLink("Approve", "Approve", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Reject", "Reject", new { /* id=item.PrimaryKey */ })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<!-- Modal -->
+<div class="modal fade" id="dateModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6>Filter Dates</h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-5">
+                        From <input id="TxtFrmDate" class="form-control date-format" placeholder="dd/mm/yyyy" autocomplete="off" />
+                    </div>
+                    <div class="col-md-5">
+                        To <input id="TxtToDate" class="form-control date-format" placeholder="dd/mm/yyyy" autocomplete="off" />
+                    </div>
+                    <div class="col-md-2 pt-4"><button class="btn btn-dark">Filter</button></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/lib/jquery/dist/jquery.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.2/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.2/js/dataTables.bootstrap4.min.js"></script>
+<script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
+
+<script>
+    $('#TBRTable').DataTable();
+
+    var today = new Date();
+    var tomorrow = new Date();
+    tomorrow.setDate(today.getDate() - 1);
+
+    $('#TxtFrmDate').datepicker({
+        uiLibrary: 'bootstrap4',
+        maxDate: tomorrow,
+        format: "dd/mm/yyyy"
+    });
+
+    $('#TxtToDate').datepicker({
+        uiLibrary: 'bootstrap4',
+        maxDate: tomorrow,
+        format: "dd/mm/yyyy"
+    });
+
+    var isShift = false;
+    var seperator = "/";
+    window.onload = function () {
+        var inputs = document.getElementsByTagName("input");
+
+        for (var i = 0; i < inputs.length; i++) {
+            if (inputs[i].type == "text") {
+                if (inputs[i].className.indexOf("date-format") != 1) {
+                    inputs[i].setAttribute("maxlength", 10);
+                    inputs[i].onkeydown = function (e) {
+                        return IsNumeric(this, e.keyCode);
+                    };
+                    inputs[i].onkeyup = function (e) {
+                        if (!ValidateDateFormat(this, e.keyCode)) {
+                            alert("Invalid dates!");
+                        }
+                    };
+                }
+            }
+        }
+    };
+
+    function IsNumeric(input, keyCode) {
+        if (keyCode == 16) {
+            isShift = true;
+        }
+        //Allow only Numeric Keys.
+        if (((keyCode >= 48 && keyCode <= 57) || keyCode == 8 || keyCode <= 37 || keyCode <= 39 || (keyCode >= 96 && keyCode <= 105)) && isShift == false) {
+            if ((input.value.length == 2 || input.value.length == 5) && keyCode != 8) {
+                input.value += seperator;
+            }
+
+            return true;
+        }
+        else {
+            return false;
+        }
+    };
+
+    function ValidateDateFormat(input, keyCode) {
+        var dateString = input.value;
+        if (keyCode == 16) {
+            isShift = false;
+        }
+        var regex = /(((0|1)[0-9]|2[0-9]|3[0-1])\/(0[1-9]|1[0-2])\/((19|20)\d\d))$/;
+
+        //Check whether valid dd/MM/yyyy Date Format.
+        if (regex.test(dateString) || dateString.length == 0) {
+            return true;
+        } else {
+            return false;
+        }
+    };
+
+    //function ShowHideError(textbox, display) {
+    //    var row = textbox.parentNode.parentNode;
+    //    var errorMsg = row.getElementsByTagName("span")[0];
+    //    if (errorMsg != null) {
+    //        errorMsg.style.display = display;
+    //    }
+    //};
+</script>
