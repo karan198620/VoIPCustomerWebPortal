@@ -11,5 +11,7 @@ namespace VoipProjectEntities.Application.Features.BalanceCustomers.Commands.Cre
         public double BalanceAmount { get; set; }
 
         public int TranscationType { get; set; }
+
+        public Guid CustomerId { get; set; }
     }
 }

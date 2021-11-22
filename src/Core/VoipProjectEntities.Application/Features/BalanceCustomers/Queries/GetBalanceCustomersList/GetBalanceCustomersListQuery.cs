@@ -8,7 +8,6 @@ namespace VoipProjectEntities.Application.Features.BalanceCustomers.Queries.GetB
 {
     public class GetBalanceCustomersListQuery : IRequest<Response<IEnumerable<BalanceCustomerListVm>>>
     {
-        
-
+        public string Customerid { get; set; }
     }
 }

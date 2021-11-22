@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using VoipProjectEntities.Application.Features.BalanceCustomers.Commands.CreateBalanceCustomer;
 
 namespace VoipProjectEntities.Api.Controllers.v1
 {
@@ -23,18 +24,28 @@ namespace VoipProjectEntities.Api.Controllers.v1
             _mediator = mediator;
         }
 
-        // Method To get allbalance Customer
-        [HttpGet(Name = "GetAllBalanceCustomers")]
+
+
+        [HttpPost(Name = "AddBalanceCustomer")]
+        public async Task<ActionResult> Create([FromBody] CreateBalanceCustomerCommand createBalanceCustomerCommand)
+        {
+            var id = await _mediator.Send(createBalanceCustomerCommand);
+            return Ok(id);
+        }
+
+
+        // Method To get allbalance Customer by Customer ID(FK)
+        [HttpGet("{id}",Name = "GetAllBalanceCustomers")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesDefaultResponseType]
-        public async Task<ActionResult> GetAllEvents()
+        public async Task<ActionResult> GetAllEvents(string id)
         {
-            var dtos = await _mediator.Send(new GetBalanceCustomersListQuery());
+            var dtos = await _mediator.Send(new GetBalanceCustomersListQuery() {Customerid = id });
             return Ok(dtos);
         }
 
         //method to get balancecustomer By ID
-        [HttpGet("{id}", Name = "GetBalanceCustomerById")]
+        [HttpGet("GetBalanceCustomerById/{id}")]
         public async Task<ActionResult> GetEventById(string id)
         {
             var getBalanceCustomerDetailQuery = new GetBalanceCustomerDetailQuery() { Id = id };

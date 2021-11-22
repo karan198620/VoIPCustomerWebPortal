@@ -1,0 +1,44 @@
+﻿@model IEnumerable<VoipApplicationProject.Models.BalanceCustomerModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            
+            <th>
+                @Html.DisplayNameFor(model => model.BalanceAmount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TranscationType)
+            </th>
+            
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            >
+            <td>
+                @Html.DisplayFor(modelItem => item.BalanceAmount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TranscationType)
+            </td>
+            
+            <td>
+                 
+                @Html.ActionLink("Delete", "BalanceCustomer", new { id=item.BalanceCustomerID})
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

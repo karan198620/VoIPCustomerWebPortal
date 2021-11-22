@@ -53,7 +53,7 @@ namespace VoipApplicationProject.Controllers
 
             if (Customer.Id != null)
             {
-                if (repo.CreateMenuAccess(Customer.Id,"Agents"))
+                if (repo.CreateMenuAccess(Customer.Id,"Users"))
                 {
                     return RedirectToAction("Login", "Customer");
                 }

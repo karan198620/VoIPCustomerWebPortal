@@ -11,7 +11,7 @@ namespace VoipApplicationProject.Models
         public string CustomerId { get; set; }
         public DateTime SubscriptionStartDate { get; set; }
         public DateTime SubscriptionEndDate { get; set; }
-        public int SubscriptionType { get; set; }
+        public SubscriptionType SubscriptionType { get; set; }
         public bool ISActive { get; set; }
     }
     public enum SubscriptionType

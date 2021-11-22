@@ -8,5 +8,6 @@ namespace VoipProjectEntities.Application.Features.AgentCustomers.Queries.GetAge
 {
     public class GetAgentCustomersListQuery : IRequest<Response<IEnumerable<AgentCustomerListVm>>>
     {
+        //public string Customerid { get; set; }
     }
 }

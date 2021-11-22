@@ -25,7 +25,7 @@ namespace VoipProjectEntities.Application.Features.AgentCustomers.Queries.GetAge
 
         public async Task<Response<IEnumerable<AgentCustomerListVm>>> Handle(GetAgentCustomersListQuery request, CancellationToken cancellationToken)
         {
-            var allAgentCustomers = (await _agentcustomerRepository.ListAllAsync()).OrderBy(x => x.AgentName);
+            var allAgentCustomers = (await _agentcustomerRepository.ListAllAsync()).OrderBy(x => x.AgentCustomerID);
             var agentcustomerlist = _mapper.Map<List<AgentCustomerListVm>>(allAgentCustomers);
             var response = new Response<IEnumerable<AgentCustomerListVm>>(agentcustomerlist);
             return response;
