@@ -15,13 +15,13 @@ namespace VoipProjectEntities.Application.Features.BalanceCustomers.Commands.Cre
         {
             _balancecustomerRepository = balancecustomerRepository;
 
-            RuleFor(p => p.BalanceAmount)
-               .NotEmpty().WithMessage("{PropertyName} is required.");
+            //RuleFor(p => p.BalanceAmount)
+            //   .NotEmpty().WithMessage("{PropertyName} is required.");
 
-            //.MaximumLength(50).WithMessage("{PropertyName} must not exceed 50 characters.");
+            ////.MaximumLength(50).WithMessage("{PropertyName} must not exceed 50 characters.");
 
-            RuleFor(p => p.TranscationType)
-                .NotEmpty().WithMessage("{PropertyName} is required.");
+            //RuleFor(p => p.TranscationType)
+            //    .NotEmpty().WithMessage("{PropertyName} is required.");
 
 
 

@@ -36,9 +36,6 @@ namespace VoipProjectEntities.Application.Features.AgentCustomers.Queries.GetAge
 
             var @event = await _agentcustomerRepository.GetByIdAsync(new Guid(id));
             var agentcustomerDetailDto = _mapper.Map<AgentCustomerDetailVm>(@event);
-
-           
-
             var response = new Response<AgentCustomerDetailVm>(agentcustomerDetailDto);
             return response;
             //throw new NotImplementedException();

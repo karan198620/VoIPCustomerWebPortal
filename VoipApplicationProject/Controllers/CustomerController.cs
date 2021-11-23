@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.WebUtilities;
 using System;
@@ -54,6 +54,7 @@ namespace VoipApplicationProject.Controllers
             if (Customer.Id != null)
             {
                 if (repo.CreateMenuAccess(Customer.Id,"Users"))
+
                 {
                     return RedirectToAction("Login", "Customer");
                 }

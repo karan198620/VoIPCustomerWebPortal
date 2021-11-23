@@ -14,7 +14,7 @@ namespace VoipProjectEntities.Application.Features.BalanceCustomers.Queries.GetB
         public string BalanceCustomerID { get; set; }
 
         public double BalanceAmount { get; set; }
-
+        public string CustomerId { get; set; }
         public int TranscationType { get; set; }
     }
 }

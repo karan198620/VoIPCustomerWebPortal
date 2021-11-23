@@ -28,7 +28,7 @@ namespace VoipMainProject.Api.Controllers.v1
         [HttpGet(Name = "GetAllAgentCustomers")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesDefaultResponseType]
-        public async Task<ActionResult> GetAllEvents()
+        public async Task<ActionResult> GetAllAgentCustomer()
         {
             var dtos = await _mediator.Send(new GetAgentCustomersListQuery());
             return Ok(dtos);
@@ -72,7 +72,7 @@ namespace VoipMainProject.Api.Controllers.v1
 
         //method to get agentcustomer By ID
         [HttpGet("{id}", Name = "GetAgentCustomerById")]
-        public async Task<ActionResult> GetEventById(string id)
+        public async Task<ActionResult> GetAgentCustomerById(string id)
         {
             var getAgentCustomerDetailQuery = new GetAgentCustomerDetailQuery() { Id = id };
             return Ok(await _mediator.Send(getAgentCustomerDetailQuery));

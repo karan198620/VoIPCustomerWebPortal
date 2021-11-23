@@ -25,7 +25,7 @@ namespace VoipProjectEntities.Application.Features.BalanceCustomers.Queries.GetB
 
         public async Task<Response<IEnumerable<BalanceCustomerListVm>>> Handle(GetBalanceCustomersListQuery request, CancellationToken cancellationToken)
         {
-            var allBalanceCustomers = (await _balancecustomerRepository.ListAllAsync()).OrderBy(x => x.BalanceCustomerID);
+            var allBalanceCustomers = (await _balancecustomerRepository.ListAllAsync()).Where(c => c.CustomerId == request.Customerid);
             var balancecustomerlist = _mapper.Map<List<BalanceCustomerListVm>>(allBalanceCustomers);
             var response = new Response<IEnumerable<BalanceCustomerListVm>>(balancecustomerlist);
             return response;
