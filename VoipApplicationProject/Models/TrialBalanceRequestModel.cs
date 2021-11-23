@@ -14,6 +14,9 @@ namespace VoipApplicationProject.Models
         public string CustomerId { get; set; }
         public string Email { get; set; }
         public string OrganisationName { get; set; }
+        public DateTime CreatedAt { get; set; }
+        public DateTime UpdatedAt { get; set; }
+        public decimal Amount { get; set; }
         public CustomerType CustomerTypeId { get; set; }
         public string status { get; set; }
         public TrialBalanceRequestModel[] data { get; set; }
@@ -27,6 +30,6 @@ namespace VoipApplicationProject.Models
 
     public enum TransactionType
     {
-        Debit = 0, Credit = 1, Contra = 2, Reversal = 3
+        debit = 0, credit = 1, contra = 2, reversal = 3
     }
 }

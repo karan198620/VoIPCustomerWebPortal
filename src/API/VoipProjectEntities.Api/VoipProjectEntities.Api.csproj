@@ -9,6 +9,13 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <Compile Remove="Logs\**" />
+	  <Content Remove="Logs\**" />
+	  <EmbeddedResource Remove="Logs\**" />
+	  <None Remove="Logs\**" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <Compile Remove="Controllers\v2\OrderController.cs" />
 	</ItemGroup>
 
@@ -55,7 +62,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Logs\" />
 	  <Folder Include="scripts\" />
 	  <Folder Include="swaggerhelper\" />
 	</ItemGroup>
