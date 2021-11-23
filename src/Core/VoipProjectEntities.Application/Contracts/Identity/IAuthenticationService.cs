@@ -14,6 +14,6 @@ namespace VoipProjectEntities.Application.Contracts.Identity
         Task<DeleteResponse> DeleteAsync(string CustomerId);
         Task<UserManagerResponse> ForgetPasswordAsync(string email);
         Task<UserManagerResponse> ResetPasswordAsync(ResetPasswordRequest request);
-        Task<GetByIdResponse> GetByIdAsync(string id);
+        Task<GetByIdResponse> GetByIdAsync(string Id);
     }
 }

@@ -24,8 +24,8 @@ namespace VoipProjectEntities.Application.Features.TrailBalanceCustomers.Queries
         }
         public async Task<Response<IEnumerable<TrailBalanceCustomerListVm>>> Handle(GetTrailBalanceCustomerListQuery request, CancellationToken cancellationToken)
         {
-            var allTrailBalanceCustomer = await _trailBalanceCustomerRepository.GetTrialBalanceWithCustomers();
-            var trailBalanceCustomerList = _mapper.Map<List<TrailBalanceCustomerListVm>>(allTrailBalanceCustomer);
+            var allTrailBalanceCustomers = (request.FromDate == null && request.ToDate == null) ? await _trailBalanceCustomerRepository.ListAllAsync() : (await _trailBalanceCustomerRepository.ListAllAsync()).Where(x => x.Date >= Convert.ToDateTime(request.FromDate) && x.Date <= Convert.ToDateTime(request.ToDate));
+            var trailBalanceCustomerList = _mapper.Map<List<TrailBalanceCustomerListVm>>(allTrailBalanceCustomers);
             var response = new Response<IEnumerable<TrailBalanceCustomerListVm>>(trailBalanceCustomerList);
             return response;
         }

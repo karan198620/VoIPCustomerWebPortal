@@ -7,8 +7,8 @@
 <link href="https://cdn.datatables.net/1.11.2/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
 <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
 <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
-
 <div style="font-size:20px">Total Trial Balance Request : @Model.data.Count()</div>
+
 <table id="TBRTable" class="table table-bordered text-center w-100">
     <thead>
         <tr>
@@ -18,7 +18,7 @@
             <th>Time</th>
             <th>Email</th>
             <th>Organisation</th>
-            <th>Role</th>
+            <th>Role <a href="#" data-toggle="modal" data-target="#roleModal"><i class="fas fa-filter text-dark"></i></a></th>
             <th>Action</th>
         </tr>
     </thead>
@@ -41,7 +41,8 @@
         }
     </tbody>
 </table>
-<!-- Modal -->
+
+<!-- Date Filter Modal -->
 <div class="modal fade" id="dateModal" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -52,19 +53,54 @@
                 </button>
             </div>
             <div class="modal-body">
-                <div class="row">
-                    <div class="col-md-5">
-                        From <input id="TxtFrmDate" class="form-control date-format" placeholder="dd/mm/yyyy" autocomplete="off" />
+                <form asp-action="ManageTrialBalanceRequest">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <span id="DateErrMsg" style="display:none" class="text-danger">Invalid Dates!</span>
+                    <span asp-validation-for="FromDate" class="text-danger"></span>
+                    <span asp-validation-for="ToDate" class="text-danger"></span>
+                    <div class="row">
+                        <div class="col-md-5">
+                            From <input id="TxtFrmDate" asp-for="FromDate" class="form-control date-format" placeholder="dd/mm/yyyy" autocomplete="off" />
+                        </div>
+                        <div class="col-md-5">
+                            To <input id="TxtToDate" asp-for="ToDate" class="form-control date-format" placeholder="dd/mm/yyyy" autocomplete="off" />
+                        </div>
+                        <div class="col-md-2 pt-4"><input type="submit" value="Filter" class="btn btn-dark" /></div>
                     </div>
-                    <div class="col-md-5">
-                        To <input id="TxtToDate" class="form-control date-format" placeholder="dd/mm/yyyy" autocomplete="off" />
-                    </div>
-                    <div class="col-md-2 pt-4"><button class="btn btn-dark">Filter</button></div>
-                </div>
+                </form>
             </div>
         </div>
     </div>
 </div>
+
+<!-- Role Filter Modal -->
+<div class="modal fade" id="roleModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6>Filter Dates</h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form asp-action="ManageTrialBalanceRequest">                 
+                    <div class="row">
+                        <div class="col-md-6">
+                            <select asp-for="@Model.CustomerTypeId" class="form-control" asp-items="Html.GetEnumSelectList<CustomerType>()">
+                            </select>
+                        </div>
+                        <div class="col-md-6"><input type="submit" value="Filter" class="btn btn-dark btn-block" /></div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
 <script src="/lib/jquery/dist/jquery.min.js"></script>
 <script src="https://cdn.datatables.net/1.11.2/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.11.2/js/dataTables.bootstrap4.min.js"></script>
@@ -102,8 +138,11 @@
                         return IsNumeric(this, e.keyCode);
                     };
                     inputs[i].onkeyup = function (e) {
-                        if (!ValidateDateFormat(this, e.keyCode)) {
-                            alert("Invalid dates!");
+                        if (ValidateDateFormat(this, e.keyCode)) {
+                            $("#DateErrMsg").css("display", "none");
+                        }
+                        else {
+                            $("#DateErrMsg").css("display", "block");
                         }
                     };
                 }
@@ -142,12 +181,4 @@
             return false;
         }
     };
-
-    //function ShowHideError(textbox, display) {
-    //    var row = textbox.parentNode.parentNode;
-    //    var errorMsg = row.getElementsByTagName("span")[0];
-    //    if (errorMsg != null) {
-    //        errorMsg.style.display = display;
-    //    }
-    //};
 </script>

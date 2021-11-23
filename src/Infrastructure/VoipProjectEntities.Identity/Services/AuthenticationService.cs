@@ -355,13 +355,14 @@ namespace VoipProjectEntities.Identity.Services
             };
         }
 
-        public async Task<GetByIdResponse> GetByIdAsync(string id)
+        public async Task<GetByIdResponse> GetByIdAsync(string Id)
         {
-            var user = await _userManager.FindByIdAsync(id);
+            var user = await _userManager.FindByIdAsync(Id);
 
             if (user != null)
             {
-                return new GetByIdResponse { 
+                return new GetByIdResponse
+                {
                     Id = user.Id,
                     UserName = user.UserName,
                     Email = user.Email,
@@ -372,7 +373,7 @@ namespace VoipProjectEntities.Identity.Services
                 };
             }
 
-            return new GetByIdResponse { Message = $"{id} Not Found !." };
+            return new GetByIdResponse { Message = $"{Id} Not Found !." };
         }
     }
 }

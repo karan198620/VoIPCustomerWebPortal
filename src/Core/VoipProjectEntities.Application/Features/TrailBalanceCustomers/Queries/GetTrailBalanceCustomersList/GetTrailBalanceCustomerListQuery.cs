@@ -8,5 +8,7 @@ namespace VoipProjectEntities.Application.Features.TrailBalanceCustomers.Queries
 {
    public class GetTrailBalanceCustomerListQuery : IRequest<Response<IEnumerable<TrailBalanceCustomerListVm>>>
     {
+        public string FromDate { get; set; }
+        public string ToDate { get; set; }
     }
 }

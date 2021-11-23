@@ -80,11 +80,11 @@ namespace VoipProjectEntities.Api.Controllers
                 return BadRequest();
         }
 
-        [Authorize]
-        [HttpGet("getById/{id}")]
-        public async Task<IActionResult> GetByIdAsync(string id)
+        
+        [HttpGet("getById")]
+        public async Task<IActionResult> GetByIdAsync([FromQuery]string Id)
         {
-            var response = await _authenticationService.GetByIdAsync(id);
+            var response = await _authenticationService.GetByIdAsync(Id);
 
             if (response != null)
                 return Ok(response);

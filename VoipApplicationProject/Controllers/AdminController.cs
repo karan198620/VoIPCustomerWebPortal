@@ -27,13 +27,44 @@ namespace VoipApplicationProject.Controllers
             {
                 TrialBalanceRequestModel TBRModel = repo.GetAllTBRRequest(token);
 
-                for (int nCount = 0; nCount < TBRModel.data.Count(); nCount++)
+                if ((TBRModel.data != null) && (TBRModel.data.Count() > 0))
                 {
-                    var customer = repo.GetCustomerById(TBRModel.data[nCount].CustomerId, token);
+                    for (int nCount = 0; nCount < TBRModel.data.Count(); nCount++)
+                    {
+                        var customer = repo.GetCustomerById(TBRModel.data[nCount].CustomerId, token);
 
-                    TBRModel.data[nCount].OrganisationName = String.IsNullOrEmpty(customer.OrganisationName) ? "-" : customer.OrganisationName;
-                    TBRModel.data[nCount].CustomerTypeId = customer.CustomerTypeId;
-                    TBRModel.data[nCount].Email = customer.Email;
+                        TBRModel.data[nCount].OrganisationName = String.IsNullOrEmpty(customer.OrganisationName) ? "-" : customer.OrganisationName;
+                        TBRModel.data[nCount].CustomerTypeId = customer.CustomerTypeId;
+                        TBRModel.data[nCount].Email = customer.Email;
+                    }
+                }
+
+                return View(TBRModel);
+            }
+            else
+            {
+                return RedirectToAction("AdminLogin", "Customer");
+            }
+        }
+
+        [HttpPost]
+        public IActionResult ManageTrialBalanceRequest(TrialBalanceRequestModel trialBalanceRequestModel)
+        {
+            string token = GetCookie("token");
+            if (!String.IsNullOrEmpty(token))
+            {
+                TrialBalanceRequestModel TBRModel = repo.GetAllTBRRequest(token,trialBalanceRequestModel.FromDate,trialBalanceRequestModel.ToDate);
+
+                if ((TBRModel.data != null) && (TBRModel.data.Count() > 0))
+                {
+                    for (int nCount = 0; nCount < TBRModel.data.Count(); nCount++)
+                    {
+                        var customer = repo.GetCustomerById(TBRModel.data[nCount].CustomerId, token);
+
+                        TBRModel.data[nCount].OrganisationName = String.IsNullOrEmpty(customer.OrganisationName) ? "-" : customer.OrganisationName;
+                        TBRModel.data[nCount].CustomerTypeId = customer.CustomerTypeId;
+                        TBRModel.data[nCount].Email = customer.Email;
+                    }
                 }
 
                 return View(TBRModel);
