@@ -29,6 +29,7 @@ namespace VoipApplicationProject
             services.AddScoped<IDashboardRepo, DashboardRepo>();
             services.AddScoped<ISubscriptionRepo, SubscriptionRepo>();
             services.AddScoped<IAdminRepo, AdminRepo>();
+            services.AddScoped<ITrailBalanceCustomerRepo, TrailBalanceCustomerRepo>();
             services.AddSession();
         }
 

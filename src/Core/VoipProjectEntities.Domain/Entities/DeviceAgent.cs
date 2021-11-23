@@ -9,7 +9,9 @@ using VoipProjectEntities.Domain.Common;
 namespace VoipProjectEntities.Domain.Entities
 {
     public class DeviceAgent:CommonField
-    {   [Key]
+    {
+        #region DeviceAgent - Lucky
+        [Key]
         public Guid DeviceAgentId { get; set; }
         public string MacAddress { get; set; }
         public bool IsWorking { get; set; }
@@ -21,5 +23,6 @@ namespace VoipProjectEntities.Domain.Entities
         public Guid? AgentCustomerID { get; set; }
         [ForeignKey("AgentCustomerID")]
         public virtual AgentCustomer AgentCustomers { get; set; }
+        #endregion
     }
 }

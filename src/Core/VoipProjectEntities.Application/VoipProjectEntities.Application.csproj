@@ -4,6 +4,12 @@
 	  <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Features\TrailBalanceCustomers\Queries\GetTrailBalanceCustomerDetail\**" />
+    <EmbeddedResource Remove="Features\TrailBalanceCustomers\Queries\GetTrailBalanceCustomerDetail\**" />
+    <None Remove="Features\TrailBalanceCustomers\Queries\GetTrailBalanceCustomerDetail\**" />
+  </ItemGroup>
+
 	<ItemGroup>
 		<PackageReference Include="AutoMapper" Version="10.1.1" />
 		<PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.0" />
@@ -19,10 +25,6 @@
 	
   <ItemGroup>
     <ProjectReference Include="..\VoipProjectEntities.Domain\VoipProjectEntities.Domain.csproj" />
-  </ItemGroup>
-	
-  <ItemGroup>
-    <Folder Include="Features\TrailBalanceCustomers\Queries\GetTrailBalanceCustomerDetail\" />
   </ItemGroup>
 
 </Project>

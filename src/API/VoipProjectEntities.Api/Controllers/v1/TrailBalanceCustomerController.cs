@@ -13,7 +13,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace VoipProjectEntities.Api.Controllers.v1
 {
-    [Authorize]
+    
     [Route("api/[controller]")]
     [ApiController]
     public class TrailBalanceCustomerController : ControllerBase

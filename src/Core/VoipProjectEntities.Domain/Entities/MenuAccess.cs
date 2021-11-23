@@ -10,10 +10,12 @@ namespace VoipProjectEntities.Domain.Entities
 {
     public class MenuAccess: CommonField
     {
+        #region MenuAccess - Lucky
         [Key]
         public Guid MenuAccessId { get; set; }
         public bool IsAccess { get; set; }
         public int MenuLink { get; set; }//enum
         public string CustomerId { get; set; }
+        #endregion
     }
 }

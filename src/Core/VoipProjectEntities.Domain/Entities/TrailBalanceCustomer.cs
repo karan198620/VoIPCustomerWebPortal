@@ -9,6 +9,8 @@ namespace VoipProjectEntities.Domain.Entities
 {
     public class TrailBalanceCustomer: CommonField
     {
+        #region TrailBalanceCustomer - Lucky
+
         [Key]
         public Guid TrailBalanceCustomerId { get; set; }
         public DateTime Date { get; set; }
@@ -18,5 +20,6 @@ namespace VoipProjectEntities.Domain.Entities
         [ForeignKey(nameof(AgentCustomer))]
         public Guid? AgentCustomerID { get; set; }
         public decimal Amount { get; set; }
+        #endregion
     }
 }

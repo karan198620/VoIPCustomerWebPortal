@@ -16,10 +16,15 @@ namespace VoipApplicationProject.Controllers
     public class CustomerController : Controller
     {
         private readonly ICustomerRepo repo;
-        public CustomerController(ICustomerRepo _repo)
+        private readonly ITrailBalanceCustomerRepo t_repo;
+        public CustomerController(ICustomerRepo _repo, ITrailBalanceCustomerRepo _t_repo)
         {
             repo = _repo;
+            t_repo = _t_repo;
+
         }
+       
+
 
         #region "Get All Customers / Get All Existing Users - Lucky"
         public IActionResult Index()
@@ -53,9 +58,34 @@ namespace VoipApplicationProject.Controllers
 
             if (Customer.Id != null)
             {
-                if (repo.CreateMenuAccess(Customer.Id,"Users"))
+                if (repo.CreateMenuAccess(Customer.Id, "Users"))
                 {
-                    return RedirectToAction("Login", "Customer");
+                    if (Customer.CustomerTypeID == CustomerType.User)
+                    {
+                        TrialBalanceRequestModel tbrModel = new TrialBalanceRequestModel();
+                        tbrModel.CustomerId = Customer.Id;
+                        tbrModel.Date = DateTime.Now;
+                        tbrModel.TransactionType = TransactionType.Credit;
+                        tbrModel.CreatedAt = DateTime.Now;
+                        tbrModel.UpdatedAt = DateTime.Now;
+                         TrialBalanceRequestModel trailBalanceCustomer = t_repo.CreateTrialBalanceCustomers(tbrModel);
+                        if (!String.IsNullOrEmpty(trailBalanceCustomer.TrailBalanceCustomerId.ToString()))
+                        {
+                            return RedirectToAction("Login", "Customer");
+                        }
+                        else
+                        {
+                            repo.DeleteCustomer(Customer.Id);
+                            ViewBag.ShowAlert = "menu_error";
+                            return View();
+                        }
+                    }
+                    else
+                    {
+                        return RedirectToAction("Login", "Customer");
+                    }
+
+
                 }
                 else
                 {
