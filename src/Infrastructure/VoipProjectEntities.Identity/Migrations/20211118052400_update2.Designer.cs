@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using VoipProjectEntities.Identity;
 
 namespace VoipProjectEntities.Identity.Migrations
 {
     [DbContext(typeof(IdentityDbContext))]
-    partial class IdentityDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211118052400_update2")]
+    partial class update2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -48,15 +50,15 @@ namespace VoipProjectEntities.Identity.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "bb750f65-8827-46cd-a7c6-4096afffbdec",
-                            ConcurrencyStamp = "e1479b5c-95cd-4a1a-8117-7ca9a176cb33",
+                            Id = "d048c393-fc16-4068-bc1f-cbf2b50a9247",
+                            ConcurrencyStamp = "e80ef656-fbb6-427d-8ef7-804198c1a760",
                             Name = "Viewer",
                             NormalizedName = "VIEWER"
                         },
                         new
                         {
-                            Id = "02b8244b-8198-4b5b-a263-0de6d5f1352d",
-                            ConcurrencyStamp = "cb28fdbd-b435-4a61-b669-adfc2b67e5e2",
+                            Id = "211faebf-f0f0-40de-8077-210f50d532e5",
+                            ConcurrencyStamp = "2e339ac6-f28f-4653-94fd-1b96bbcc2277",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         });

@@ -1,0 +1,45 @@
+﻿@model VoipApplicationProject.Models.CustomerModel
+
+@{
+    ViewData["Title"] = "AdminLogin";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="col-md-6 mx-auto">
+    <h4 class="text-center">Welcome Admin</h4>
+    <form asp-action="AdminLogin">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group mt-3">
+            <input asp-for="Email" class="form-control" placeholder="Username*" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <input type="password" asp-for="Password" required class="form-control" placeholder="Password*" />
+        </div>
+        <div class="form-group row">
+            <div class="col-6">
+                @Html.CheckBox("ChkRememberMe", false)
+                <label class="mx-2">Remember Me</label>
+            </div>
+            <div class="col-6 text-right">
+                <a href="ForgotPassword">Forgot Password ?</a>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-4 mx-auto">
+                <input type="submit" value="Login" class="btn btn-primary btn-block" />
+            </div>
+        </div>
+    </form>
+</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+@if (ViewBag.ShowAlert == "login_error")
+{
+    <script>alert("Your username and/or password is incorrect. Please try again");</script>
+}
+else if (ViewBag.ShowAlert == "customertype_error")
+{
+    <script>alert("Your credentials doesn't match as Admin!");</script>
+}

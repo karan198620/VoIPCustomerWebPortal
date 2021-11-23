@@ -8,10 +8,12 @@ using System.Threading.Tasks;
 using VoipProjectEntities.Application.Features.TrialBalanceCustomers.Commands.CreateTrialBalanceCustomer;
 using VoipProjectEntities.Application.Features.TrialBalanceCustomers.Commands.DeleteTrialBalanceCustomer;
 using VoipProjectEntities.Application.Features.TrialBalanceCustomers.Commands.UpdateTrialBalanceCustomer;
-using VoipProjectEntities.Application.Features.TrialBalanceCustomers.Queries.GetTrialBalanceCustomerList;
+using VoipProjectEntities.Application.Features.TrailBalanceCustomers.Queries.GetTrailBalanceCustomersList;
+using Microsoft.AspNetCore.Authorization;
 
 namespace VoipProjectEntities.Api.Controllers.v1
 {
+    
     [Route("api/[controller]")]
     [ApiController]
     public class TrailBalanceCustomerController : ControllerBase
@@ -26,9 +28,9 @@ namespace VoipProjectEntities.Api.Controllers.v1
         [HttpGet(Name = "TrailBalanceCustomers")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesDefaultResponseType]
-        public async Task<ActionResult> GetTrailBalanceCustomers()
+        public async Task<ActionResult> GetTrailBalanceCustomers([FromQuery]string fromDate, string toDate)
         {
-            var dtos = await _mediator.Send(new GetTrailBalanceCustomerListQuery());
+            var dtos = await _mediator.Send(new GetTrailBalanceCustomerListQuery() { FromDate = fromDate, ToDate = toDate});
             return Ok(dtos);
         }
 
