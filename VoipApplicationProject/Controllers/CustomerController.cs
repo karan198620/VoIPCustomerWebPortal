@@ -16,12 +16,9 @@ namespace VoipApplicationProject.Controllers
     public class CustomerController : Controller
     {
         private readonly ICustomerRepo repo;
-        private readonly ITrailBalanceCustomerRepo t_repo;
-        public CustomerController(ICustomerRepo _repo, ITrailBalanceCustomerRepo _t_repo)
+        public CustomerController(ICustomerRepo _repo)
         {
             repo = _repo;
-            t_repo = _t_repo;
-
         }
 
         #region "Get All Customers / Get All Existing Users - Lucky"
@@ -60,17 +57,7 @@ namespace VoipApplicationProject.Controllers
                 {
                     if (Customer.CustomerTypeID == CustomerType.User)
                     {
-                        TrialBalanceRequestModel tbrModel = new TrialBalanceRequestModel();
-                        tbrModel.CustomerId = Customer.Id;
-                        tbrModel.Date = DateTime.Now;
-                        tbrModel.TransactionType = TransactionType.credit;
-                        tbrModel.CreatedAt = DateTime.Now;
-                        tbrModel.UpdatedAt = DateTime.Now;
-                        tbrModel.Amount = 500;
-
-                        
-                        TrialBalanceRequestModel trailBalanceCustomer = t_repo.CreateTrialBalanceCustomers(tbrModel);
-                        if (!String.IsNullOrEmpty(trailBalanceCustomer.TrailBalanceCustomerId.ToString()))
+                        if (repo.CreateTrialBalanceCustomers(Customer.Id))
                         {
                             return RedirectToAction("Login", "Customer");
                         }
@@ -85,8 +72,6 @@ namespace VoipApplicationProject.Controllers
                     {
                         return RedirectToAction("Login", "Customer");
                     }
-
-
                 }
                 else
                 {

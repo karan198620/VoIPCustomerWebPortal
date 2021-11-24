@@ -156,6 +156,45 @@ namespace VoipApplicationProject.Repositories
         }
         #endregion
 
+        #region "Create Trial Balance Request Customers - Lucky"
+        public bool CreateTrialBalanceCustomers(string CustomerId)
+        {
+            bool FunctionReturnValue = false;
+
+            try
+            {
+                HttpClient HC = new HttpClient();
+                HC.BaseAddress = new Uri(Baseurl);
+
+                TrialBalanceRequestModel tbrModel = new TrialBalanceRequestModel();
+                tbrModel.CustomerId = CustomerId;
+                tbrModel.Date = DateTime.Now;
+                tbrModel.TransactionType = TransactionType.credit;
+                tbrModel.CreatedAt = DateTime.Now;
+                tbrModel.UpdatedAt = DateTime.Now;
+                tbrModel.Amount = 500;
+
+                var insertedRecord = HC.PostAsJsonAsync("api/TrailBalanceCustomer", tbrModel);
+                insertedRecord.Wait();
+
+                var result = insertedRecord.Result;
+
+                if (result.IsSuccessStatusCode)
+                {
+                    FunctionReturnValue = true;
+                }
+
+                HC.Dispose();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+            return FunctionReturnValue;
+        }
+        #endregion
+
         #region "Common Method For Calling API - Anagha"
         public Tuple<CustomerModel, List<CustomerModel>> CallingApi(bool IsGet, string api, bool IsList, CustomerModel customer = null)
         {
@@ -187,7 +226,7 @@ namespace VoipApplicationProject.Repositories
             {
                 throw;
             }
-        }
+        }        
         #endregion
     }
 }
