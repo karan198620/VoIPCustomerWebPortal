@@ -12,4 +12,5 @@ namespace VoipApplicationProject.Models
         public TransactionType TranscationType { get; set; }
         public string CustomerId { get; set; }
     }
+
 }

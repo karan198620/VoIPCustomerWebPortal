@@ -274,6 +274,13 @@ namespace VoipApplicationProject.Controllers
         }
         #endregion
 
+        #region"User Billing"
+        public ActionResult Billing()
+        {
+            return View();
+        }
+        #endregion
+
         #region "Set Cookies"
         public void SetCookie(string key, string value, int? expireTime)
         {
