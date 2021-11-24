@@ -25,20 +25,9 @@ namespace VoipApplicationProject.Controllers
             string token = GetCookie("token");
             if (!String.IsNullOrEmpty(token))
             {
-                TrialBalanceRequestModel TBRModel = repo.GetAllTBRRequest(token);
-
-                if ((TBRModel.data != null) && (TBRModel.data.Count() > 0))
-                {
-                    for (int nCount = 0; nCount < TBRModel.data.Count(); nCount++)
-                    {
-                        var customer = repo.GetCustomerById(TBRModel.data[nCount].CustomerId, token);
-
-                        TBRModel.data[nCount].OrganisationName = String.IsNullOrEmpty(customer.OrganisationName) ? "-" : customer.OrganisationName;
-                        TBRModel.data[nCount].CustomerTypeId = customer.CustomerTypeId;
-                        TBRModel.data[nCount].Email = customer.Email;
-                    }
-                }
-
+                var result = repo.GetAllTBRRequest(token);
+                TrialBalanceRequestModel TBRModel = new TrialBalanceRequestModel();
+                TBRModel.data = result.ToArray();
                 return View(TBRModel);
             }
             else
@@ -53,20 +42,15 @@ namespace VoipApplicationProject.Controllers
             string token = GetCookie("token");
             if (!String.IsNullOrEmpty(token))
             {
-                TrialBalanceRequestModel TBRModel = repo.GetAllTBRRequest(token,trialBalanceRequestModel.FromDate,trialBalanceRequestModel.ToDate);
-
-                if ((TBRModel.data != null) && (TBRModel.data.Count() > 0))
+                var result = repo.GetAllTBRRequest(token, trialBalanceRequestModel.FromDate, trialBalanceRequestModel.ToDate);
+                
+                if (!String.IsNullOrEmpty(trialBalanceRequestModel.IsRole))
                 {
-                    for (int nCount = 0; nCount < TBRModel.data.Count(); nCount++)
-                    {
-                        var customer = repo.GetCustomerById(TBRModel.data[nCount].CustomerId, token);
-
-                        TBRModel.data[nCount].OrganisationName = String.IsNullOrEmpty(customer.OrganisationName) ? "-" : customer.OrganisationName;
-                        TBRModel.data[nCount].CustomerTypeId = customer.CustomerTypeId;
-                        TBRModel.data[nCount].Email = customer.Email;
-                    }
+                    result = result.Where(item => item.CustomerTypeId == trialBalanceRequestModel.CustomerTypeId).ToList();
                 }
 
+                TrialBalanceRequestModel TBRModel = new TrialBalanceRequestModel();
+                TBRModel.data = result.ToArray();
                 return View(TBRModel);
             }
             else

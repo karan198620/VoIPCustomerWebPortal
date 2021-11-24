@@ -1,0 +1,40 @@
+﻿@model VoipApplicationProject.Models.APILogsModel
+
+@{
+    ViewData["Title"] = "APILogs";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div style="font-size:20px">Total API Logs : @Model.data.Count()</div>
+
+<table id="UserLogTable" class="table table-bordered text-center w-100">
+    <thead>
+        <tr>
+            <th>Sr No.</th>
+            <th>Date</th>
+            <th>API Name</th>
+            <th>Type</th>
+            <th>Time</th>
+            <th>Response Status</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (int i = 0; i < Model.data.Count(); i++)
+        {
+            <tr>
+                <td>@Html.DisplayName((1 + i).ToString())</td>
+                <td>@Html.DisplayFor(modelItem => Model.data[i].Date)</td>
+                <td>@Html.DisplayFor(modelItem => Model.data[i].APIName)</td>
+                <td>@Html.DisplayFor(modelItem => Model.data[i].Type)</td>
+                <td>@Html.DisplayFor(modelItem => Model.data[i].Time)</td>
+                <td>@Html.DisplayFor(modelItem => Model.data[i].ResponseStatus)</td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
