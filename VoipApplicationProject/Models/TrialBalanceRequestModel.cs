@@ -23,6 +23,7 @@ namespace VoipApplicationProject.Models
 
         [Required(ErrorMessage = "To date cannot be empty")]
         public string ToDate { get; set; }
+        public string IsRole { get; set; }
     }
 
     public enum TransactionType

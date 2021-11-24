@@ -12,9 +12,4 @@ namespace VoipApplicationProject.Models
         public TransactionType TranscationType { get; set; }
         public string CustomerId { get; set; }
     }
-
-    public enum TransactionType
-    {
-        Debit = 0, Credit = 1, Contra = 2, Reversal = 3
-    }
 }

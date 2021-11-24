@@ -15,7 +15,7 @@ namespace VoipApplicationProject.Repositories
         string Baseurl = "https://localhost:44330/";
 
         #region "Get All Trial Balance Request - Anagha"
-        public TrialBalanceRequestModel GetAllTBRRequest(string token, string fromDate = "", string toDate = "")
+        public List<TrialBalanceRequestModel> GetAllTBRRequest(string token, string fromDate = "", string toDate = "")
         {
             string api = "";
 
@@ -24,16 +24,30 @@ namespace VoipApplicationProject.Repositories
                 string[] formats = { "dd/MM/yyyy" };
                 fromDate = (DateTime.ParseExact(fromDate, formats, new CultureInfo("en-US"))).ToString();
                 toDate = (DateTime.ParseExact(toDate, formats, new CultureInfo("en-US"))).ToString();
-              
+
                 api = "api/TrailBalanceCustomer?fromDate=" + fromDate + "&toDate=" + toDate;
-            }            
+            }
             else
             {
                 api = "api/TrailBalanceCustomer";
             }
 
             var result = CallingApi(true, api, token);
-            return result;
+
+            List<TrialBalanceRequestModel> tbrList = new List<TrialBalanceRequestModel>();
+
+            tbrList = result.data.ToList();
+
+            for (int nCount = 0; nCount < result.data.Count(); nCount++)
+            {
+                var customer = GetCustomerById(result.data[nCount].CustomerId, token);
+
+                tbrList[nCount].OrganisationName = customer.OrganisationName;
+                tbrList[nCount].CustomerTypeId = customer.CustomerTypeId;
+                tbrList[nCount].Email = customer.Email;                          
+            }           
+
+            return tbrList;
         }
         #endregion
 
