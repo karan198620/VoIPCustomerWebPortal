@@ -1,6 +1,31 @@
 ﻿@{
     ViewData["Title"] = "Privacy Policy";
 }
-<h1>@ViewData["Title"]</h1>
-
-<p>Use this page to detail your site's privacy policy.</p>
+<style>
+    .row {
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+        margin-right: -15px;
+        margin-left: -15px;
+        justify-content: center;
+    }
+</style>
+<h2  style="color:blue;text-align:center">WE HAVE UPDATED OUR TERMS AND CONDITION/PRIVACY POLICY</h2>
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <p style="color:blue ">Terms and Conditions</p>
+        </div>
+        <div class="col-md-4" style="text-align:center">
+            <p style="color:blue">Privacy Policy</p>
+        </div>
+    </div>
+</div>
+<div class="container" style="border:2px solid black ; height:300px; width:3000px" >
+    <p style="text-align:center;font-size:40px ;margin-top:12%">TERMS & CONDITIONS & PRIVACY POLICY</p>
+</div>
+<div style="margin-left:45%;margin-top:10px">
+    <button type="button"><a class="nav-link text-primary bg-white" asp-area="" asp-controller="Home" asp-action="Index">ACCEPT & CONTINUE</a></button>
+</div>

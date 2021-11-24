@@ -1,0 +1,53 @@
+﻿@model IEnumerable<VoipApplicationProject.Models.BillingModel>
+
+@{
+    ViewData["Title"] = "Billing";
+}
+
+<h1>Billing</h1>
+
+<div class="row">
+    <div class="col-md-3">
+        <button type="submit" class="btn btn-dark" asp-area="" asp-controller="Home" asp-action="Index">ACCEPT & CONTINUE</a></button>
+    </div>
+    <div class="col-md-3">
+        <button type="submit"class="btn btn-dark" asp-area="" asp-controller="Home" asp-action="Index">ACCEPT & CONTINUE</a></button>
+    </div>
+    <div class="col-md-3">
+        <button type="submit" class="btn btn-dark" asp-area="" asp-controller="Home" asp-action="Index">ACCEPT & CONTINUE</a></button>
+    </div>
+    <div class="col-md-3">
+        <button type="submit" class="btn btn-dark" asp-area="" asp-controller="Home" asp-action="Index">ACCEPT & CONTINUE</a></button>
+    </div>
+</div>
+<br>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Sr_No)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Time)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Type)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Amount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TransactionId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+   
+</table>
