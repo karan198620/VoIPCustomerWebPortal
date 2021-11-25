@@ -8,7 +8,7 @@ namespace VoipApplicationProject.Repositories
 {
     public interface IAdminRepo
     {
-        TrialBalanceRequestModel GetAllTBRRequest(string token, string fromDate = "", string toDate = "");
+        List<TrialBalanceRequestModel> GetAllTBRRequest(string token, string fromDate = "", string toDate = "");
         TrialBalanceRequestModel GetCustomerById(string Id, string token);
     }
 }

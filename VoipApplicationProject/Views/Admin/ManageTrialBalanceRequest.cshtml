@@ -4,9 +4,7 @@
     ViewData["Title"] = "ManageTrialBalanceRequest";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
-<link href="https://cdn.datatables.net/1.11.2/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
-<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
-<link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
+
 <div style="font-size:20px">Total Trial Balance Request : @Model.data.Count()</div>
 
 <table id="TBRTable" class="table table-bordered text-center w-100">
@@ -23,16 +21,17 @@
         </tr>
     </thead>
     <tbody>
-        @for (int i = 0; i < Model.data.Count(); i++)
+        @{int i = 1; }
+        @foreach (var item in Model.data)
         {
             <tr>
-                <td>@Html.DisplayName((1 + i).ToString())</td>
-                <td>@Html.Label(Model.data[i].Date.ToShortDateString())</td>
-                <td>@Html.DisplayFor(modelItem => Model.data[i].TransactionType)</td>
-                <td>@Html.Label(Model.data[i].Date.ToShortTimeString())</td>
-                <td>@Html.DisplayFor(modelItem => Model.data[i].Email)</td>
-                <td>@Html.DisplayFor(modelItem => Model.data[i].OrganisationName)</td>
-                <td>@Html.DisplayFor(modelItem => Model.data[i].CustomerTypeId)</td>
+                <td>@Html.DisplayName((i++).ToString())</td>
+                <td>@Html.Label(item.Date.ToShortDateString())</td>
+                <td>@Html.DisplayFor(modelItem => item.TransactionType)</td>
+                <td>@Html.Label(item.Date.ToShortTimeString())</td>
+                <td>@Html.DisplayFor(modelItem => item.Email)</td>
+                <td>@Html.DisplayFor(modelItem => item.OrganisationName)</td>
+                <td>@Html.DisplayFor(modelItem => item.CustomerTypeId)</td>
                 <td>
                     @Html.ActionLink("Approve", "Approve", new { /* id=item.PrimaryKey */ }) |
                     @Html.ActionLink("Reject", "Reject", new { /* id=item.PrimaryKey */ })
@@ -65,7 +64,9 @@
                         <div class="col-md-5">
                             To <input id="TxtToDate" asp-for="ToDate" class="form-control date-format" placeholder="dd/mm/yyyy" autocomplete="off" />
                         </div>
-                        <div class="col-md-2 pt-4"><input type="submit" value="Filter" class="btn btn-dark" /></div>
+                        <div class="col-md-2 pt-4">
+                            <input type="submit" value="Filter" class="btn btn-dark" />
+                        </div>
                     </div>
                 </form>
             </div>
@@ -84,27 +85,24 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form asp-action="ManageTrialBalanceRequest">                 
+                <form asp-action="ManageTrialBalanceRequest">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input asp-for="IsRole" class="d-none" value="true" />
                     <div class="row">
                         <div class="col-md-6">
-                            <select asp-for="@Model.CustomerTypeId" class="form-control" asp-items="Html.GetEnumSelectList<CustomerType>()">
+                            <select class="form-control" asp-for="CustomerTypeId" asp-items="Html.GetEnumSelectList<CustomerType>()">
                             </select>
                         </div>
-                        <div class="col-md-6"><input type="submit" value="Filter" class="btn btn-dark btn-block" /></div>
+                        <div class="col-md-6">
+                            <input type="submit" value="Filter" class="btn btn-dark" />
+                            @*@Html.ActionLink("Filter", "ManageTrialBalanceRequest", new { @class = "btn btn-dark" })*@
+                        </div>
                     </div>
                 </form>
             </div>
         </div>
     </div>
 </div>
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
-<script src="/lib/jquery/dist/jquery.min.js"></script>
-<script src="https://cdn.datatables.net/1.11.2/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.11.2/js/dataTables.bootstrap4.min.js"></script>
-<script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
 
 <script>
     $('#TBRTable').DataTable();

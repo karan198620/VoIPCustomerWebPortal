@@ -1,0 +1,46 @@
+﻿@model VoipApplicationProject.Models.UserLogsModel
+
+@{
+    ViewData["Title"] = "UserLogs";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div style="font-size:20px">Total Logs Count : @Model.data.Count()</div>
+
+<table id="UserlogTable" class="table table-bordered text-center w-100">
+    <thead>
+        <tr>
+            <th>Sr. No</th>
+            <th>Date</th>
+            <th>User</th>
+            <th>Email Id</th>
+            <th>Logged In Time</th>
+            <th>Logged Out Time</th>
+            <th>Country</th>
+            <th>IP</th>
+            <th>Device</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (int i = 0; i < Model.data.Count(); i++)
+        {
+            <tr>
+                <td>@Html.DisplayName((1 + i).ToString())</td>
+                <td>@Html.DisplayFor(modelItem => Model.data[i].Date)</td>
+                <td>@Html.DisplayFor(modelItem => Model.data[i].User)</td>
+                <td>@Html.DisplayFor(modelItem => Model.data[i].EmailID)</td>
+                <td>@Html.DisplayFor(modelItem => Model.data[i].LoggedInTime)</td>
+                <td>@Html.DisplayFor(modelItem => Model.data[i].LoggedOutTime)</td>
+                <td>@Html.DisplayFor(modelItem => Model.data[i].Country)</td>
+                <td>@Html.DisplayFor(modelItem => Model.data[i].IP)</td>
+                <td>@Html.DisplayFor(modelItem => Model.data[i].Device)</td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
