@@ -45,6 +45,10 @@ namespace VoipApplicationProject.Controllers
         }
         #endregion
 
+        public IActionResult BuySubscription()
+        {
+                return View(); 
+        }
         #region "Get Cookies"
         public string GetCookie(string Value)
         {

@@ -35,8 +35,11 @@ namespace VoipApplicationProject.Controllers
                 return RedirectToAction("Login", "Customer");
             }
         }
-        
-        
+
+        public IActionResult AddBalance()
+        {
+                return View();
+        }
 
         #region "Get Cookies"
         public string GetCookie(string Value)
