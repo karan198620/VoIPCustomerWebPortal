@@ -233,6 +233,7 @@ namespace VoipApplicationProject.Repositories
         }
         #endregion
 
+        #region "Get Subscription List - Jaideep"
         public List<SubscriptionModel> GetSubscriptionList(string CustomerId)
         {
             try
@@ -262,6 +263,7 @@ namespace VoipApplicationProject.Repositories
                 throw;
             }
         }
+        #endregion
 
         #region "Common Method For Calling API - Anagha"
         public Tuple<CustomerModel, List<CustomerModel>> CallingApi(bool IsGet, string api, bool IsList, CustomerModel customer = null)
