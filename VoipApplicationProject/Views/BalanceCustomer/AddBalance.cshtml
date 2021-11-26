@@ -1,0 +1,41 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "ADD BALANCE";
+}
+<h1 style="text-align:center">Add Funds to your Motele.com account instantly  </h1>
+<h4 style="text-align:center">Select an amount to add to your account</h4>
+<div class="form-group row"style="text-align:center">
+    <div class="col-md-2">
+        @Html.CheckBox("$50", false)
+        <label class="mx-2">$50</label>
+    </div>
+    <div class="col-md-2">
+        @Html.CheckBox("$100", false)
+        <label >$100</label>
+    </div>
+    <div class="col-md-2">
+        @Html.CheckBox("$150", false)
+        <label >$150</label>
+    </div>
+    <div class="col-md-2">
+        @Html.CheckBox("$200", false)
+        <label >$200</label>
+    </div>
+    <div class="col-md-2">
+        @Html.CheckBox("$250", false)
+        <label>$250</label>
+    </div>
+    <div class="col-md-2">
+        @Html.CheckBox("$300", false)
+        <label >$300</label>
+    </div>
+</div>
+<h4 style="text-align:center">OR</h4>
+<br>
+<div style="text-align:center">
+    <input placeholder="ENTER AMOUNT($)">
+    <br><br>
+    <button type="submit" class="btn btn-dark" style="background-color:blue" asp-area="" asp-controller="Home" asp-action="Index">GENERATE PAYMENT LINK</button>
+</div>

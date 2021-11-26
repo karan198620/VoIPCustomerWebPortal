@@ -25,7 +25,7 @@ namespace VoipProjectEntities.Application.Features.CallRecordingAgents.Queries.G
 
         public async Task<Response<IEnumerable<CallRecordingAgentListVm>>> Handle(GetCallRecordingAgentsListQuery request, CancellationToken cancellationToken)
         {
-            var allcallRecordingAgent = (await _callrecordingagentRepository.ListAllAsync()).OrderBy(x => x.CustomerId);
+            var allcallRecordingAgent = (await _callrecordingagentRepository.ListAllAsync()).Where(x=>x.CustomerId == request.CustomerId).OrderBy(x => x.CustomerId);
             var callrecordingagentlist = _mapper.Map<List<CallRecordingAgentListVm>>(allcallRecordingAgent);
             var response = new Response<IEnumerable<CallRecordingAgentListVm>>(callrecordingagentlist);
             return response;

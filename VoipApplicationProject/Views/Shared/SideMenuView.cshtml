@@ -13,7 +13,7 @@ else
     <div class="sidenav border-right">
         @foreach (var menu in ViewBag.menulist)
         {
-            <a href="#" class="border-bottom menulinks">@AddSpace(@menu.MenuLink)</a>
+            <a href="Customer/@menu.MenuLink" class="border-bottom menulinks">@AddSpace(@menu.MenuLink)</a>
         }
     </div>
 }

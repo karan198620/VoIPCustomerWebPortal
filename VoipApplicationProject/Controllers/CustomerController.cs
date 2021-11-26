@@ -127,6 +127,10 @@ namespace VoipApplicationProject.Controllers
         public IActionResult Login()
         {
             ViewBag.ShowAlert = "";
+            //if (GetCookie("name") != null)
+            //{
+            //    return RedirectToAction("Index", "Dashboard");
+            //}
             return View();
         }
 
@@ -144,10 +148,11 @@ namespace VoipApplicationProject.Controllers
 
                     string isRememberMe = Request.Form["ChkRememberMe"];
 
-                    if(isRememberMe != "false")
+                    if (isRememberMe != "false")
                     {
+                        //set an object of login credentials
                         SetCookie("refreshtoken", Customer.refreshtoken, 600);
-                    }                   
+                    }     
 
                     return RedirectToAction("Index", "Dashboard");
                 }
@@ -256,6 +261,96 @@ namespace VoipApplicationProject.Controllers
                 ViewBag.ShowAlert = "failed";
                 return View();
             }            
+        }
+        #endregion
+
+        #region "Call Recording - Krunal"
+        [HttpGet]
+        public ActionResult ManageCallRecording()
+        {
+            string customerId = GetCookie("CustomerId");
+
+            if (String.IsNullOrEmpty(customerId))
+            {
+                return RedirectToAction("Login", "Customer");
+            }
+            else
+            {
+                List<CallRecordingModel> CRMList = repo.GetAllCallRecordings(customerId);
+                return View(CRMList);
+            }
+        }
+        #endregion
+
+        #region "Get allSubscription - Jaideep"
+        [HttpGet]
+        public IActionResult ManageSubscription()
+        {
+            string customerId = GetCookie("CustomerId");
+
+            if (String.IsNullOrEmpty(customerId))
+            {
+                return RedirectToAction("Login", "Customer");
+            }
+            else
+            {
+                List<SubscriptionModel> allsubscription = repo.GetSubscriptionList(customerId);
+                if (allsubscription.Count > 0)
+                {
+                    return View(allsubscription);
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Subscription");
+                }
+            }           
+        }
+        #endregion
+
+        #region "Call History - Krunal"
+        [HttpGet]
+        public ActionResult ManageCallHistory()
+        {
+            string customerId = GetCookie("CustomerId");
+
+            if (String.IsNullOrEmpty(customerId))
+            {
+                return RedirectToAction("Login", "Customer");
+            }
+            else
+            {
+                return View();
+            }
+        }
+        #endregion
+
+        #region "Billing - Jaideep"
+        [HttpGet]
+        public ActionResult Billing()
+        {
+            string customerId = GetCookie("CustomerId");
+
+            if (String.IsNullOrEmpty(customerId))
+            {
+                return RedirectToAction("Login", "Customer");
+            }
+            else
+            {
+                return View();
+            }
+        }
+        #endregion
+
+        #region "Get Cookies"
+        public string GetCookie(string Value)
+        {
+            string cookieValue = "";
+            if (!String.IsNullOrEmpty(Request.Cookies[Value]))
+            {
+                var decodedValue = WebEncoders.Base64UrlDecode(Request.Cookies[Value]);
+                cookieValue = Encoding.UTF8.GetString(decodedValue);
+            }
+            return cookieValue;
         }
         #endregion
 

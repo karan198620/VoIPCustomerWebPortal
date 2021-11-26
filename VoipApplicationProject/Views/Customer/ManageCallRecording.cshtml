@@ -1,0 +1,74 @@
+﻿@model IEnumerable<VoipApplicationProject.Models.CallRecordingModel>
+
+@{
+    ViewData["Title"] = "ManageCallRecording";
+}
+
+<div class="row">
+    <div class="col-md-4">
+        <input type="submit" value="Total CallRecordings: " class="btn btn-danger btn-block" />
+    </div>
+</div>
+<table id="MCRTable" class="table table-bordered text-center w-100 mt-3">
+    <thead>
+        <tr>
+            <th>Sr No.</th>
+            <th>
+                @Html.DisplayNameFor(model => model.DeviceId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SourceNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DesitinationNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Time)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Duration)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Action)
+            </th>
+        </tr>
+    </thead>
+    @*<tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.DeviceId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SourceNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DesitinationNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Time)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Duration)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Action)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            </td>
+        </tr>
+}
+    </tbody>*@
+</table>
+<script>
+    $('#MCRTable').DataTable();
+</script>

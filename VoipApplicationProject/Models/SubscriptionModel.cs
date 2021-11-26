@@ -13,6 +13,8 @@ namespace VoipApplicationProject.Models
         public DateTime SubscriptionEndDate { get; set; }
         public SubscriptionType SubscriptionType { get; set; }
         public bool ISActive { get; set; }
+        public string status { get; set; }
+        public SubscriptionModel[] data { get; set; }
     }
     public enum SubscriptionType
     {
