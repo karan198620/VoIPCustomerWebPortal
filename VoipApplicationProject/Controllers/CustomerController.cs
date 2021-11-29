@@ -263,7 +263,7 @@ namespace VoipApplicationProject.Controllers
             }            
         }
         #endregion
-
+        
         #region "Call Recording - Krunal"
         [HttpGet]
         public ActionResult ManageCallRecording()
@@ -351,6 +351,12 @@ namespace VoipApplicationProject.Controllers
                 cookieValue = Encoding.UTF8.GetString(decodedValue);
             }
             return cookieValue;
+=======
+        #region"User Billing"
+        public ActionResult Billing()
+        {
+            return View();
+
         }
         #endregion
 
