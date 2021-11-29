@@ -8,16 +8,16 @@
 
 <div class="row">
     <div class="col-md-3">
-        <button type="submit" class="btn btn-dark" style="background-color:blue" asp-area="" asp-controller="Home" asp-action="Index">REQUEST FOR TRAIL BALANCE</a></button>
+        <button type="submit" class="btn btn-primary">REQUEST FOR TRAIL BALANCE</button>
     </div>
     <div class="col-md-3">
-        <button type="submit" class="btn btn-dark" style="background-color:blue" asp-area="" asp-controller="Home" asp-action="Index">ADD BALANCE </button>
+        <button type="submit" class="btn btn-primary"  onclick="@("window.location.href='" + @Url.Action("AddBalance", "BalanceCustomer") + "'");">ADD BALANCE </button>
     </div>
     <div class="col-md-3">
-        <button type="submit" class="btn btn-dark" data-toggle="modal" data-target="#BuyModal" style="background-color:blue" asp-area="" asp-controller="Home" asp-action="Index">BUY SUBSCRIPTION</button>
+        <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#BuyModal" style="background-color:blue" >BUY SUBSCRIPTION</button>
     </div>
     <div class="col-md-3">
-        <button type="submit" class="btn btn-dark" style="background-color:blue" asp-area="" asp-controller="Home" asp-action="Index">DOWNLOAD INVOICE</button>
+        <button type="submit" class="btn btn-primary">DOWNLOAD INVOICE</button>
     </div>
 </div>
 <br>
@@ -50,7 +50,7 @@
         </tr>
     </thead>
     <tbody>
-        <tr>
+        <tr style="height:30px">
             <td>1</td>
             <td>Tiger Nixon</td>
             <td>System Architect</td>
@@ -75,16 +75,16 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-md-2" style="margin-left:10px;height:100px;border:2px solid black ;background-color:dodgerblue">
-                        <label><a href="#" style="color:black;text-align:center">Country Wise Minutes Purchase</a></label>
+                        <label><a href="#" style="color:black;text-align:center" data-toggle="modal" data-target="#BuyMinute">Country Wise Minutes Purchase</a></label>
                     </div>
                     <div class="col-md-2" style="margin-left: 10px; height: 100px;  border: 2px solid black; background-color: forestgreen">
-                        <label><a href="#" style="color: black; text-align: center">Buy Phone Number</a></label>
+                        <label><a href="#" style="color: black; text-align: center"data-toggle="modal" data-target="#BuyPhone">Buy Phone Number</a></label>
                     </div>
                     <div class="col-md-2" style="margin-left: 10px; height: 100px; border: 2px solid black; background-color: darkred">
-                        <label><a href="#" style="color: black; text-align: center">Buy Sub User</a></label>
+                        <label><a href="#" style="color: black; text-align: center" data-toggle="modal" data-target="#BuySub">Buy Sub User</a></label>
                     </div>
                     <div class="col-md-2" style="margin-left: 10px; height: 100px; border: 2px solid black; background-color: yellowgreen">
-                        <label><a href="#" style="color:black;text-align:center">Buy Storage Space Time</a></label>
+                        <label><a href="#" style="color:black;text-align:center" data-toggle="modal" data-target="#Buy">Buy Storage Space Time</a></label>
                     </div>
                 </div>
                 <h5 style="margin-left:30%">Don't find what you need? <a href="#">Click Here</a></h5>
@@ -95,6 +95,155 @@
 <div style="margin-left:70%">
     <button type="submit" class="btn btn-dark " style="background-color:blue" asp-area="" asp-controller="Home" asp-action="Index">EXPORT TO EXCEL</button>
 </div>
-<script>
-    $('#example').DataTable();
-</script>
+
+<div class="modal fade " id="BuyMinute" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header" style="text-align:center">
+                <h6>Buy Country Wise Minutes</h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="margin:0 30% 0 30%">
+                <div class="row">
+                    <label>Select Country: </label>
+                    <div style="position:relative;width:200px;height:25px;padding:0;margin-left:10px;">
+                        <select style="position:absolute;top:0px;left:0px;width:200px; height:25px;line-height:20px;margin:0;padding:0;"
+                                onchange="document.getElementById('displayValue').value=this.options[this.selectedIndex].text; document.getElementById('idValue').value=this.options[this.selectedIndex].value;">
+
+                            <option>England</option>
+                            <option>India</option>
+                            <option>Dubai  </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <label>Select Package: </label>
+                    <div style="position:relative;width:200px;height:25px;padding:0;margin-left:10px;">
+                        <select style="position:absolute;top:0px;left:0px;width:200px; height:25px;line-height:20px;margin:0;padding:0;"
+                                onchange="document.getElementById('displayValue').value=this.options[this.selectedIndex].text; document.getElementById('idValue').value=this.options[this.selectedIndex].value;">
+                            <option>Package 1</option>
+                            <option>Package 2</option>
+                            <option>Package 3</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <label>Amount To Pay: </label>
+                    <input style="margin-left:10px;" placeholder="Enter the Amount($)">
+                </div>
+                <div class="row">
+                    <div style="margin-left:25%;margin-top:10px">
+                        <button class="btn btn-primary" data-toggle="modal" data-target="#Confirm" type="button">BUY</button>
+                    </div>
+                    <div style="margin-left:5%;margin-top:10px">
+                        <button class="btn btn-primary" type="button" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade " id="BuyPhone" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header" style="text-align:center">
+                <h6>Buy Phone Number</h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="margin:0 30% 0 30%">
+                <div class="row">
+                    <label>Select Country: </label>
+                    <div style="position:relative;width:200px;height:25px;padding:0;margin-left:10px;">
+                        <select style="position:absolute;top:0px;left:0px;width:200px; height:25px;line-height:20px;margin:0;padding:0;"
+                                onchange="document.getElementById('displayValue').value=this.options[this.selectedIndex].text; document.getElementById('idValue').value=this.options[this.selectedIndex].value;">
+                            <option>England</option>
+                            <option>India</option>
+                            <option>Dubai  </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <label>Prefix: </label>
+                    <div style="position:relative;width:200px;height:25px;padding:0;margin-left:10px;">
+                        <select style="position:absolute;top:0px;left:0px;width:200px; height:25px;line-height:20px;margin:0;padding:0;"
+                                onchange="document.getElementById('displayValue').value=this.options[this.selectedIndex].text; document.getElementById('idValue').value=this.options[this.selectedIndex].value;">
+                            <option>+91</option>
+                            <option>+44</option>
+                            <option>+971</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <label>Town: </label>
+                    <div style="position:relative;width:200px;height:25px;padding:0;margin-left:10px;">
+                        <select style="position:absolute;top:0px;left:0px;width:200px; height:25px;line-height:20px;margin:0;padding:0;"
+                                onchange="document.getElementById('displayValue').value=this.options[this.selectedIndex].text; document.getElementById('idValue').value=this.options[this.selectedIndex].value;">
+                            <option>Jaipur</option>
+                            <option>Varanasi</option>
+                            <option>Kolkata</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <label>Phone Type: </label>
+                    <div style="position:relative;width:200px;height:25px;padding:0;margin-left:10px;">
+                        <select style="position:absolute;top:0px;left:0px;width:200px; height:25px;line-height:20px;margin:0;padding:0;"
+                                onchange="document.getElementById('displayValue').value=this.options[this.selectedIndex].text; document.getElementById('idValue').value=this.options[this.selectedIndex].value;">
+                            <option>Phablet</option>
+                            <option>Dumb Phone</option>
+                            <option>Smartphone</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <label>Amount To Pay: </label>
+                    <input style="margin-left:10px;margin-top:5px" placeholder="Auto Populate($)">
+                </div>
+                <div class="row">
+                    <label>Set Up Cost: </label>
+                    <input style="margin-left: 10px; margin-top: 5px" placeholder="Auto Populate($)">
+                </div>
+                <div class="row">
+                    <label>Recurring Monthly Cost: </label>
+                    <input style="margin-left: 10px; margin-top: 5px" placeholder="Auto Populate($)">
+                </div>
+                <div class="row">
+                    <div style="margin-left:25%;margin-top:10px">
+                        <button class="btn btn-primary" data-toggle="modal" data-target="#Confirm" type="button">BUY</button>
+                    </div>
+                    <div style="margin-left:5%;margin-top:10px">
+                        <button class="btn btn-primary" type="button" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade"id="Confirm" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header" style="text-align:center">
+                <h6>Kindly Confirm! you are going to Buy Selected Subscription?</h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="margin: 0 30% 0 30%">
+                <div class="row">
+                    <div style="margin-left:25%;margin-top:10px">
+                        <button class="btn btn-primary" type="button">YES</button>
+                    </div>
+                    <div style="margin-left:5%;margin-top:10px">
+                        <button class="btn btn-primary" type="button" data-dismiss="modal">NO</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
