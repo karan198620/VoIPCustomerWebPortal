@@ -30,11 +30,11 @@ namespace VoipApplicationProject.Controllers
             }
             else
             {
-                MenuAccessModel Menu = repo.GetMenu(GetCookie("CustomerId"), true,GetCookie("token"));
+                MenuAccessModel Menu = repo.GetMenu(GetCookie("CustomerId"), true, GetCookie("token"));
 
                 if (Menu.status == "Unauthorized")
                 {
-                   return RedirectToAction("Login", "Customer");
+                    return RedirectToAction("Login", "Customer");
                 }
                 else if ((Menu.status == "Success") && (Menu.data.ToList().Count > 0))
                 {

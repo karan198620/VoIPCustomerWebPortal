@@ -25,12 +25,12 @@ namespace VoipProjectEntities.Api.Controllers.v1
         }
 
         //get alllist
-        [HttpGet(Name = "GetAllCallRecordingAgent")]
+        [HttpGet("GetAll/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesDefaultResponseType]
-        public async Task<ActionResult> GetAllEvents()
+        public async Task<ActionResult> GetAllEvents(string id)
         {
-            var dtos = await _mediator.Send(new GetCallRecordingAgentsListQuery());
+            var dtos = await _mediator.Send(new GetCallRecordingAgentsListQuery() { CustomerId = id });
             return Ok(dtos);
         }
 

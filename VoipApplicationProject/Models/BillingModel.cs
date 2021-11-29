@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -14,5 +14,6 @@ namespace VoipApplicationProject.Models
         public Double Amount{ get; set; }
         public string TransactionId { get; set; }
         public bool Status { get; set; }
+        public BillingModel[] data { get; set; }
     }
 }

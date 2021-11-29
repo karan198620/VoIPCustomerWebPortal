@@ -8,5 +8,6 @@ namespace VoipProjectEntities.Application.Features.CallRecordingAgents.Queries.G
 {
     public class GetCallRecordingAgentsListQuery : IRequest<Response<IEnumerable<CallRecordingAgentListVm>>>
     {
+        public string CustomerId { get; set; }
     }
 }

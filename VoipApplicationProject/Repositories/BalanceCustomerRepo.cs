@@ -21,7 +21,7 @@ namespace VoipApplicationProject.Repositories
                 HttpClient HC = new HttpClient();
                 RootObject result = new RootObject();
 
-                var insertedRecord = HC.GetAsync("https://localhost:44330/" + "api/BalanceCustomer/" + CustomerId);
+                var insertedRecord = HC.GetAsync(Baseurl + "api/BalanceCustomer/" + CustomerId);
 
                 insertedRecord.Wait();
 

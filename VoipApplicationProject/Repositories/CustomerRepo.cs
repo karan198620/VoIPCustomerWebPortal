@@ -60,11 +60,17 @@ namespace VoipApplicationProject.Repositories
 
                 foreach (MenuLink menuLinkenum in (MenuLink[])Enum.GetValues(typeof(MenuLink)))
                 {
-                    if (CustomerType == "Agents" && menuLinkenum == MenuLink.DashboardUsers || menuLinkenum == MenuLink.Billing)
+                    if (CustomerType == "Users" && menuLinkenum == MenuLink.DashboardUsers)
                         continue;
 
-                    if (CustomerType == "DemoUsers" && menuLinkenum == MenuLink.DashboardUsers || menuLinkenum == MenuLink.Link9
-                        || menuLinkenum == MenuLink.Link10 || menuLinkenum == MenuLink.Link11 || menuLinkenum == MenuLink.DashboardAdminUsers)
+                    if ((CustomerType == "Agents" && menuLinkenum == MenuLink.DashboardUsers) || (CustomerType == "Agents" && menuLinkenum == MenuLink.Billing))
+                        continue;
+
+                    if ((CustomerType == "DemoUsers" && menuLinkenum == MenuLink.DashboardUsers) || 
+                        (CustomerType == "DemoUsers" && menuLinkenum == MenuLink.Link9) ||
+                        (CustomerType == "DemoUsers" && menuLinkenum == MenuLink.Link10) ||
+                        (CustomerType == "DemoUsers" && menuLinkenum == MenuLink.Link11) || 
+                        (CustomerType == "DemoUsers" && menuLinkenum == MenuLink.DashboardAdminUsers))
                         continue;
 
                     menuItemList.Add(
@@ -153,6 +159,109 @@ namespace VoipApplicationProject.Repositories
                 return FunctionReturnValue = false;
             else
                 return FunctionReturnValue;
+        }
+        #endregion
+
+        #region "Create Trial Balance Request Customers - Lucky"
+        public bool CreateTrialBalanceCustomers(string CustomerId)
+        {
+            bool FunctionReturnValue = false;
+
+            try
+            {
+                HttpClient HC = new HttpClient();
+                HC.BaseAddress = new Uri(Baseurl);
+
+                TrialBalanceRequestModel tbrModel = new TrialBalanceRequestModel();
+                tbrModel.CustomerId = CustomerId;
+                tbrModel.Date = DateTime.Now;
+                tbrModel.TransactionType = TransactionType.credit;
+                tbrModel.CreatedAt = DateTime.Now;
+                tbrModel.UpdatedAt = DateTime.Now;
+                tbrModel.Amount = 500;
+
+                var insertedRecord = HC.PostAsJsonAsync("api/TrailBalanceCustomer", tbrModel);
+                insertedRecord.Wait();
+
+                var result = insertedRecord.Result;
+
+                if (result.IsSuccessStatusCode)
+                {
+                    FunctionReturnValue = true;
+                }
+
+                HC.Dispose();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+            return FunctionReturnValue;
+        }
+        #endregion
+
+        #region "Manage Call Recording - Krunal"
+        public List<CallRecordingModel> GetAllCallRecordings(string CustomerId)
+        {
+            try
+            {
+                CallRecordingModel result = new CallRecordingModel();
+                List<CallRecordingModel> GetAllCallRecordings = new List<CallRecordingModel>();
+
+                HttpClient HC = new HttpClient();
+                var insertedRecord = HC.GetAsync(Baseurl + "api/CallRecordingAgent/GetAll/" + CustomerId);
+
+                insertedRecord.Wait();
+
+                var results = insertedRecord.Result;
+
+                if (results.IsSuccessStatusCode)
+                {
+                    var UserResponse = results.Content.ReadAsStringAsync().Result;
+                    result = JsonConvert.DeserializeObject<CallRecordingModel>(UserResponse);
+                    GetAllCallRecordings = result.data.ToList();
+                }
+
+                HC.Dispose();
+                return GetAllCallRecordings;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        #endregion
+
+        #region "Get Subscription List - Jaideep"
+        public List<SubscriptionModel> GetSubscriptionList(string CustomerId)
+        {
+            try
+            {
+                SubscriptionModel result = new SubscriptionModel();
+                List<SubscriptionModel> GetSubscriptionList = new List<SubscriptionModel>();
+
+                HttpClient HC = new HttpClient();
+                var insertedRecord = HC.GetAsync(Baseurl + "api/SubscriptionCustomer/" + CustomerId);
+
+                insertedRecord.Wait();
+
+                var results = insertedRecord.Result;
+
+                if (results.IsSuccessStatusCode)
+                {
+                    var UserResponse = results.Content.ReadAsStringAsync().Result;
+                    result = JsonConvert.DeserializeObject<SubscriptionModel>(UserResponse);
+                    GetSubscriptionList = result.data.ToList();
+                }
+
+                HC.Dispose();
+                return GetSubscriptionList;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
         #endregion
 

@@ -23,7 +23,6 @@ namespace VoipApplicationProject.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-
             string customerId = GetCookie("CustomerId");
             List<BalanceCustomerModel> alltranscation = repo.GetBalanceCustomerList(customerId);
             if (alltranscation.Count > 0)
@@ -35,8 +34,13 @@ namespace VoipApplicationProject.Controllers
                 return RedirectToAction("Login", "Customer");
             }
         }
-        
-        
+
+        [HttpGet]
+        public IActionResult AddBalance()
+        {
+            return View();
+        }
+
 
         #region "Get Cookies"
         public string GetCookie(string Value)

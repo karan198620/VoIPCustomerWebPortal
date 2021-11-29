@@ -16,12 +16,9 @@ namespace VoipApplicationProject.Controllers
     public class CustomerController : Controller
     {
         private readonly ICustomerRepo repo;
-        private readonly ITrailBalanceCustomerRepo t_repo;
-        public CustomerController(ICustomerRepo _repo, ITrailBalanceCustomerRepo _t_repo)
+        public CustomerController(ICustomerRepo _repo)
         {
             repo = _repo;
-            t_repo = _t_repo;
-
         }
 
         #region "Get All Customers / Get All Existing Users - Lucky"
@@ -60,17 +57,7 @@ namespace VoipApplicationProject.Controllers
                 {
                     if (Customer.CustomerTypeID == CustomerType.User)
                     {
-                        TrialBalanceRequestModel tbrModel = new TrialBalanceRequestModel();
-                        tbrModel.CustomerId = Customer.Id;
-                        tbrModel.Date = DateTime.Now;
-                        tbrModel.TransactionType = TransactionType.credit;
-                        tbrModel.CreatedAt = DateTime.Now;
-                        tbrModel.UpdatedAt = DateTime.Now;
-                        tbrModel.Amount = 500;
-
-                        
-                        TrialBalanceRequestModel trailBalanceCustomer = t_repo.CreateTrialBalanceCustomers(tbrModel);
-                        if (!String.IsNullOrEmpty(trailBalanceCustomer.TrailBalanceCustomerId.ToString()))
+                        if (repo.CreateTrialBalanceCustomers(Customer.Id))
                         {
                             return RedirectToAction("Login", "Customer");
                         }
@@ -85,8 +72,6 @@ namespace VoipApplicationProject.Controllers
                     {
                         return RedirectToAction("Login", "Customer");
                     }
-
-
                 }
                 else
                 {
@@ -142,6 +127,10 @@ namespace VoipApplicationProject.Controllers
         public IActionResult Login()
         {
             ViewBag.ShowAlert = "";
+            //if (GetCookie("name") != null)
+            //{
+            //    return RedirectToAction("Index", "Dashboard");
+            //}
             return View();
         }
 
@@ -159,10 +148,11 @@ namespace VoipApplicationProject.Controllers
 
                     string isRememberMe = Request.Form["ChkRememberMe"];
 
-                    if(isRememberMe != "false")
+                    if (isRememberMe != "false")
                     {
+                        //set an object of login credentials
                         SetCookie("refreshtoken", Customer.refreshtoken, 600);
-                    }                   
+                    }     
 
                     return RedirectToAction("Index", "Dashboard");
                 }
@@ -273,11 +263,100 @@ namespace VoipApplicationProject.Controllers
             }            
         }
         #endregion
+        
+        #region "Call Recording - Krunal"
+        [HttpGet]
+        public ActionResult ManageCallRecording()
+        {
+            string customerId = GetCookie("CustomerId");
 
+            if (String.IsNullOrEmpty(customerId))
+            {
+                return RedirectToAction("Login", "Customer");
+            }
+            else
+            {
+                List<CallRecordingModel> CRMList = repo.GetAllCallRecordings(customerId);
+                return View(CRMList);
+            }
+        }
+        #endregion
+
+        #region "Get allSubscription - Jaideep"
+        [HttpGet]
+        public IActionResult ManageSubscription()
+        {
+            string customerId = GetCookie("CustomerId");
+
+            if (String.IsNullOrEmpty(customerId))
+            {
+                return RedirectToAction("Login", "Customer");
+            }
+            else
+            {
+                List<SubscriptionModel> allsubscription = repo.GetSubscriptionList(customerId);
+                if (allsubscription.Count > 0)
+                {
+                    return View(allsubscription);
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Subscription");
+                }
+            }           
+        }
+        #endregion
+
+        #region "Call History - Krunal"
+        [HttpGet]
+        public ActionResult ManageCallHistory()
+        {
+            string customerId = GetCookie("CustomerId");
+
+            if (String.IsNullOrEmpty(customerId))
+            {
+                return RedirectToAction("Login", "Customer");
+            }
+            else
+            {
+                return View();
+            }
+        }
+        #endregion
+
+        #region "Billing - Jaideep"
+        [HttpGet]
+        public ActionResult Billing()
+        {
+            string customerId = GetCookie("CustomerId");
+
+            if (String.IsNullOrEmpty(customerId))
+            {
+                return RedirectToAction("Login", "Customer");
+            }
+            else
+            {
+                return View();
+            }
+        }
+        #endregion
+
+        #region "Get Cookies"
+        public string GetCookie(string Value)
+        {
+            string cookieValue = "";
+            if (!String.IsNullOrEmpty(Request.Cookies[Value]))
+            {
+                var decodedValue = WebEncoders.Base64UrlDecode(Request.Cookies[Value]);
+                cookieValue = Encoding.UTF8.GetString(decodedValue);
+            }
+            return cookieValue;
+=======
         #region"User Billing"
         public ActionResult Billing()
         {
             return View();
+
         }
         #endregion
 
