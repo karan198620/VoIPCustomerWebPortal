@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.WebUtilities;
 using System;
 using System.Collections.Generic;
@@ -23,7 +23,6 @@ namespace VoipApplicationProject.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-
             string customerId = GetCookie("CustomerId");
             List<BalanceCustomerModel> alltranscation = repo.GetBalanceCustomerList(customerId);
             if (alltranscation.Count > 0)
@@ -35,10 +34,16 @@ namespace VoipApplicationProject.Controllers
                 return RedirectToAction("Login", "Customer");
             }
         }
-
+        
         public IActionResult AddBalance()
         {
                 return View();
+        }
+
+        [HttpGet]
+        public IActionResult AddBalance()
+        {
+            return View();
         }
 
         #region "Get Cookies"

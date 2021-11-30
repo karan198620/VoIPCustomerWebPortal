@@ -14,36 +14,10 @@ namespace VoipApplicationProject.Controllers
     public class SubscriptionController : Controller
     {
         private readonly ISubscriptionRepo repo;
-        const string CustomerId = "";
         public SubscriptionController(ISubscriptionRepo _repo)
         {
             repo = _repo;
         }
-       
-        #region " Get allSubscription"
-        [HttpGet]
-        public IActionResult Index()
-        {
-
-            string customerId =GetCookie("CustomerId");
-            List<SubscriptionModel> allsubscription = repo.GetSubscriptionList(customerId);
-            if (allsubscription.Count > 0)
-            {
-                return View(allsubscription);
-            }
-            else
-            {
-                return RedirectToAction("Login", "Customer");
-            }
-        }
-        [HttpPost]
-        public IActionResult Index(CustomerModel customerModel)
-        {
-
-            return View("Index","Subscription");
-
-        }
-        #endregion
 
         public IActionResult BuySubscription()
         {

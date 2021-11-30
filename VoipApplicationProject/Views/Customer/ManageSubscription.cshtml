@@ -1,0 +1,49 @@
+﻿
+@{
+    ViewData["Title"] = "ManageSubscription";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model IEnumerable<VoipApplicationProject.Models.SubscriptionModel>
+
+<table id="MSTable" class="table table-bordered text-center w-100 mt-3">
+    <thead>
+        <tr>
+            <th>Sr. No</th>
+            <th>
+               Activation Date
+            </th>
+            <th>
+               End Date
+            </th>
+            <th>
+               Description
+            </th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{int i = 1; }
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayName((i++).ToString())</td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SubscriptionStartDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SubscriptionEndDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SubscriptionType)
+                </td>
+                <td>
+                    @Html.ActionLink("Cancel Subscription", "Delete", new { /* id=item.PrimaryKey */ })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<script>
+    $('#MSTable').DataTable();
+</script>

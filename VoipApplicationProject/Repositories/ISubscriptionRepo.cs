@@ -8,7 +8,5 @@ namespace VoipApplicationProject.Repositories
 {
     public interface ISubscriptionRepo
     {
-        List<SubscriptionModel> GetSubscriptionList(string CustomerId);
-
     }
 }
