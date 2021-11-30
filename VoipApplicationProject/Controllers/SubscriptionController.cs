@@ -19,10 +19,6 @@ namespace VoipApplicationProject.Controllers
             repo = _repo;
         }
 
-        public IActionResult BuySubscription()
-        {
-                return View(); 
-        }
         #region "Get Cookies"
         public string GetCookie(string Value)
         {

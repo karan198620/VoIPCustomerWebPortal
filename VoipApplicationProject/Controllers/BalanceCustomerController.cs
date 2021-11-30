@@ -34,12 +34,7 @@ namespace VoipApplicationProject.Controllers
                 return RedirectToAction("Login", "Customer");
             }
         }
-        
-        public IActionResult AddBalance()
-        {
-                return View();
-        }
-
+      
         [HttpGet]
         public IActionResult AddBalance()
         {
