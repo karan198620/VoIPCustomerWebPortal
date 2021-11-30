@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.WebUtilities;
 using System;
 using System.Collections.Generic;
@@ -34,13 +34,12 @@ namespace VoipApplicationProject.Controllers
                 return RedirectToAction("Login", "Customer");
             }
         }
-
+      
         [HttpGet]
         public IActionResult AddBalance()
         {
             return View();
         }
-
 
         #region "Get Cookies"
         public string GetCookie(string Value)
