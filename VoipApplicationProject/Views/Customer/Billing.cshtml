@@ -3,7 +3,7 @@
 @{
     ViewData["Title"] = "Billing";
 }
-
+<input type="text" id="title" value="@ViewData["Title"]" hidden />
 <div class="row">
     <div class="col-md-3">
         <button type="submit" class="btn btn-primary btn-block">REQUEST FOR TRAIL BALANCE</button>
@@ -90,7 +90,7 @@
     </div>
 </div>
 <div style="margin-left:70%">
-    <button type="submit" class="btn btn-primary">EXPORT TO EXCEL</button>
+    <button type="submit" class="btn btn-primary"  onclick="javascript: fnExcelReport('BillingTable', 'data')">EXPORT TO EXCEL</button>
 </div>
 
 <div class="modal fade " id="BuyMinute" tabindex="-1" role="dialog">

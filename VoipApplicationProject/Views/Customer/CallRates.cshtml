@@ -6,7 +6,7 @@
 
 @model IEnumerable<VoipApplicationProject.Models.CallRatesModel>
 
-
+<input type="text" id="title" value="@ViewData["Title"]" hidden />
 <h2>Call Rates </h2>
 <br />
 
@@ -39,6 +39,7 @@
             }
         </tbody>*@
 </table>
+<button type="submit" class="btn btn-primary" onclick="javascript: fnExcelReport('MSTable', 'data')">EXPORT TO EXCEL</button>
 <script>
     $('#MSTable').DataTable();
 </script>

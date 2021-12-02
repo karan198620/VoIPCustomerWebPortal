@@ -3,7 +3,7 @@
 @{
     ViewData["Title"] = "ManageCallRecording";
 }
-
+<input type="text" id="title" value="@ViewData["Title"]" hidden />
 <div class="row">
     <div class="col-md-4">
         <input type="submit" value="Total CallRecordings: " class="btn btn-danger btn-block" />
@@ -69,6 +69,10 @@
 }
     </tbody>*@
 </table>
+
+<div style="margin-left:70%">
+    <button type="submit" id="btn1" class="btn btn-primary" onclick="javascript: fnExcelReport('MCRTable', 'data')">EXPORT TO EXCEL</button>
+</div>
 <script>
     $('#MCRTable').DataTable();
 </script>
