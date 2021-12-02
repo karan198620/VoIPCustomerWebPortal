@@ -1,68 +1,104 @@
 ﻿@model VoipApplicationProject.Models.CustomerModel
 
+
 @{
+    Layout = "~/Views/Shared/FooterLayout.cshtml";
     ViewData["Title"] = "Login";
     var custTypeList = Enum.GetValues(typeof(VoipApplicationProject.Models.CustomerType));
 }
 
-    <div class="col-md-10" style="margin-left:-150px;margin-top:10px">
-        <div class="row">
-            <div class="col-md-6"></div>
-            <div class="col-md-6">
-                <h4 class="text-center">Welcome Back</h4>
-                <div class="text-center" style="font-size:20px"><small class="mb-3">Don't miss your next opportunity. Sign in to stay updated.</small></div>
-                <form asp-action="Login">
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+<style>
+    .container-fluid {
+        padding-right: 0px;
+        padding-left: 0px;
+    }
+</style>
+<header>
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow mb-3" style="background-color:black">
+        <div class="container">
+            <a class="navbar-brand text-white" asp-area="" asp-controller="Home" asp-action="Index">Moitele.Com</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-                    <div class="row mt-3">
-                        <div class="col-md-4 text-md-left text-center"><label>Select User Type</label></div>
-                        <div class="col-md-8 text-md-left text-center">
-                            @foreach (var value in custTypeList)
-                            {
-                                <div class="form-check form-check-inline">
-                                    @Html.RadioButtonFor(Model => Model.CustomerTypeID, value)
-                                    <label class="mx-2 mb-0">@value.ToString()</label>
-                                </div>
-                            }
-                        </div>
-                    </div>
-                    <br />
-                    <span asp-validation-for="CustomerTypeID" class="text-danger"></span>
+            <div class="nav navbar-nav navbar-right">
+                <div class="dropdown bg-white ">
+                    <button class="btn dropdown-toggle" type="button" data-toggle="dropdown" style="width:200px;">
+                        English
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a class="nav-link dropdown-item text-dark" asp-area="" asp-controller="Home" asp-action="English">English</a></li>
+                        <li><a class="nav-link dropdown-item text-dark" asp-area="" asp-controller="Home" asp-action="Hindi">Hindi</a></li>
+                        <li><a class="nav-link dropdown-item text-dark" asp-area="" asp-controller="Home" asp-action="Spanish">Spanish</a></li>
+                    </ul>
+                </div>
 
-                    <div class="form-group mt-3">
-                        <input asp-for="Email" class="form-control" placeholder="Username*" />
-                        <span asp-validation-for="Email" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <input asp-for="Password" class="form-control" placeholder="Password*" />
-                        <span asp-validation-for="Password" class="text-danger"></span>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-6">
-                            @Html.CheckBox("ChkRememberMe", false)
-                            <label class="mx-2">Remember Me</label>
-                        </div>
-                        <div class="col-6 text-right">
-                            <a href="ForgotPassword">Forgot Password ?</a>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-md-4 mx-auto">
-                            <input type="submit" value="Login" class="btn btn-primary btn-block" />
-                        </div>
-                    </div>
-                    <div class="form-group text-center mb-0">
-                        <label>Dont't have an account? </label>
-                        <a href="SignUp">Sign Up</a>
-                    </div>
-                    <div class="form-group text-center">
-                        <label>To access demo account link</label>
-                        <a href="#">Click here</a>
-                    </div>
-                </form>
             </div>
         </div>
+    </nav>
+</header>
+
+
+<div class="col-md-10" style="margin-left:-150px;margin-top:10px">
+    <div class="row">
+        <div class="col-md-6"></div>
+        <div class="col-md-6">
+            <h4 class="text-center">Welcome Back</h4>
+            <div class="text-center" style="font-size:20px"><small class="mb-3">Don't miss your next opportunity. Sign in to stay updated.</small></div>
+            <form asp-action="Login">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div class="row mt-3">
+                    <div class="col-md-4 text-md-left text-center"><label>Select User Type</label></div>
+                    <div class="col-md-8 text-md-left text-center">
+                        @foreach (var value in custTypeList)
+                        {
+                            <div class="form-check form-check-inline">
+                                @Html.RadioButtonFor(Model => Model.CustomerTypeID, value)
+                                <label class="mx-2 mb-0">@value.ToString()</label>
+                            </div>
+                        }
+                    </div>
+                </div>
+                <br />
+                <span asp-validation-for="CustomerTypeID" class="text-danger"></span>
+
+                <div class="form-group mt-3">
+                    <input asp-for="Email" class="form-control" placeholder="Username*" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input asp-for="Password" class="form-control" placeholder="Password*" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+                <div class="form-group row">
+                    <div class="col-6">
+                        @Html.CheckBox("ChkRememberMe", false)
+                        <label class="mx-2">Remember Me</label>
+                    </div>
+                    <div class="col-6 text-right">
+                        <a href="ForgotPassword">Forgot Password ?</a>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-4 mx-auto">
+                        <input type="submit" value="Login" class="btn btn-primary btn-block" />
+                    </div>
+                </div>
+                <div class="form-group text-center mb-0">
+                    <label>Dont't have an account? </label>
+                    <a href="SignUp">Sign Up</a>
+                </div>
+                <div class="form-group text-center">
+                    <label>To access demo account link</label>
+                    <a href="#">Click here</a>
+                </div>
+            </form>
+        </div>
     </div>
+</div>
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
@@ -71,7 +107,7 @@
 {
     <script>alert("Your username and/or password is incorrect. Please try again");</script>
 }
-else if(ViewBag.ShowAlert == "customertype_error")
+else if (ViewBag.ShowAlert == "customertype_error")
 {
     <script>alert("Selected user type is incorrect!");</script>
 }

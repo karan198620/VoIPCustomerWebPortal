@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -25,6 +26,8 @@ namespace VoipApplicationProject
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+             .AddCookie(o => { o.LoginPath = "/Customer/Login"; });
             services.AddScoped<ICustomerRepo, CustomerRepo>();
             services.AddScoped<IDashboardRepo, DashboardRepo>();
             services.AddScoped<ISubscriptionRepo, SubscriptionRepo>();
@@ -50,7 +53,7 @@ namespace VoipApplicationProject
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

@@ -3,7 +3,7 @@
 @{
     ViewData["Title"] = "Billing";
 }
-
+<input type="text" id="title" value="@ViewData["Title"]" hidden />
 <div class="row">
     <div class="col-md-3">
         <button type="submit" class="btn btn-primary btn-block">REQUEST FOR TRAIL BALANCE</button>
@@ -72,16 +72,16 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-md-2" style="margin-left:10px;height:100px;border:2px solid black ;background-color:dodgerblue">
-                        <label><a href="#" style="color:black;text-align:center" data-toggle="modal" data-target="#BuyMinute">Country Wise Minutes Purchase</a></label>
+                        <label><a href="#" style="color:black;text-align:center" data-toggle="modal"  data-target="#BuyMinute" data-dismiss="modal">Country Wise Minutes Purchase </a></label>
                     </div>
                     <div class="col-md-2" style="margin-left: 10px; height: 100px;  border: 2px solid black; background-color: forestgreen">
-                        <label><a href="#" style="color: black; text-align: center" data-toggle="modal" data-target="#BuyPhone">Buy Phone Number</a></label>
+                        <label><a href="#" style="color: black; text-align: center" data-toggle="modal" data-target="#BuyPhone" data-dismiss="modal">Buy Phone Number</a></label>
                     </div>
                     <div class="col-md-2" style="margin-left: 10px; height: 100px; border: 2px solid black; background-color: darkred">
-                        <label><a href="#" style="color: black; text-align: center" data-toggle="modal" data-target="#BuyUser">Buy Sub User</a></label>
+                        <label><a href="#" style="color: black; text-align: center" data-toggle="modal" data-target="#BuyUser" data-dismiss="modal">Buy Sub User</a></label>
                     </div>
                     <div class="col-md-2" style="margin-left: 10px; height: 100px; border: 2px solid black; background-color: yellowgreen">
-                        <label><a href="#" style="color:black;text-align:center" data-toggle="modal" data-target="#Buy">Buy Storage Space Time</a></label>
+                        <label><a href="#" style="color:black;text-align:center" data-toggle="modal" data-target="#Buy" data-dismiss="modal">Buy Storage Space Time</a></label>
                     </div>
                 </div>
                 <h5 style="margin-left:30%">Don't find what you need? <a href="#">Click Here</a></h5>
@@ -90,7 +90,7 @@
     </div>
 </div>
 <div style="margin-left:70%">
-    <button type="submit" class="btn btn-primary">EXPORT TO EXCEL</button>
+    <button type="submit" class="btn btn-primary"  onclick="javascript: fnExcelReport('BillingTable', 'data')">EXPORT TO EXCEL</button>
 </div>
 
 <div class="modal fade " id="BuyMinute" tabindex="-1" role="dialog">
@@ -132,7 +132,7 @@
                 </div>
                 <div class="row">
                     <div style="margin-left:25%;margin-top:10px">
-                        <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#Confirm">BUY</button>
+                        <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#Confirm" data-dismiss="modal">BUY</button>
                     </div>
                     <div style="margin-left:5%;margin-top:10px">
                         <button class="btn btn-primary" type="button" data-dismiss="modal">Close</button>
@@ -215,7 +215,7 @@
                 </div>
                 <div class="row">
                     <div style="margin-left:25%;margin-top:10px">
-                        <button class="btn btn-primary" data-toggle="modal" data-target="#Confirm" type="button">BUY</button>
+                        <button class="btn btn-primary" data-toggle="modal" data-target="#Confirm" type="button" data-dismiss="modal">BUY</button>
                     </div>
                     <div style="margin-left:5%;margin-top:10px">
                         <button class="btn btn-primary" type="button" data-dismiss="modal">Close</button>
@@ -265,10 +265,10 @@
                 </div>
                 <div class="row">
                     <div style="margin-left:25%;margin-top:10px">
-                        <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#Confirm">BUY</button>
+                        <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#Confirm" data-dismiss="modal">BUY</button>
                     </div>
                     <div style="margin-left:5%;margin-top:10px">
-                        <button class="btn btn-primary" type="button" data-dismiss="modal">Close</button>
+                        <button class="btn btn-primary" type="button" data-dismiss="modal" >Close</button>
                     </div>
                 </div>
             </div>
@@ -296,7 +296,7 @@
                 </div>
                 <div class="row">
                     <div style="margin-left:25%;margin-top:10px">
-                        <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#Confirm">BUY</button>
+                        <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#Confirm" data-dismiss="modal">BUY</button>
                     </div>
                     <div style="margin-left:5%;margin-top:10px">
                         <button class="btn btn-primary" type="button" data-dismiss="modal">Close</button>

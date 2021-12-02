@@ -5,42 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="Controllers\wwwroot\css\site.css" />
-    <Content Include="Controllers\wwwroot\favicon.ico" />
-    <Content Include="Controllers\wwwroot\js\site.js" />
-    <Content Include="Controllers\wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css" />
-    <Content Include="Controllers\wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css.map" />
-    <Content Include="Controllers\wwwroot\lib\bootstrap\dist\css\bootstrap-grid.min.css" />
-    <Content Include="Controllers\wwwroot\lib\bootstrap\dist\css\bootstrap-grid.min.css.map" />
-    <Content Include="Controllers\wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.css" />
-    <Content Include="Controllers\wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.css.map" />
-    <Content Include="Controllers\wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.min.css" />
-    <Content Include="Controllers\wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.min.css.map" />
-    <Content Include="Controllers\wwwroot\lib\bootstrap\dist\css\bootstrap.css" />
-    <Content Include="Controllers\wwwroot\lib\bootstrap\dist\css\bootstrap.css.map" />
-    <Content Include="Controllers\wwwroot\lib\bootstrap\dist\css\bootstrap.min.css" />
-    <Content Include="Controllers\wwwroot\lib\bootstrap\dist\css\bootstrap.min.css.map" />
-    <Content Include="Controllers\wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.js" />
-    <Content Include="Controllers\wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.js.map" />
-    <Content Include="Controllers\wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.min.js" />
-    <Content Include="Controllers\wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.min.js.map" />
-    <Content Include="Controllers\wwwroot\lib\bootstrap\dist\js\bootstrap.js" />
-    <Content Include="Controllers\wwwroot\lib\bootstrap\dist\js\bootstrap.js.map" />
-    <Content Include="Controllers\wwwroot\lib\bootstrap\dist\js\bootstrap.min.js" />
-    <Content Include="Controllers\wwwroot\lib\bootstrap\dist\js\bootstrap.min.js.map" />
-    <Content Include="Controllers\wwwroot\lib\bootstrap\LICENSE" />
-    <Content Include="Controllers\wwwroot\lib\jquery-validation-unobtrusive\jquery.validate.unobtrusive.js" />
-    <Content Include="Controllers\wwwroot\lib\jquery-validation-unobtrusive\jquery.validate.unobtrusive.min.js" />
-    <Content Include="Controllers\wwwroot\lib\jquery-validation-unobtrusive\LICENSE.txt" />
-    <Content Include="Controllers\wwwroot\lib\jquery-validation\dist\additional-methods.js" />
-    <Content Include="Controllers\wwwroot\lib\jquery-validation\dist\additional-methods.min.js" />
-    <Content Include="Controllers\wwwroot\lib\jquery-validation\dist\jquery.validate.js" />
-    <Content Include="Controllers\wwwroot\lib\jquery-validation\dist\jquery.validate.min.js" />
-    <Content Include="Controllers\wwwroot\lib\jquery-validation\LICENSE.md" />
-    <Content Include="Controllers\wwwroot\lib\jquery\dist\jquery.js" />
-    <Content Include="Controllers\wwwroot\lib\jquery\dist\jquery.min.js" />
-    <Content Include="Controllers\wwwroot\lib\jquery\dist\jquery.min.map" />
-    <Content Include="Controllers\wwwroot\lib\jquery\LICENSE.txt" />
+    <Compile Remove="Controllers\wwwroot\**" />
+    <Content Remove="Controllers\wwwroot\**" />
+    <EmbeddedResource Remove="Controllers\wwwroot\**" />
+    <None Remove="Controllers\wwwroot\**" />
   </ItemGroup>
 
   <ItemGroup>

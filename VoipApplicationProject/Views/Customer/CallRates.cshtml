@@ -1,0 +1,46 @@
+﻿
+@{
+    ViewData["Title"] = "Call Rates";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model IEnumerable<VoipApplicationProject.Models.CallRatesModel>
+
+<input type="text" id="title" value="@ViewData["Title"]" hidden />
+<h2>Call Rates </h2>
+<br />
+
+<table id="MSTable" class="table table-bordered text-center w-100 mt-3">
+    <thead>
+        <tr>
+            <th>Sr. No</th>
+            <th>
+                Country
+            </th>
+            <th>
+                CallRates
+            </th>
+        </tr>
+    </thead>
+    @*<tbody>
+            @{int i = 1; }
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayName((i++).ToString())</td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Country)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Callrates)
+                    </td>
+
+                </tr>
+            }
+        </tbody>*@
+</table>
+<button type="submit" class="btn btn-primary" onclick="javascript: fnExcelReport('MSTable', 'data')">EXPORT TO EXCEL</button>
+<script>
+    $('#MSTable').DataTable();
+</script>
+

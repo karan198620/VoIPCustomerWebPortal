@@ -11,6 +11,7 @@
     <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/js/FileSaver.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
 
     @section Scripts {
@@ -26,50 +27,7 @@
     </style>
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow mb-3" style="background-color:black">
-            <div class="container">
-                <a class="navbar-brand text-white" asp-area="" asp-controller="Home" asp-action="Index">Moitele.Com</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
 
-                <div class="nav navbar-nav navbar-right">
-                    <div class="dropdown bg-white ">
-                        <button class="btn dropdown-toggle" type="button" data-toggle="dropdown">
-                            English
-                            <span class="caret"></span>
-                        </button>
-                        <ul class="dropdown-menu">
-                            <li><a class="nav-link dropdown-item text-dark" asp-area="" asp-controller="Home" asp-action="English">English</a></li>
-                            <li><a class="nav-link dropdown-item text-dark" asp-area="" asp-controller="Home" asp-action="Hindi">Hindi</a></li>
-                            <li><a class="nav-link dropdown-item text-dark" asp-area="" asp-controller="Home" asp-action="Spanish">Spanish</a></li>
-                        </ul>
-                    </div>
-                    <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                        <ul class="navbar-nav flex-grow-1">
-                            <li class="nav-item">
-                                <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Contact">Contact Us</a>
-                            </li>
-
-                        </ul>
-
-                    </div>
-                    <div class="dropdown bg-white ">
-                        <button class="btn dropdown-toggle" type="button" data-toggle="dropdown">
-                            <i class="far fa-user-circle fa-1x  bg-white"></i>
-                        </button>
-                        <ul class="dropdown-menu">
-                            <li><a class="nav-link dropdown-item text-dark" asp-area="" asp-controller="Customer" asp-action="Profile">Profile</a></li>
-                            <li><a class="nav-link dropdown-item text-dark" asp-area="" asp-controller="Customer" asp-action="LogOut">Log Out</a></li>
-                        </ul>
-                    </div>
-
-                </div>
-            </div>
-        </nav>
-    </header>
     <div class="container-fluid">
         <main role="main" class="pb-3">
             @RenderBody()
@@ -104,12 +62,12 @@
             <h5 class="text-right text-white">&copy; 2020 Moitele.com. All Right Reserved</h5>
         </nav>
     </footer>
-
-    <script src="~/js/FileSaver.js"></script>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/ExportTOExcel.js"></script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>
+

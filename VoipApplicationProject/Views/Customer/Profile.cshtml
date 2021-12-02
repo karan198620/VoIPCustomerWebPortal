@@ -1,0 +1,159 @@
+﻿@{
+    ViewData["Title"] = "Profile Information";
+
+}
+
+<style>
+    .input {
+        width: 200px;
+    }
+
+    tr {
+        margin-bottom: 10px;
+    }
+</style>
+<h1 style="text-align:center">@ViewData["Title"]</h1>
+<br>
+
+
+
+<form style="text-align:center;">
+    <table style="margin-left: auto; margin-right: auto;">
+        <tr>
+            <td><label> Firstname: </label></td>
+            <td><input type="text" name="firstname" size="15" class="input" /></td>
+        </tr>
+        <tr>
+            <td><label> Lastname: </label></td>
+            <td><input type="text" name="lastname" size="15" class="input" /></td>
+        </tr>
+        <tr>
+            <td><label> Organization Name: </label></td>
+            <td><input type="text" name="organizationName" size="15" class="input" /></td>
+        </tr>
+        <tr>
+            <td><label> Billing Adress: </label></td>
+            <td><input type="text" name="billingAddress" class="input" /></td>
+        </tr>
+        <tr>
+            <td><label>Postal Code :</label></td>
+            <td>
+                <select class="input">
+                    <option value=""></option>
+                    <option value="01">01</option>
+                    <option value="02">02</option>
+                    <option value="03">03</option>
+                    <option value="04">04</option>
+                    <option value="05">05</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td><label>Country :</label></td>
+            <td>
+                <select class="input">
+                    <option value=""></option>
+                    <option value="USA">USA</option>
+                    <option value="Germany">Germany</option>
+                    <option value="Dubai">Dubai</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td><label>State :</label></td>
+            <td>
+                <select class="input">
+                    <option value=""></option>
+                    <option value="abc">abc</option>
+                    <option value="edf">edf</option>
+                    <option value="ghi">ghi</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label>Phone No:</label>
+            </td>
+            <td><input type="number" name="phone" size="10" class="input" /></td>
+        </tr>
+        <tr>
+            <td>
+                <label>Phone No:</label>
+            </td>
+            <td><input type="number" name="phone" size="10" class="input" /></td>
+        </tr>
+        <tr>
+            <td>
+                <label>Tax ID/VAT No/Buisness ID:</label>
+            </td>
+            <td><input type="text" name="ID" class="input" /></td>
+        </tr>
+        <tr>
+            <td><label>UpdatePassword:</label></td>
+            <td><input type="Password" id="pass" name="pass" class="input"></td>
+        </tr>
+        <tr>
+            <td><label>Recording Storage Space:</label></td>
+            <td><input type="number" name="space" size="10" class="input" /></td>
+        </tr>
+        <tr>
+            <td><label>Email:</label></td>
+            <td><input type="email" name="email" class="input" /></td>&nbsp;&nbsp;
+            <td><input type="button" value="Update Email ID" data-toggle="modal" data-target="#UpdateEmail" style="background-color:deepskyblue;color:white;" /></td>
+        </tr>
+        <tr>
+            <td><label>Currency:</label></td>
+            <td><input type="text" name="currency" class="input" /></td>
+        </tr>
+
+    </table>
+    <br>
+    <input type="button" value="Update/Save" style="background-color:deepskyblue;color:white;" />
+
+</form>
+
+<div class="modal fade " id="UpdateEmail" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header" style="text-align:center">
+                <h6 style="margin-left: 45%; font-size:large">Enter New Email ID</h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="margin:0 30% 0 30%">
+                <form>
+                    <!-- Name input -->
+                    <div class="form-outline mb-4">
+                        <input type="email" id="email" class="form-control" placeholder="Enter Your Email" />
+                    </div>
+                    <!-- Create button -->
+                    <button type="submit" class="btn btn-primary btn-block" data-toggle="modal" data-target="#ConfirmEmail" data-dismiss="modal" style="background-color: deepskyblue; color: white;">Change Email</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="ConfirmEmail" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header" style="text-align:center">
+                <h6>Kindly Confirm! you want to update the devices data?</h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="margin: 0 30% 0 30%">
+                <div class="row">
+                    <div style="margin-left:25%;margin-top:10px">
+                        <button class="btn btn-primary" type="button">YES</button>
+                    </div>
+                    <div style="margin-left:5%;margin-top:10px">
+                        <button class="btn btn-primary" type="button" data-dismiss="modal">NO</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

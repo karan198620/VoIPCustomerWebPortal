@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.WebUtilities;
@@ -215,6 +217,18 @@ namespace VoipApplicationProject.Controllers
         }
         #endregion
 
+        #region "LogOut - Lucky"
+        public async Task<IActionResult> LogOut()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            foreach (var cookie in HttpContext.Request.Cookies)
+            {
+                Response.Cookies.Delete(cookie.Key);
+            }
+            return RedirectToAction("Login", "Customer");
+        }
+        #endregion
+
         #region "Forgot Password - Krunal"
         [HttpGet]
         public ActionResult ForgotPassword()
@@ -338,6 +352,65 @@ namespace VoipApplicationProject.Controllers
             {
                 return View();
             }
+        }
+        #endregion
+
+        #region "CallRates - Krunal"
+        [HttpGet]
+        public ActionResult CallRates()
+        {
+            string customerId = GetCookie("CustomerId");
+
+            if (String.IsNullOrEmpty(customerId))
+            {
+                return RedirectToAction("Login", "Customer");
+            }
+            else
+            {
+                return View();
+            }
+        }
+        #endregion
+
+        #region "Manage SubUser - Lucky"
+        [HttpGet]
+        public ActionResult ManageSubUser()
+        {
+            string customerId = GetCookie("CustomerId");
+
+            if (String.IsNullOrEmpty(customerId))
+            {
+                return RedirectToAction("Login", "Customer");
+            }
+            else
+            {
+                return View();
+            }
+        }
+        #endregion
+
+        #region "DashBoardURL- Lucky"
+        [HttpGet]
+        public ActionResult DashBoardURL()
+        {
+            string customerId = GetCookie("CustomerId");
+
+            if (String.IsNullOrEmpty(customerId))
+            {
+                return RedirectToAction("Login", "Customer");
+            }
+            else
+            {
+                return View();
+            }
+        }
+        #endregion
+
+        #region "Profile- Lucky"
+        [HttpGet]
+        public ActionResult Profile()
+        {
+            return View();
         }
         #endregion
 
