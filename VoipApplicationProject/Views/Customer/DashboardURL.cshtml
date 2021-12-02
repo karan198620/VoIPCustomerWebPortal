@@ -1,0 +1,48 @@
+﻿@{
+    ViewData["Title"] = "Dashboard Public URL";
+}
+<style>
+
+    h6 {
+        text-align: left;
+    }
+</style>
+
+<form style="text-align:center;">
+
+    <label> Public URL: </label>
+    <input type="text" name="publicURL" style="width:200px;" class="input" placeholder="wwww.moitele.com/public/URL" />&nbsp;&nbsp;&nbsp;
+    <input type="button" value="Generate URL" class="btn btn-primary" />&nbsp;
+
+    <br><br><br>
+    <h5><b>Select which graph to be displayed in the public URL</b></h5>
+    <table style="margin-left: auto; margin-right: auto;">
+
+        <tr>
+            <td><input type="checkbox" /></td>
+            <td><h6>Country Wise Total Answered Calls Today</h6></td>
+        </tr>
+        <tr>
+            <td> <input type="checkbox" /></td>
+            <td><h6>Country Wise Total Answered Calls Monthly</h6></td>
+        </tr>
+        <tr>
+            <td><input type="checkbox" /></td>
+            <td><h6>Call Status Total Call vs Answered Calls Today</h6></td>
+        </tr>
+        <tr>
+            <td><input type="checkbox" /></td>
+            <td><h6>Call Status Total Call vs Answered Calls Monthly</h6></td>
+        </tr>
+        <tr>
+            <td><input type="checkbox" /> </td>
+            <td><h6>All Cards Option</h6></td>
+        </tr>
+    </table>
+    <br><br>
+
+    <input type="button" value="Save" class="btn btn-primary" />
+
+
+    
+</form>
